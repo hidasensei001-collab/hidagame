@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#FFD15C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>HidaKids - Main & Belajar Pintar</title>
+
+<!-- GOOGLE FONTS & FONTAWESOME -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+/* =========================================================
+   HIDAKIDS GAME STUDIO V1.0
+   DESIGNED FOR KIDS (TK - KELAS 1 SD)
+   ========================================================= */
+
+:root {
+  --bg-app: #FFF9E6;
+  --card-bg: #FFFFFF;
+  --text-main: #2D3436;
+  --text-muted: #636E72;
+  
+  --kids-pink: #FF6B81;
+  --kids-yellow: #FFD15C;
+  --kids-blue: #4D96FF;
+  --kids-green: #6BCB77;
+  --kids-purple: #9B51E0;
+  --kids-orange: #FF9F43;
+
+  --shadow-3d: 0 8px 0px rgba(0, 0, 0, 0.15);
+  --shadow-3d-active: 0 2px 0px rgba(0, 0, 0, 0.15);
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.08);
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fredoka', 'Nunito', sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+/* APP CONTAINER (MOBILE VIEWPORT) */
+.app-viewport {
+  width: 100%;
+  max-width: 480px;
+  height: 100vh;
+  max-height: 920px;
+  background: var(--bg-app);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(0,0,0,0.1);
+}
+
+/* TOP HEADER BAR */
+.top-header {
+  height: calc(64px + var(--safe-top));
+  padding-top: var(--safe-top);
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  border-bottom: 4px solid #F0E6D2;
+  z-index: 100;
+}
+
+.header-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: var(--kids-yellow);
+  color: #5A3E00;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 0px #D6A329;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.header-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0px #D6A329;
+}
+
+.star-badge {
+  background: #FFF3C4;
+  border: 3px solid var(--kids-yellow);
+  border-radius: 30px;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #B77900;
+}
+
+.star-badge i {
+  color: #FFB800;
+  font-size: 24px;
+  filter: drop-shadow(0 2px 0 #D6A329);
+}
+
+/* MAIN CONTENT CONTAINER */
+.main-content {
+  flex: 1;
+  padding: 20px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* VIEW MANAGEMENT */
+.view-panel {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  animation: bounceIn 0.35s ease;
+}
+
+.view-panel.active {
+  display: flex;
+}
+
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.92); }
+  60% { transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* HOME MENU VIEW */
+.home-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.home-title h1 {
+  font-size: 32px;
+  color: var(--kids-pink);
+  text-shadow: 2px 2px 0px #FFB8C6;
+  line-height: 1.1;
+}
+
+.home-title p {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.game-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.game-card {
+  width: 100%;
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  border: 4px solid;
+  box-shadow: var(--shadow-3d);
+  transition: transform 0.1s;
+}
+
+.game-card:active {
+  transform: translateY(4px);
+  box-shadow: var(--shadow-3d-active);
+}
+
+.game-card.card-count { border-color: var(--kids-blue); }
+.game-card.card-shape { border-color: var(--kids-pink); }
+.game-card.card-memory { border-color: var(--kids-green); }
+.game-card.card-words { border-color: var(--kids-purple); }
+
+.card-icon-box {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.card-count .card-icon-box { background: #E6F0FF; }
+.card-shape .card-icon-box { background: #FFE6EA; }
+.card-memory .card-icon-box { background: #E6F8EB; }
+.card-words .card-icon-box { background: #F3E6FF; }
+
+.card-info h3 {
+  font-size: 20px;
+  color: var(--text-main);
+}
+
+.card-info p {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* GAMEPLAY ARENA GLOBAL */
+.game-question-box {
+  width: 100%;
+  background: var(--card-bg);
+  border-radius: 28px;
+  padding: 24px 16px;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  border: 4px solid #FFEAA7;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.question-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.display-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  min-height: 90px;
+  align-items: center;
+}
+
+.item-emoji {
+  font-size: 50px;
+  animation: popItem 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popItem {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+/* BUTTON OPTIONS (ANSWER GRID) */
+.answers-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.btn-answer {
+  background: var(--card-bg);
+  border: 4px solid var(--kids-blue);
+  border-radius: 24px;
+  padding: 20px 10px;
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--kids-blue);
+  cursor: pointer;
+  box-shadow: var(--shadow-3d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.1s;
+}
+
+.btn-answer:active {
+  transform: translateY(4px);
+  box-shadow: var(--shadow-3d-active);
+}
+
+/* GAME: MEMORY CARDS */
+.memory-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.memory-card {
+  aspect-ratio: 1;
+  background: var(--kids-purple);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 6px 0px #7B2CBF;
+  transition: transform 0.2s;
+}
+
+.memory-card.flipped {
+  background: white;
+  border: 4px solid var(--kids-purple);
+  box-shadow: 0 2px 0px #7B2CBF;
+  transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+  background: #E6F8EB;
+  border: 4px solid var(--kids-green);
+  box-shadow: none;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* GAME: SPELLING / WORD BUILDER */
+.spelling-slots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.letter-slot {
+  width: 48px;
+  height: 56px;
+  border-bottom: 4px solid var(--kids-orange);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--kids-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letters-pool {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-letter {
+  width: 54px;
+  height: 58px;
+  background: var(--kids-orange);
+  color: white;
+  font-size: 28px;
+  font-weight: 800;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 5px 0px #D35400;
+  cursor: pointer;
+}
+
+.btn-letter:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0px #D35400;
+}
+
+/* CELEBRATION OVERLAY / WIN MODAL */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+  animation: fadeIn 0.2s ease;
+}
+
+.win-box {
+  width: 100%;
+  background: white;
+  border-radius: 32px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popModal {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+.win-icon {
+  font-size: 80px;
+  margin-bottom: 10px;
+}
+
+.win-title {
+  font-size: 30px;
+  color: var(--kids-green);
+  margin-bottom: 8px;
+}
+
+.win-desc {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.btn-next {
+  width: 100%;
+  background: var(--kids-green);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  padding: 16px;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 6px 0px #388E3C;
+  cursor: pointer;
+}
+
+.btn-next:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0px #388E3C;
+}
+
+/* CANVAS CONFETTI */
+#confettiCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-viewport">
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- TOP HEADER -->
+  <header class="top-header">
+    <button class="header-btn" id="btnHome" onclick="showHome()">
+      <i class="fa-solid fa-house"></i>
+    </button>
+
+    <div class="star-badge">
+      <i class="fa-solid fa-star"></i>
+      <span id="starCount">0</span>
+    </div>
+
+    <button class="header-btn" id="btnSound" onclick="toggleSound()">
+      <i class="fa-solid fa-volume-high" id="soundIcon"></i>
+    </button>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="main-content">
+
+    <!-- 1. HOME MENU VIEW -->
+    <section class="view-panel active" id="viewHome">
+      <div class="home-title">
+        <h1>HidaKids Game</h1>
+        <p>Pilih permainan seru & bikin pintar!</p>
+      </div>
+
+      <div class="game-grid">
+        <div class="game-card card-count" onclick="startCountGame()">
+          <div class="card-icon-box">🍎</div>
+          <div class="card-info">
+            <h3>Hitung Buah</h3>
+            <p>Belajar angka & matematika dasar</p>
+          </div>
+        </div>
+
+        <div class="game-card card-shape" onclick="startShapeGame()">
+          <div class="card-icon-box">⭐</div>
+          <div class="card-info">
+            <h3>Tebak Bentuk</h3>
+            <p>Mengenal bentuk & geometri</p>
+          </div>
+        </div>
+
+        <div class="game-card card-memory" onclick="startMemoryGame()">
+          <div class="card-icon-box">🐶</div>
+          <div class="card-info">
+            <h3>Kartu Memori</h3>
+            <p>Mengasah ingatan & konsentrasi</p>
+          </div>
+        </div>
+
+        <div class="game-card card-words" onclick="startSpellingGame()">
+          <div class="card-icon-box">🔤</div>
+          <div class="card-info">
+            <h3>Susun Kata</h3>
+            <p>Latihan membaca huruf A-Z</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. HITUNG BUAH VIEW -->
+    <section class="view-panel" id="viewCount">
+      <div class="game-question-box">
+        <div class="question-text">Ada berapa buah di bawah?</div>
+        <div class="display-items" id="countDisplay"></div>
+      </div>
+      <div class="answers-grid" id="countAnswers"></div>
+    </section>
+
+    <!-- 3. TEBAK BENTUK VIEW -->
+    <section class="view-panel" id="viewShape">
+      <div class="game-question-box">
+        <div class="question-text" id="shapeQuestion">Manakah gambar Bintang?</div>
+      </div>
+      <div class="answers-grid" id="shapeAnswers"></div>
+    </section>
+
+    <!-- 4. KARTU MEMORI VIEW -->
+    <section class="view-panel" id="viewMemory">
+      <div class="game-question-box" style="padding:14px; margin-bottom:14px;">
+        <div class="question-text" style="font-size:18px; margin:0;">Cari 3 Pasang Gambar Sama!</div>
+      </div>
+      <div class="memory-grid" id="memoryGrid"></div>
+    </section>
+
+    <!-- 5. SUSUN KATA VIEW -->
+    <section class="view-panel" id="viewSpelling">
+      <div class="game-question-box">
+        <div class="item-emoji" id="spellingEmoji" style="font-size:70px;">🐱</div>
+        <div class="question-text" style="font-size:18px; margin-top:6px;" id="spellingHint">Susun Kata: KUCING</div>
+        <div class="spelling-slots" id="spellingSlots"></div>
+      </div>
+      <div class="letters-pool" id="lettersPool"></div>
+    </section>
+
+  </main>
+
+  <!-- WIN CELEBRATION MODAL -->
+  <div class="modal-overlay" id="winModal">
+    <div class="win-box">
+      <div class="win-icon">🎉</div>
+      <div class="win-title">HEBAT BANGET!</div>
+      <div class="win-desc">Kamu dapat 1 Bintang Emas! ⭐</div>
+      <button class="btn-next" onclick="nextQuestionOrHome()">Lanjut Main! 🚀</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   HIDAKIDS JAVASCRIPT LOGIC & AUDIO SYNTHESIZER
+   ========================================================= */
+
+// APP STATE
+let stars = parseInt(localStorage.getItem('hidakids_stars') || '0');
+let soundEnabled = true;
+let currentGame = '';
+let currentTargetValue = null;
+
+// MEMORY GAME STATE
+let memoryCards = [];
+let flippedCards = [];
+let matchedPairs = 0;
+
+// SPELLING GAME STATE
+let spellingWord = '';
+let currentSpellingInput = [];
+
+// INITIALIZE
+document.getElementById('starCount').textContent = stars;
+
+/* ---------------------------------------------------------
+   INTERNAL WEB AUDIO API SYNTHESIZER (NO EXTERNAL MP3 NEEDED)
+   --------------------------------------------------------- */
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new AudioCtx();
+  }
+}
+
+function playSound(type) {
+  if (!soundEnabled) return;
+  initAudio();
+  if (!audioCtx) return;
+
+  const now = audioCtx.currentTime;
+
+  if (type === 'click') {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(400, now);
+    osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+    gain.gain.setValueAtTime(0.3, now);
+    gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.08);
+  } 
+  else if (type === 'correct') {
+    // Joyful Chord Arpeggio (C5, E5, G5, C6)
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((freq, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+      gain.gain.setValueAtTime(0.3, now + idx * 0.07);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.25);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now + idx * 0.07);
+      osc.stop(now + idx * 0.07 + 0.25);
+    });
+  }
+  else if (type === 'wrong') {
+    // Gentle Wobble (No punitive loud noise)
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.linearRampToValueAtTime(180, now + 0.15);
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.15);
+  }
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  const icon = document.getElementById('soundIcon');
+  icon.className = soundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
+  playSound('click');
+}
+
+/* ---------------------------------------------------------
+   NAVIGATION MANAGEMENT
+   --------------------------------------------------------- */
+function switchView(viewId) {
+  document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
+  document.getElementById(viewId).classList.add('active');
+}
+
+function showHome() {
+  playSound('click');
+  currentGame = '';
+  switchView('viewHome');
+}
+
+function addStar() {
+  stars += 1;
+  localStorage.setItem('hidakids_stars', stars);
+  document.getElementById('starCount').textContent = stars;
+}
+
+/* ---------------------------------------------------------
+   1. HITUNG BUAH GAME LOGIC
+   --------------------------------------------------------- */
+const fruits = ['🍎', '🍌', '🍓', '🍊', '🍇', '🍉'];
+
+function startCountGame() {
+  playSound('click');
+  currentGame = 'count';
+  switchView('viewCount');
+  
+  const targetCount = Math.floor(Math.random() * 6) + 1; // 1 - 6
+  currentTargetValue = targetCount;
+  
+  const chosenFruit = fruits[Math.floor(Math.random() * fruits.length)];
+  const displayBox = document.getElementById('countDisplay');
+  displayBox.innerHTML = '';
+  
+  for (let i = 0; i < targetCount; i++) {
+    const span = document.createElement('span');
+    span.className = 'item-emoji';
+    span.textContent = chosenFruit;
+    displayBox.appendChild(span);
+  }
+  
+  // Options
+  let options = [targetCount];
+  while (options.length < 4) {
+    let rand = Math.floor(Math.random() * 6) + 1;
+    if (!options.includes(rand)) options.push(rand);
+  }
+  options.sort(() => Math.random() - 0.5);
+  
+  const answersBox = document.getElementById('countAnswers');
+  answersBox.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-answer';
+    btn.textContent = opt;
+    btn.onclick = () => checkAnswer(opt, targetCount);
+    answersBox.appendChild(btn);
+  });
+}
+
+/* ---------------------------------------------------------
+   2. TEBAK BENTUK GAME LOGIC
+   --------------------------------------------------------- */
+const shapes = [
+  { name: 'Bintang', emoji: '⭐' },
+  { name: 'Hati', emoji: '❤️' },
+  { name: 'Lingkaran', emoji: '🔴' },
+  { name: 'Persegi', emoji: '🟦' },
+  { name: 'Segitiga', emoji: '🔺' }
+];
+
+function startShapeGame() {
+  playSound('click');
+  currentGame = 'shape';
+  switchView('viewShape');
+  
+  const targetObj = shapes[Math.floor(Math.random() * shapes.length)];
+  currentTargetValue = targetObj.name;
+  
+  document.getElementById('shapeQuestion').textContent = `Manakah gambar ${targetObj.name}?`;
+  
+  let options = [targetObj];
+  while (options.length < 4) {
+    let rand = shapes[Math.floor(Math.random() * shapes.length)];
+    if (!options.some(o => o.name === rand.name)) options.push(rand);
+  }
+  options.sort(() => Math.random() - 0.5);
+  
+  const answersBox = document.getElementById('shapeAnswers');
+  answersBox.innerHTML = '';
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-answer';
+    btn.style.fontSize = '48px';
+    btn.textContent = opt.emoji;
+    btn.onclick = () => checkAnswer(opt.name, targetObj.name);
+    answersBox.appendChild(btn);
+  });
+}
+
+/* ---------------------------------------------------------
+   3. KARTU MEMORI GAME LOGIC
+   --------------------------------------------------------- */
+const memoryIcons = ['🐶', '🐱', '🐰'];
+
+function startMemoryGame() {
+  playSound('click');
+  currentGame = 'memory';
+  switchView('viewMemory');
+  
+  matchedPairs = 0;
+  flippedCards = [];
+  
+  // Create 3 pairs = 6 cards
+  let deck = [...memoryIcons, ...memoryIcons];
+  deck.sort(() => Math.random() - 0.5);
+  
+  const grid = document.getElementById('memoryGrid');
+  grid.innerHTML = '';
+  
+  deck.forEach((icon, index) => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    card.dataset.icon = icon;
+    card.dataset.index = index;
+    card.textContent = '❓';
+    card.onclick = () => flipMemoryCard(card);
+    grid.appendChild(card);
+  });
+}
+
+function flipMemoryCard(card) {
+  if (flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  
+  playSound('click');
+  card.classList.add('flipped');
+  card.textContent = card.dataset.icon;
+  flippedCards.push(card);
+  
+  if (flippedCards.length === 2) {
+    const [c1, c2] = flippedCards;
+    if (c1.dataset.icon === c2.dataset.icon) {
+      playSound('correct');
+      c1.classList.add('matched');
+      c2.classList.add('matched');
+      matchedPairs++;
+      flippedCards = [];
+      
+      if (matchedPairs === memoryIcons.length) {
+        setTimeout(triggerWin, 500);
+      }
+    } else {
+      playSound('wrong');
+      setTimeout(() => {
+        c1.classList.remove('flipped');
+        c2.classList.remove('flipped');
+        c1.textContent = '❓';
+        c2.textContent = '❓';
+        flippedCards = [];
+      }, 800);
+    }
+  }
+}
+
+/* ---------------------------------------------------------
+   4. SUSUN KATA GAME LOGIC
+   --------------------------------------------------------- */
+const wordList = [
+  { word: 'BATU', emoji: '🪨' },
+  { word: 'BOLA', emoji: '⚽' },
+  { word: 'KUDA', emoji: '🐎' },
+  { word: 'IKAN', emoji: '🐟' },
+  { word: 'APEL', emoji: '🍎' }
+];
+
+function startSpellingGame() {
+  playSound('click');
+  currentGame = 'spelling';
+  switchView('viewSpelling');
+  
+  const targetObj = wordList[Math.floor(Math.random() * wordList.length)];
+  spellingWord = targetObj.word;
+  currentSpellingInput = [];
+  
+  document.getElementById('spellingEmoji').textContent = targetObj.emoji;
+  document.getElementById('spellingHint').textContent = `Kata: ${targetObj.word}`;
+  
+  // Slots
+  const slotsBox = document.getElementById('spellingSlots');
+  slotsBox.innerHTML = '';
+  for (let i = 0; i < spellingWord.length; i++) {
+    const slot = document.createElement('div');
+    slot.className = 'letter-slot';
+    slot.id = `slot_${i}`;
+    slotsBox.appendChild(slot);
+  }
+  
+  // Letter buttons pool (scrambled)
+  let letters = spellingWord.split('').sort(() => Math.random() - 0.5);
+  const poolBox = document.getElementById('lettersPool');
+  poolBox.innerHTML = '';
+  
+  letters.forEach((char, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn-letter';
+    btn.textContent = char;
+    btn.onclick = () => selectLetter(char, btn);
+    poolBox.appendChild(btn);
+  });
+}
+
+function selectLetter(char, btnElement) {
+  if (currentSpellingInput.length >= spellingWord.length) return;
+  
+  playSound('click');
+  btnElement.style.visibility = 'hidden';
+  
+  const currentIdx = currentSpellingInput.length;
+  currentSpellingInput.push({ char, btnElement });
+  
+  document.getElementById(`slot_${currentIdx}`).textContent = char;
+  
+  if (currentSpellingInput.length === spellingWord.length) {
+    const builtWord = currentSpellingInput.map(item => item.char).join('');
+    if (builtWord === spellingWord) {
+      setTimeout(triggerWin, 300);
+    } else {
+      playSound('wrong');
+      setTimeout(() => {
+        // Reset
+        currentSpellingInput.forEach(item => item.btnElement.style.visibility = 'visible');
+        currentSpellingInput = [];
+        for (let i = 0; i < spellingWord.length; i++) {
+          document.getElementById(`slot_${i}`).textContent = '';
+        }
+      }, 700);
+    }
+  }
+}
+
+/* ---------------------------------------------------------
+   GLOBAL ANSWER CHECK & CELEBRATION
+   --------------------------------------------------------- */
+function checkAnswer(selected, correct) {
+  if (selected === correct) {
+    triggerWin();
+  } else {
+    playSound('wrong');
+  }
+}
+
+function triggerWin() {
+  playSound('correct');
+  addStar();
+  launchConfetti();
+  document.getElementById('winModal').classList.add('active');
+}
+
+function nextQuestionOrHome() {
+  playSound('click');
+  document.getElementById('winModal').classList.remove('active');
+  
+  if (currentGame === 'count') startCountGame();
+  else if (currentGame === 'shape') startShapeGame();
+  else if (currentGame === 'memory') startMemoryGame();
+  else if (currentGame === 'spelling') startSpellingGame();
+  else showHome();
+}
+
+/* ---------------------------------------------------------
+   CANVAS CONFETTI EFFECT
+   --------------------------------------------------------- */
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  
+  canvas.width = canvas.parentElement.clientWidth;
+  canvas.height = canvas.parentElement.clientHeight;
+  
+  const particles = [];
+  const colors = ['#FF6B81', '#FFD15C', '#4D96FF', '#6BCB77', '#9B51E0'];
+  
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 12,
+      vy: (Math.random() - 0.7) * 14,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      size: Math.random() * 8 + 6,
+      gravity: 0.3
+    });
+  }
+  
+  let animationFrame;
+  function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let active = false;
+    
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      
+      if (p.y < canvas.height) active = true;
+      
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    
+    if (active) {
+      animationFrame = requestAnimationFrame(render);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      cancelAnimationFrame(animationFrame);
+    }
+  }
+  
+  render();
+}
+</script>
+
+</body>
+</html>
