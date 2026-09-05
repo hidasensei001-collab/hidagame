@@ -812,6 +812,10 @@ cursor:pointer;
 <canvas id="confetti"></canvas>
 
 <header>
+<button class="hbtn" onclick="window.location.href='https://hidasensei001-collab.github.io/Gameplay/'">
+<i class="fa-solid fa-gamepad"></i>
+</button>
+
 <button class="hbtn" onclick="showHome()">
 <i class="fa-solid fa-house"></i>
 </button>
@@ -833,7 +837,6 @@ cursor:pointer;
 
 <main class="main">
 
-<!-- PLAYER -->
 <section class="view active" id="playerView">
 <div class="welcome center">
 <div class="logo">🎮 HIDA GAME</div>
@@ -856,7 +859,6 @@ cursor:pointer;
 </div>
 </section>
 
-<!-- HOME -->
 <section class="view" id="homeView">
 
 <div class="homeHero">
@@ -957,7 +959,6 @@ cursor:pointer;
 </div>
 </section>
 
-<!-- COUNT -->
 <section class="view" id="countView">
 <div class="question">
 <div class="badgeInfo" id="countCategory">Matematika</div>
@@ -967,7 +968,6 @@ cursor:pointer;
 <div class="answers" id="countAnswers"></div>
 </section>
 
-<!-- GUESS -->
 <section class="view" id="guessView">
 <div class="question">
 <div class="badgeInfo" id="guessCategory">Pengetahuan</div>
@@ -976,7 +976,6 @@ cursor:pointer;
 <div class="answers" id="guessAnswers"></div>
 </section>
 
-<!-- MEMORY -->
 <section class="view" id="memoryView">
 <div class="question" style="padding:12px">
 <div class="questionText" style="margin:0;font-size:17px" id="memoryTitle">
@@ -986,7 +985,6 @@ Cari pasangan yang sama!
 <div class="memoryGrid" id="memoryGrid"></div>
 </section>
 
-<!-- SPELLING -->
 <section class="view" id="spellingView">
 <div class="question">
 <div class="bigEmoji" id="spellEmoji" style="font-size:65px">🍎</div>
@@ -996,14 +994,12 @@ Cari pasangan yang sama!
 <div class="letters" id="letters"></div>
 </section>
 
-<!-- CATALOG -->
 <section class="view" id="catalogView">
 <div class="sectionTitle">📚 Ensiklopedia HIDA</div>
 <div class="category" id="categories"></div>
 <div class="catalog" id="catalog"></div>
 </section>
 
-<!-- LEARN -->
 <section class="view" id="learnView">
 <button class="smallBack" onclick="showHome()">← Kembali</button>
 <div class="learnBox">
@@ -1016,7 +1012,6 @@ Cari pasangan yang sama!
 </div>
 </section>
 
-<!-- QUEST -->
 <section class="view" id="questView">
 <div class="sectionTitle">🏆 Misi Petualangan</div>
 <div class="question">
@@ -1027,7 +1022,6 @@ Cari pasangan yang sama!
 <div class="answers" id="questAnswers"></div>
 </section>
 
-<!-- COLLECTION -->
 <section class="view" id="collectionView">
 <button class="smallBack" onclick="showHome()">← Kembali</button>
 <div class="sectionTitle">🎒 Koleksi Pengetahuan</div>
@@ -1046,7 +1040,6 @@ Cari pasangan yang sama!
 <div class="catalog" id="collectionGrid"></div>
 </section>
 
-<!-- ACHIEVEMENTS -->
 <section class="view" id="achievementView">
 <button class="smallBack" onclick="showHome()">← Kembali</button>
 <div class="sectionTitle">🏅 Lencana Prestasi</div>
@@ -1055,7 +1048,6 @@ Cari pasangan yang sama!
 
 </main>
 
-<!-- WIN MODAL -->
 <div class="modal" id="modal">
 <div class="modalBox">
 <div class="modalIcon" id="modalIcon">🎉</div>
