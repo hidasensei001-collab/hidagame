@@ -812,7 +812,7 @@ cursor:pointer;
 <canvas id="confetti"></canvas>
 
 <header>
-<button class="hbtn" onclick="window.location.href='https://hidasensei001-collab.github.io/Gameplay/'">
+<button class="hbtn" onclick="showGameplayMenu()">
 <i class="fa-solid fa-gamepad"></i>
 </button>
 
@@ -1044,6 +1044,19 @@ Cari pasangan yang sama!
 <button class="smallBack" onclick="showHome()">← Kembali</button>
 <div class="sectionTitle">🏅 Lencana Prestasi</div>
 <div class="achievementGrid" id="achievementGrid"></div>
+</section>
+
+<section class="view" id="gameplayMenuView">
+<button class="smallBack" onclick="showHome()">← Kembali</button>
+<div class="sectionTitle">🎮 HIDA GAME PLAY</div>
+<div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+<button class="btn btnBlue" onclick="window.location.href='https://hidasensei001-collab.github.io/Gameplay/'">
+🎮 Game play
+</button>
+<button class="btn btnGreen" onclick="window.location.href='https://hidasensei001-collab.github.io/1game/'">
+🌙 HIDA ISLAMIC GAME
+</button>
+</div>
 </section>
 
 </main>
@@ -1505,6 +1518,11 @@ speak(`Selamat datang ${currentPlayer.nick}! Yuk bermain dan belajar!`);
 
 function showPlayerSelect(){
 switchView("playerView");
+}
+
+function showGameplayMenu(){
+playSound("click");
+switchView("gameplayMenuView");
 }
 
 function switchView(id){
