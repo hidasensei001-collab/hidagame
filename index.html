@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<title>HidaKids - Super Game Edukasi Anak</title>
+<title>HIDA GAME - Main & Belajar Pintar</title>
 
 <!-- GOOGLE FONTS & FONTAWESOME -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,12 +18,12 @@
 
 <style>
 /* =========================================================
-   HIDAKIDS GAME STUDIO V2.0 - ULTRA EXPANDED EDITION
+   HIDA GAME STUDIO V3.0 - PLAYER & DYNAMIC BG EDITION
    ========================================================= */
 
 :root {
   --bg-app: #FFF9E6;
-  --card-bg: #FFFFFF;
+  --card-bg: rgba(255, 255, 255, 0.94);
   --text-main: #2D3436;
   --text-muted: #636E72;
   
@@ -37,7 +37,7 @@
 
   --shadow-3d: 0 8px 0px rgba(0, 0, 0, 0.15);
   --shadow-3d-active: 0 2px 0px rgba(0, 0, 0, 0.15);
-  --shadow-soft: 0 10px 30px rgba(0,0,0,0.08);
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.12);
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -70,36 +70,41 @@ body {
   max-width: 480px;
   height: 100vh;
   max-height: 920px;
-  background: var(--bg-app);
+  background-color: var(--bg-app);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 0 50px rgba(0,0,0,0.1);
+  box-shadow: 0 0 50px rgba(0,0,0,0.15);
+  transition: background-image 0.4s ease-in-out;
 }
 
 /* TOP HEADER BAR */
 .top-header {
   height: calc(64px + var(--safe-top));
   padding-top: var(--safe-top);
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 14px;
+  padding-right: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
   border-bottom: 4px solid #F0E6D2;
   z-index: 100;
 }
 
 .header-btn {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: var(--kids-yellow);
   color: #5A3E00;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
   box-shadow: 0 4px 0px #D6A329;
   display: flex;
@@ -113,22 +118,37 @@ body {
   box-shadow: 0 1px 0px #D6A329;
 }
 
+.player-badge {
+  background: #FFF0F3;
+  border: 3px solid var(--kids-pink);
+  border-radius: 20px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-main);
+  cursor: pointer;
+  box-shadow: 0 3px 0px rgba(0,0,0,0.1);
+}
+
 .star-badge {
   background: #FFF3C4;
   border: 3px solid var(--kids-yellow);
   border-radius: 30px;
-  padding: 6px 16px;
+  padding: 4px 12px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 20px;
+  gap: 6px;
+  font-size: 18px;
   font-weight: 700;
   color: #B77900;
 }
 
 .star-badge i {
   color: #FFB800;
-  font-size: 24px;
+  font-size: 20px;
   filter: drop-shadow(0 2px 0 #D6A329);
 }
 
@@ -162,23 +182,122 @@ body {
   100% { opacity: 1; transform: scale(1); }
 }
 
+/* 0. PLAYER SELECTION VIEW */
+.player-select-box {
+  width: 100%;
+  text-align: center;
+  padding: 10px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.game-logo-badge {
+  background: var(--kids-yellow);
+  color: #5A3E00;
+  font-size: 32px;
+  font-weight: 900;
+  padding: 12px 28px;
+  border-radius: 32px;
+  border: 4px solid #D6A329;
+  box-shadow: var(--shadow-3d);
+  letter-spacing: 1px;
+}
+
+.player-select-box h2 {
+  font-size: 24px;
+  color: var(--kids-pink);
+  text-shadow: 2px 2px 0px #FFB8C6;
+}
+
+.player-select-box p {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.player-buttons-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.btn-player {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  border-radius: 24px;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  border: 4px solid;
+  box-shadow: var(--shadow-3d);
+  transition: transform 0.1s;
+}
+
+.btn-player:active {
+  transform: translateY(4px);
+  box-shadow: var(--shadow-3d-active);
+}
+
+.btn-raina {
+  border-color: var(--kids-pink);
+  background: #FFF0F3;
+}
+
+.btn-fatih {
+  border-color: var(--kids-blue);
+  background: #EBF3FF;
+}
+
+.player-avatar {
+  font-size: 52px;
+}
+
+.player-fullname {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.player-nickname {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4px 14px;
+  border-radius: 12px;
+  border: 1px solid #E0E0E0;
+}
+
 /* HOME MENU VIEW */
 .home-title {
   text-align: center;
   margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 10px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .home-title h1 {
-  font-size: 30px;
+  font-size: 28px;
   color: var(--kids-pink);
   text-shadow: 2px 2px 0px #FFB8C6;
   line-height: 1.1;
 }
 
 .home-title p {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-muted);
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .game-grid {
@@ -191,6 +310,7 @@ body {
 .game-card {
   width: 100%;
   background: var(--card-bg);
+  backdrop-filter: blur(4px);
   border-radius: 22px;
   padding: 14px 18px;
   display: flex;
@@ -255,7 +375,7 @@ body {
 
 .chip-cat {
   flex-shrink: 0;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.9);
   border: 3px solid #E0E0E0;
   padding: 6px 14px;
   border-radius: 20px;
@@ -275,6 +395,7 @@ body {
 .game-question-box {
   width: 100%;
   background: var(--card-bg);
+  backdrop-filter: blur(4px);
   border-radius: 24px;
   padding: 20px 14px;
   text-align: center;
@@ -320,6 +441,7 @@ body {
 
 .btn-answer {
   background: var(--card-bg);
+  backdrop-filter: blur(4px);
   border: 4px solid var(--kids-blue);
   border-radius: 22px;
   padding: 16px 8px;
@@ -431,7 +553,7 @@ body {
   box-shadow: 0 1px 0px #D35400;
 }
 
-/* ENSIKLOPEDIA / KATALOG KATALOG GRID */
+/* ENSIKLOPEDIA / KATALOG GRID */
 .catalog-grid {
   width: 100%;
   display: grid;
@@ -440,7 +562,8 @@ body {
 }
 
 .catalog-card {
-  background: white;
+  background: var(--card-bg);
+  backdrop-filter: blur(4px);
   border: 3px solid #E0E0E0;
   border-radius: 18px;
   padding: 12px 6px;
@@ -548,7 +671,7 @@ body {
 
 <body>
 
-<div class="app-viewport">
+<div class="app-viewport" id="appViewport">
 
   <canvas id="confettiCanvas"></canvas>
 
@@ -557,6 +680,11 @@ body {
     <button class="header-btn" id="btnHome" onclick="showHome()">
       <i class="fa-solid fa-house"></i>
     </button>
+
+    <div class="player-badge" id="playerBadge" onclick="showPlayerSelect()" style="display:none;">
+      <span id="playerBadgeAvatar">👧</span>
+      <span id="playerBadgeName">Raina</span>
+    </div>
 
     <div class="star-badge">
       <i class="fa-solid fa-star"></i>
@@ -571,11 +699,34 @@ body {
   <!-- MAIN CONTENT CONTAINER -->
   <main class="main-content">
 
+    <!-- 0. PLAYER SELECTION VIEW (TAMPILAN AWAL SEBELUM MAIN) -->
+    <section class="view-panel active" id="viewPlayerSelect">
+      <div class="player-select-box">
+        <div class="game-logo-badge">🎮 HIDA GAME</div>
+        <h2>Siapa yang Mau Main?</h2>
+        <p>Pilih nama kamu dulu ya!</p>
+        
+        <div class="player-buttons-grid">
+          <button class="btn-player btn-raina" onclick="selectPlayer('raina')">
+            <span class="player-avatar">👧</span>
+            <span class="player-fullname">Marisa Raina Hidayatullah</span>
+            <span class="player-nickname">Panggil: Raina</span>
+          </button>
+
+          <button class="btn-player btn-fatih" onclick="selectPlayer('fatih')">
+            <span class="player-avatar">👦</span>
+            <span class="player-fullname">Muhammad Alfatih Hidayatullah</span>
+            <span class="player-nickname">Panggil: Alfatih</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- 1. HOME MENU VIEW -->
-    <section class="view-panel active" id="viewHome">
+    <section class="view-panel" id="viewHome">
       <div class="home-title">
-        <h1>HidaKids Studio</h1>
-        <p>Main, Belajar & Mengenal Dunia!</p>
+        <h1>HIDA GAME</h1>
+        <p id="homeSubhead">Main, Belajar & Mengenal Dunia!</p>
       </div>
 
       <div class="game-grid">
@@ -669,7 +820,7 @@ body {
     <div class="win-box">
       <div class="win-icon">🎉</div>
       <div class="win-title">HEBAT BANGET!</div>
-      <div class="win-desc">Kamu dapat 1 Bintang Emas! ⭐</div>
+      <div class="win-desc" id="winModalDesc">Kamu dapat 1 Bintang Emas! ⭐</div>
       <button class="btn-next" onclick="nextQuestionOrHome()">Lanjut Main! 🚀</button>
     </div>
   </div>
@@ -678,10 +829,28 @@ body {
 
 <script>
 /* =========================================================
-   HIDAKIDS EXPANDED DATABASE & LOGIC
+   HIDA GAME EXPANDED DATABASE & PLAYER LOGIC
    ========================================================= */
 
-// DATABASE HAMPIR 100+ KARAKTER & BENDA LENGKAP
+// DATA PEMAIN
+const PLAYERS = {
+  raina: {
+    fullName: 'Marisa Raina Hidayatullah',
+    nickName: 'Raina',
+    avatar: '👧',
+    bg: 'bgraina.jpg'
+  },
+  fatih: {
+    fullName: 'Muhammad Alfatih Hidayatullah',
+    nickName: 'Alfatih',
+    avatar: '👦',
+    bg: 'bgfatih.jpg'
+  }
+};
+
+let currentPlayer = null;
+
+// DATABASE KATALOG BENDA (100+ ITEM)
 const DATABASE = {
   buah: [
     { name: 'Apel', emoji: '🍎' }, { name: 'Pisang', emoji: '🍌' }, { name: 'Stroberi', emoji: '🍓' },
@@ -730,13 +899,12 @@ const DATABASE = {
   ]
 };
 
-// Helper: Get flat array of all items
 function getAllItems() {
   return Object.values(DATABASE).flat();
 }
 
 // APP STATE
-let stars = parseInt(localStorage.getItem('hidakids_stars') || '0');
+let stars = parseInt(localStorage.getItem('hidagame_stars') || '0');
 let soundEnabled = true;
 let currentGame = '';
 
@@ -752,7 +920,7 @@ let currentSpellingInput = [];
 document.getElementById('starCount').textContent = stars;
 
 /* ---------------------------------------------------------
-   AUDIO SYNTHESIZER & TEXT-TO-SPEECH (SUARA BAHASA INDONESIA)
+   AUDIO SYNTHESIZER & TEXT-TO-SPEECH WITH PLAYER NAME
    --------------------------------------------------------- */
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
@@ -764,7 +932,7 @@ function initAudio() {
 function speakText(text) {
   if (!soundEnabled) return;
   if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel(); // Stop active speech
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'id-ID';
     utterance.rate = 0.9;
@@ -831,6 +999,37 @@ function toggleSound() {
 }
 
 /* ---------------------------------------------------------
+   PLAYER SELECTION & BACKGROUND MANAGEMENT
+   --------------------------------------------------------- */
+function selectPlayer(playerKey) {
+  playSound('click');
+  currentPlayer = PLAYERS[playerKey];
+  
+  // Set Dynamic Background
+  const viewport = document.getElementById('appViewport');
+  viewport.style.backgroundImage = `url('${currentPlayer.bg}')`;
+
+  // Update Header Badge
+  document.getElementById('playerBadgeAvatar').textContent = currentPlayer.avatar;
+  document.getElementById('playerBadgeName').textContent = currentPlayer.nickName;
+  document.getElementById('playerBadge').style.display = 'flex';
+  
+  // Update Home Subhead
+  document.getElementById('homeSubhead').textContent = `Selamat datang ${currentPlayer.nickName}! Ayo main & belajar!`;
+
+  // Speak Welcome
+  speakText(`Selamat datang di Hida Game, ${currentPlayer.nickName}! Ayo kita mulai!`);
+
+  // Navigate to Home
+  switchView('viewHome');
+}
+
+function showPlayerSelect() {
+  playSound('click');
+  switchView('viewPlayerSelect');
+}
+
+/* ---------------------------------------------------------
    NAVIGATION
    --------------------------------------------------------- */
 function switchView(viewId) {
@@ -840,13 +1039,17 @@ function switchView(viewId) {
 
 function showHome() {
   playSound('click');
-  currentGame = '';
-  switchView('viewHome');
+  if (!currentPlayer) {
+    showPlayerSelect();
+  } else {
+    currentGame = '';
+    switchView('viewHome');
+  }
 }
 
 function addStar() {
   stars += 1;
-  localStorage.setItem('hidakids_stars', stars);
+  localStorage.setItem('hidagame_stars', stars);
   document.getElementById('starCount').textContent = stars;
 }
 
@@ -860,7 +1063,7 @@ function startCountGame() {
   
   const all = getAllItems();
   const chosenItem = all[Math.floor(Math.random() * all.length)];
-  const targetCount = Math.floor(Math.random() * 6) + 1; // 1-6
+  const targetCount = Math.floor(Math.random() * 6) + 1;
   
   document.getElementById('countQuestion').textContent = `Ada berapa ${chosenItem.name}?`;
   speakText(`Ada berapa ${chosenItem.name}?`);
@@ -937,7 +1140,6 @@ function startMemoryGame() {
   flippedCards = [];
   
   const all = getAllItems();
-  // Pick 3 random distinct items
   let chosen = [];
   while(chosen.length < 3) {
     let rand = all[Math.floor(Math.random() * all.length)];
@@ -981,6 +1183,8 @@ function flipMemoryCard(card) {
       flippedCards = [];
       
       if (matchedPairs === 3) {
+        const nick = currentPlayer ? currentPlayer.nickName : '';
+        speakText(`Luar biasa ${nick}! Kamu berhasil menemukan semua pasangan!`);
         setTimeout(triggerWin, 600);
       }
     } else {
@@ -1049,17 +1253,21 @@ function selectLetter(char, btnElement) {
   
   if (currentSpellingInput.length === spellingWord.length) {
     const builtWord = currentSpellingInput.map(item => item.char).join('');
+    const nick = currentPlayer ? currentPlayer.nickName : '';
+    
     if (builtWord === spellingWord) {
-      setTimeout(triggerWin, 300);
+      speakText(`Hebat banget ${nick}! Kamu berhasil menyusun kata ${spellingWord}!`);
+      setTimeout(triggerWin, 400);
     } else {
       playSound('wrong');
+      speakText(`Susunan katanya masih belum tepat, ${nick}. Coba lagi ya!`);
       setTimeout(() => {
         currentSpellingInput.forEach(item => item.btnElement.style.visibility = 'visible');
         currentSpellingInput = [];
         for (let i = 0; i < spellingWord.length; i++) {
           document.getElementById(`slot_${i}`).textContent = '';
         }
-      }, 700);
+      }, 900);
     }
   }
 }
@@ -1129,11 +1337,17 @@ function renderCatalogItems(catId) {
    GLOBAL ANSWER CHECK & CELEBRATION
    --------------------------------------------------------- */
 function checkAnswer(selected, correct, spokenWord) {
+  const nick = currentPlayer ? currentPlayer.nickName : '';
+  
   if (selected === correct) {
-    if (spokenWord) speakText(`Benar! ${spokenWord}`);
+    if (spokenWord) {
+      speakText(`Benar! ${spokenWord}. Hebat sekali, ${nick}!`);
+    } else {
+      speakText(`Jawabanmu benar, ${nick}!`);
+    }
     triggerWin();
   } else {
-    speakText('Coba lagi ya!');
+    speakText(`Jawabanmu salah, ${nick}, coba lagi ya!`);
     playSound('wrong');
   }
 }
@@ -1142,6 +1356,8 @@ function triggerWin() {
   playSound('correct');
   addStar();
   launchConfetti();
+  const nick = currentPlayer ? currentPlayer.nickName : '';
+  document.getElementById('winModalDesc').textContent = `Hebat ${nick}, kamu dapat 1 Bintang Emas! ⭐`;
   document.getElementById('winModal').classList.add('active');
 }
 
