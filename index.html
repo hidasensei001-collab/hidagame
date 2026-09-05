@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<title>HidaKids - Main & Belajar Pintar</title>
+<title>HidaKids - Super Game Edukasi Anak</title>
 
 <!-- GOOGLE FONTS & FONTAWESOME -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,8 +18,7 @@
 
 <style>
 /* =========================================================
-   HIDAKIDS GAME STUDIO V1.0
-   DESIGNED FOR KIDS (TK - KELAS 1 SD)
+   HIDAKIDS GAME STUDIO V2.0 - ULTRA EXPANDED EDITION
    ========================================================= */
 
 :root {
@@ -34,6 +33,7 @@
   --kids-green: #6BCB77;
   --kids-purple: #9B51E0;
   --kids-orange: #FF9F43;
+  --kids-teal: #00CEC9;
 
   --shadow-3d: 0 8px 0px rgba(0, 0, 0, 0.15);
   --shadow-3d-active: 0 2px 0px rgba(0, 0, 0, 0.15);
@@ -65,7 +65,6 @@ body {
   padding-bottom: var(--safe-bottom);
 }
 
-/* APP CONTAINER (MOBILE VIEWPORT) */
 .app-viewport {
   width: 100%;
   max-width: 480px;
@@ -136,7 +135,7 @@ body {
 /* MAIN CONTENT CONTAINER */
 .main-content {
   flex: 1;
-  padding: 20px 16px;
+  padding: 16px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -166,18 +165,18 @@ body {
 /* HOME MENU VIEW */
 .home-title {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .home-title h1 {
-  font-size: 32px;
+  font-size: 30px;
   color: var(--kids-pink);
   text-shadow: 2px 2px 0px #FFB8C6;
   line-height: 1.1;
 }
 
 .home-title p {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-muted);
   margin-top: 4px;
 }
@@ -186,14 +185,14 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .game-card {
   width: 100%;
   background: var(--card-bg);
-  border-radius: 24px;
-  padding: 16px 20px;
+  border-radius: 22px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -209,68 +208,100 @@ body {
 }
 
 .game-card.card-count { border-color: var(--kids-blue); }
-.game-card.card-shape { border-color: var(--kids-pink); }
+.game-card.card-guess { border-color: var(--kids-pink); }
 .game-card.card-memory { border-color: var(--kids-green); }
 .game-card.card-words { border-color: var(--kids-purple); }
+.game-card.card-catalog { border-color: var(--kids-teal); }
 
 .card-icon-box {
-  width: 68px;
-  height: 68px;
-  border-radius: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36px;
+  font-size: 32px;
   flex-shrink: 0;
 }
 
 .card-count .card-icon-box { background: #E6F0FF; }
-.card-shape .card-icon-box { background: #FFE6EA; }
+.card-guess .card-icon-box { background: #FFE6EA; }
 .card-memory .card-icon-box { background: #E6F8EB; }
 .card-words .card-icon-box { background: #F3E6FF; }
+.card-catalog .card-icon-box { background: #E0F7F6; }
 
 .card-info h3 {
-  font-size: 20px;
+  font-size: 19px;
   color: var(--text-main);
 }
 
 .card-info p {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
+}
+
+/* CATEGORY FILTER CHIPS */
+.category-bar {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+}
+.category-bar::-webkit-scrollbar { display: none; }
+
+.chip-cat {
+  flex-shrink: 0;
+  background: #FFFFFF;
+  border: 3px solid #E0E0E0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.chip-cat.active {
+  background: var(--kids-yellow);
+  border-color: #D6A329;
+  color: #5A3E00;
 }
 
 /* GAMEPLAY ARENA GLOBAL */
 .game-question-box {
   width: 100%;
   background: var(--card-bg);
-  border-radius: 28px;
-  padding: 24px 16px;
+  border-radius: 24px;
+  padding: 20px 14px;
   text-align: center;
   box-shadow: var(--shadow-soft);
   border: 4px solid #FFEAA7;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   position: relative;
 }
 
 .question-text {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: var(--text-main);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .display-items {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
-  min-height: 90px;
+  gap: 10px;
+  min-height: 80px;
   align-items: center;
 }
 
 .item-emoji {
-  font-size: 50px;
+  font-size: 46px;
   animation: popItem 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -284,23 +315,24 @@ body {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  gap: 12px;
 }
 
 .btn-answer {
   background: var(--card-bg);
   border: 4px solid var(--kids-blue);
-  border-radius: 24px;
-  padding: 20px 10px;
-  font-size: 32px;
+  border-radius: 22px;
+  padding: 16px 8px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--kids-blue);
   cursor: pointer;
   box-shadow: var(--shadow-3d);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 4px;
   transition: transform 0.1s;
 }
 
@@ -309,25 +341,31 @@ body {
   box-shadow: var(--shadow-3d-active);
 }
 
+.btn-answer .ans-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
 /* GAME: MEMORY CARDS */
 .memory-grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .memory-card {
   aspect-ratio: 1;
   background: var(--kids-purple);
-  border-radius: 20px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 42px;
+  font-size: 38px;
   color: white;
   cursor: pointer;
-  box-shadow: 0 6px 0px #7B2CBF;
+  box-shadow: 0 5px 0px #7B2CBF;
   transition: transform 0.2s;
 }
 
@@ -350,15 +388,16 @@ body {
 .spelling-slots {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
 }
 
 .letter-slot {
-  width: 48px;
-  height: 56px;
+  width: 42px;
+  height: 50px;
   border-bottom: 4px solid var(--kids-orange);
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--kids-orange);
   display: flex;
@@ -370,26 +409,64 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .btn-letter {
-  width: 54px;
-  height: 58px;
+  width: 48px;
+  height: 52px;
   background: var(--kids-orange);
   color: white;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
-  border-radius: 16px;
+  border-radius: 14px;
   border: none;
-  box-shadow: 0 5px 0px #D35400;
+  box-shadow: 0 4px 0px #D35400;
   cursor: pointer;
 }
 
 .btn-letter:active {
   transform: translateY(3px);
   box-shadow: 0 1px 0px #D35400;
+}
+
+/* ENSIKLOPEDIA / KATALOG KATALOG GRID */
+.catalog-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.catalog-card {
+  background: white;
+  border: 3px solid #E0E0E0;
+  border-radius: 18px;
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 0px rgba(0,0,0,0.08);
+}
+
+.catalog-card:active {
+  transform: scale(0.95);
+  background: #FFFDE7;
+}
+
+.catalog-emoji {
+  font-size: 40px;
+}
+
+.catalog-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+  line-height: 1.1;
 }
 
 /* CELEBRATION OVERLAY / WIN MODAL */
@@ -413,7 +490,7 @@ body {
   width: 100%;
   background: white;
   border-radius: 32px;
-  padding: 30px 20px;
+  padding: 26px 18px;
   text-align: center;
   box-shadow: 0 10px 40px rgba(0,0,0,0.3);
   animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -425,20 +502,20 @@ body {
 }
 
 .win-icon {
-  font-size: 80px;
-  margin-bottom: 10px;
-}
-
-.win-title {
-  font-size: 30px;
-  color: var(--kids-green);
+  font-size: 70px;
   margin-bottom: 8px;
 }
 
+.win-title {
+  font-size: 28px;
+  color: var(--kids-green);
+  margin-bottom: 6px;
+}
+
 .win-desc {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--text-muted);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .btn-next {
@@ -446,9 +523,9 @@ body {
   background: var(--kids-green);
   color: white;
   border: none;
-  border-radius: 24px;
-  padding: 16px;
-  font-size: 22px;
+  border-radius: 22px;
+  padding: 14px;
+  font-size: 20px;
   font-weight: 800;
   box-shadow: 0 6px 0px #388E3C;
   cursor: pointer;
@@ -497,32 +574,32 @@ body {
     <!-- 1. HOME MENU VIEW -->
     <section class="view-panel active" id="viewHome">
       <div class="home-title">
-        <h1>HidaKids Game</h1>
-        <p>Pilih permainan seru & bikin pintar!</p>
+        <h1>HidaKids Studio</h1>
+        <p>Main, Belajar & Mengenal Dunia!</p>
       </div>
 
       <div class="game-grid">
         <div class="game-card card-count" onclick="startCountGame()">
-          <div class="card-icon-box">🍎</div>
+          <div class="card-icon-box">🔢</div>
           <div class="card-info">
-            <h3>Hitung Buah</h3>
-            <p>Belajar angka & matematika dasar</p>
+            <h3>Hitung Benda</h3>
+            <p>Hitung buah, mobil, hewan & snack</p>
           </div>
         </div>
 
-        <div class="game-card card-shape" onclick="startShapeGame()">
-          <div class="card-icon-box">⭐</div>
+        <div class="game-card card-guess" onclick="startGuessGame()">
+          <div class="card-icon-box">🚜</div>
           <div class="card-info">
-            <h3>Tebak Bentuk</h3>
-            <p>Mengenal bentuk & geometri</p>
+            <h3>Tebak Gambar</h3>
+            <p>Tebak alat berat, kendaraan & perabot</p>
           </div>
         </div>
 
         <div class="game-card card-memory" onclick="startMemoryGame()">
-          <div class="card-icon-box">🐶</div>
+          <div class="card-icon-box">🧠</div>
           <div class="card-info">
             <h3>Kartu Memori</h3>
-            <p>Mengasah ingatan & konsentrasi</p>
+            <p>Cari pasangan gambar yang sama</p>
           </div>
         </div>
 
@@ -530,33 +607,41 @@ body {
           <div class="card-icon-box">🔤</div>
           <div class="card-info">
             <h3>Susun Kata</h3>
-            <p>Latihan membaca huruf A-Z</p>
+            <p>Latihan menyusun kata & membaca</p>
+          </div>
+        </div>
+
+        <div class="game-card card-catalog" onclick="startCatalogView()">
+          <div class="card-icon-box">📚</div>
+          <div class="card-info">
+            <h3>Kamus Suara Pintar</h3>
+            <p>Tekan gambar untuk mendengar suaranya</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 2. HITUNG BUAH VIEW -->
+    <!-- 2. HITUNG BENDA VIEW -->
     <section class="view-panel" id="viewCount">
       <div class="game-question-box">
-        <div class="question-text">Ada berapa buah di bawah?</div>
+        <div class="question-text" id="countQuestion">Ada berapa benda di bawah?</div>
         <div class="display-items" id="countDisplay"></div>
       </div>
       <div class="answers-grid" id="countAnswers"></div>
     </section>
 
-    <!-- 3. TEBAK BENTUK VIEW -->
-    <section class="view-panel" id="viewShape">
+    <!-- 3. TEBAK GAMBAR VIEW -->
+    <section class="view-panel" id="viewGuess">
       <div class="game-question-box">
-        <div class="question-text" id="shapeQuestion">Manakah gambar Bintang?</div>
+        <div class="question-text" id="guessQuestion">Manakah gambar Ekskavator?</div>
       </div>
-      <div class="answers-grid" id="shapeAnswers"></div>
+      <div class="answers-grid" id="guessAnswers"></div>
     </section>
 
     <!-- 4. KARTU MEMORI VIEW -->
     <section class="view-panel" id="viewMemory">
-      <div class="game-question-box" style="padding:14px; margin-bottom:14px;">
-        <div class="question-text" style="font-size:18px; margin:0;">Cari 3 Pasang Gambar Sama!</div>
+      <div class="game-question-box" style="padding:12px; margin-bottom:12px;">
+        <div class="question-text" style="font-size:17px; margin:0;">Cari 3 Pasang Gambar Sama!</div>
       </div>
       <div class="memory-grid" id="memoryGrid"></div>
     </section>
@@ -564,11 +649,17 @@ body {
     <!-- 5. SUSUN KATA VIEW -->
     <section class="view-panel" id="viewSpelling">
       <div class="game-question-box">
-        <div class="item-emoji" id="spellingEmoji" style="font-size:70px;">🐱</div>
-        <div class="question-text" style="font-size:18px; margin-top:6px;" id="spellingHint">Susun Kata: KUCING</div>
+        <div class="item-emoji" id="spellingEmoji" style="font-size:60px;">🚜</div>
+        <div class="question-text" style="font-size:17px; margin-top:6px;" id="spellingHint">Susun Kata: EKSKAVATOR</div>
         <div class="spelling-slots" id="spellingSlots"></div>
       </div>
       <div class="letters-pool" id="lettersPool"></div>
+    </section>
+
+    <!-- 6. KAMUS SUARA PINTAR (KATALOG) VIEW -->
+    <section class="view-panel" id="viewCatalog">
+      <div class="category-bar" id="catalogCategoryBar"></div>
+      <div class="catalog-grid" id="catalogGrid"></div>
     </section>
 
   </main>
@@ -587,36 +678,98 @@ body {
 
 <script>
 /* =========================================================
-   HIDAKIDS JAVASCRIPT LOGIC & AUDIO SYNTHESIZER
+   HIDAKIDS EXPANDED DATABASE & LOGIC
    ========================================================= */
+
+// DATABASE HAMPIR 100+ KARAKTER & BENDA LENGKAP
+const DATABASE = {
+  buah: [
+    { name: 'Apel', emoji: '🍎' }, { name: 'Pisang', emoji: '🍌' }, { name: 'Stroberi', emoji: '🍓' },
+    { name: 'Jeruk', emoji: '🍊' }, { name: 'Anggur', emoji: '🍇' }, { name: 'Semangka', emoji: '🍉' },
+    { name: 'Melon', emoji: '🍈' }, { name: 'Nanas', emoji: '🍍' }, { name: 'Mangga', emoji: '🥭' },
+    { name: 'Lemon', emoji: '🍋' }, { name: 'Ceri', emoji: '🍒' }, { name: 'Kiwi', emoji: '🥝' },
+    { name: 'Alpukat', emoji: '🥑' }, { name: 'Kelapa', emoji: '🥥' }, { name: 'Persik', emoji: '🍑' }
+  ],
+  sayur: [
+    { name: 'Wortel', emoji: '🥕' }, { name: 'Jagung', emoji: '🌽' }, { name: 'Brokoli', emoji: '🥦' },
+    { name: 'Terong', emoji: '🍆' }, { name: 'Tomat', emoji: '🍅' }, { name: 'Mentimun', emoji: '🥒' },
+    { name: 'Cabai', emoji: '🌶️' }, { name: 'Bawang', emoji: '🧅' }, { name: 'Jamur', emoji: '🍄' },
+    { name: 'Kentang', emoji: '🥔' }, { name: 'Labu', emoji: '🎃' }
+  ],
+  hewan: [
+    { name: 'Kucing', emoji: '🐱' }, { name: 'Anjing', emoji: '🐶' }, { name: 'Kelinci', emoji: '🐰' },
+    { name: 'Singa', emoji: '🦁' }, { name: 'Harimau', emoji: '🐯' }, { name: 'Gajah', emoji: '🐘' },
+    { name: 'Jerapah', emoji: '🦒' }, { name: 'Sapi', emoji: '🐮' }, { name: 'Kuda', emoji: '🐴' },
+    { name: 'Monyet', emoji: '🐵' }, { name: 'Ayam', emoji: '🐔' }, { name: 'Bebek', emoji: '🦆' },
+    { name: 'Ikan', emoji: '🐟' }, { name: 'Gurita', emoji: '🐙' }, { name: 'Dinosaurus', emoji: '🦕' }
+  ],
+  kendaraan: [
+    { name: 'Mobil', emoji: '🚗' }, { name: 'Mobil Balap', emoji: '🏎️' }, { name: 'Taksi', emoji: '🚕' },
+    { name: 'Bus', emoji: '🚌' }, { name: 'Truk', emoji: '🚚' }, { name: 'Truk Molen', emoji: '🚜' },
+    { name: 'Ekskavator', emoji: '🏗️' }, { name: 'Motor', emoji: '🏍️' }, { name: 'Sepeda', emoji: '🚲' },
+    { name: 'Ambulans', emoji: '🚑' }, { name: 'Polisi', emoji: '🚓' }, { name: 'Pemadam', emoji: '🚒' },
+    { name: 'Pesawat', emoji: '✈️' }, { name: 'Helikopter', emoji: '🚁' }, { name: 'Kereta', emoji: '🚂' },
+    { name: 'Kapal', emoji: '🚢' }
+  ],
+  snack: [
+    { name: 'Es Krim', emoji: '🍦' }, { name: 'Donat', emoji: '🍩' }, { name: 'Cokelat', emoji: '🍫' },
+    { name: 'Permen', emoji: '🍬' }, { name: 'Susu', emoji: '🥛' }, { name: 'Jus', emoji: '🧃' },
+    { name: 'Roti', emoji: '🍞' }, { name: 'Pizza', emoji: '🍕' }, { name: 'Burger', emoji: '🍔' },
+    { name: 'Popcorn', emoji: '🍿' }, { name: 'Kue', emoji: '🎂' }
+  ],
+  bangunan: [
+    { name: 'Rumah', emoji: '🏠' }, { name: 'Sekolah', emoji: '🏫' }, { name: 'Rumah Sakit', emoji: '🏥' },
+    { name: 'Toko', emoji: '🏪' }, { name: 'Masjid', emoji: '🕌' }, { name: 'Gedung', emoji: '🏢' },
+    { name: 'Pintu', emoji: '🚪' }, { name: 'Jendela', emoji: '🪟' }, { name: 'Tangga', emoji: '🪜' },
+    { name: 'Pagar', emoji: '🧱' }
+  ],
+  perabot: [
+    { name: 'Kursi', emoji: '🪑' }, { name: 'Kasur', emoji: '🛏️' }, { name: 'Televisi', emoji: '📺' },
+    { name: 'Lampu', emoji: '💡' }, { name: 'Kipas', emoji: '🌀' }, { name: 'Jam', emoji: '⏰' },
+    { name: 'Cermin', emoji: '🪞' }, { name: 'Telepon', emoji: '☎️' }, { name: 'Kulkas', emoji: '🧊' }
+  ]
+};
+
+// Helper: Get flat array of all items
+function getAllItems() {
+  return Object.values(DATABASE).flat();
+}
 
 // APP STATE
 let stars = parseInt(localStorage.getItem('hidakids_stars') || '0');
 let soundEnabled = true;
 let currentGame = '';
-let currentTargetValue = null;
 
-// MEMORY GAME STATE
+// GAME STATES
 let memoryCards = [];
 let flippedCards = [];
 let matchedPairs = 0;
 
-// SPELLING GAME STATE
 let spellingWord = '';
 let currentSpellingInput = [];
 
-// INITIALIZE
+// INITIALIZE STAR DISPLAY
 document.getElementById('starCount').textContent = stars;
 
 /* ---------------------------------------------------------
-   INTERNAL WEB AUDIO API SYNTHESIZER (NO EXTERNAL MP3 NEEDED)
+   AUDIO SYNTHESIZER & TEXT-TO-SPEECH (SUARA BAHASA INDONESIA)
    --------------------------------------------------------- */
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 
 function initAudio() {
-  if (!audioCtx) {
-    audioCtx = new AudioCtx();
+  if (!audioCtx) audioCtx = new AudioCtx();
+}
+
+function speakText(text) {
+  if (!soundEnabled) return;
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel(); // Stop active speech
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'id-ID';
+    utterance.rate = 0.9;
+    utterance.pitch = 1.1;
+    window.speechSynthesis.speak(utterance);
   }
 }
 
@@ -641,7 +794,6 @@ function playSound(type) {
     osc.stop(now + 0.08);
   } 
   else if (type === 'correct') {
-    // Joyful Chord Arpeggio (C5, E5, G5, C6)
     const notes = [523.25, 659.25, 783.99, 1046.50];
     notes.forEach((freq, idx) => {
       const osc = audioCtx.createOscillator();
@@ -657,7 +809,6 @@ function playSound(type) {
     });
   }
   else if (type === 'wrong') {
-    // Gentle Wobble (No punitive loud noise)
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.type = 'sine';
@@ -680,7 +831,7 @@ function toggleSound() {
 }
 
 /* ---------------------------------------------------------
-   NAVIGATION MANAGEMENT
+   NAVIGATION
    --------------------------------------------------------- */
 function switchView(viewId) {
   document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
@@ -700,30 +851,30 @@ function addStar() {
 }
 
 /* ---------------------------------------------------------
-   1. HITUNG BUAH GAME LOGIC
+   1. HITUNG BENDA GAME LOGIC
    --------------------------------------------------------- */
-const fruits = ['🍎', '🍌', '🍓', '🍊', '🍇', '🍉'];
-
 function startCountGame() {
   playSound('click');
   currentGame = 'count';
   switchView('viewCount');
   
-  const targetCount = Math.floor(Math.random() * 6) + 1; // 1 - 6
-  currentTargetValue = targetCount;
+  const all = getAllItems();
+  const chosenItem = all[Math.floor(Math.random() * all.length)];
+  const targetCount = Math.floor(Math.random() * 6) + 1; // 1-6
   
-  const chosenFruit = fruits[Math.floor(Math.random() * fruits.length)];
+  document.getElementById('countQuestion').textContent = `Ada berapa ${chosenItem.name}?`;
+  speakText(`Ada berapa ${chosenItem.name}?`);
+
   const displayBox = document.getElementById('countDisplay');
   displayBox.innerHTML = '';
   
   for (let i = 0; i < targetCount; i++) {
     const span = document.createElement('span');
     span.className = 'item-emoji';
-    span.textContent = chosenFruit;
+    span.textContent = chosenItem.emoji;
     displayBox.appendChild(span);
   }
   
-  // Options
   let options = [targetCount];
   while (options.length < 4) {
     let rand = Math.floor(Math.random() * 6) + 1;
@@ -737,47 +888,39 @@ function startCountGame() {
     const btn = document.createElement('button');
     btn.className = 'btn-answer';
     btn.textContent = opt;
-    btn.onclick = () => checkAnswer(opt, targetCount);
+    btn.onclick = () => checkAnswer(opt, targetCount, `${opt}`);
     answersBox.appendChild(btn);
   });
 }
 
 /* ---------------------------------------------------------
-   2. TEBAK BENTUK GAME LOGIC
+   2. TEBAK GAMBAR GAME LOGIC
    --------------------------------------------------------- */
-const shapes = [
-  { name: 'Bintang', emoji: '⭐' },
-  { name: 'Hati', emoji: '❤️' },
-  { name: 'Lingkaran', emoji: '🔴' },
-  { name: 'Persegi', emoji: '🟦' },
-  { name: 'Segitiga', emoji: '🔺' }
-];
-
-function startShapeGame() {
+function startGuessGame() {
   playSound('click');
-  currentGame = 'shape';
-  switchView('viewShape');
+  currentGame = 'guess';
+  switchView('viewGuess');
   
-  const targetObj = shapes[Math.floor(Math.random() * shapes.length)];
-  currentTargetValue = targetObj.name;
+  const all = getAllItems();
+  const targetObj = all[Math.floor(Math.random() * all.length)];
   
-  document.getElementById('shapeQuestion').textContent = `Manakah gambar ${targetObj.name}?`;
-  
+  document.getElementById('guessQuestion').textContent = `Manakah gambar ${targetObj.name}?`;
+  speakText(`Manakah gambar ${targetObj.name}?`);
+
   let options = [targetObj];
   while (options.length < 4) {
-    let rand = shapes[Math.floor(Math.random() * shapes.length)];
+    let rand = all[Math.floor(Math.random() * all.length)];
     if (!options.some(o => o.name === rand.name)) options.push(rand);
   }
   options.sort(() => Math.random() - 0.5);
   
-  const answersBox = document.getElementById('shapeAnswers');
+  const answersBox = document.getElementById('guessAnswers');
   answersBox.innerHTML = '';
   options.forEach(opt => {
     const btn = document.createElement('button');
     btn.className = 'btn-answer';
-    btn.style.fontSize = '48px';
-    btn.textContent = opt.emoji;
-    btn.onclick = () => checkAnswer(opt.name, targetObj.name);
+    btn.innerHTML = `<span style="font-size:42px;">${opt.emoji}</span><span class="ans-label">${opt.name}</span>`;
+    btn.onclick = () => checkAnswer(opt.name, targetObj.name, opt.name);
     answersBox.appendChild(btn);
   });
 }
@@ -785,8 +928,6 @@ function startShapeGame() {
 /* ---------------------------------------------------------
    3. KARTU MEMORI GAME LOGIC
    --------------------------------------------------------- */
-const memoryIcons = ['🐶', '🐱', '🐰'];
-
 function startMemoryGame() {
   playSound('click');
   currentGame = 'memory';
@@ -795,18 +936,25 @@ function startMemoryGame() {
   matchedPairs = 0;
   flippedCards = [];
   
-  // Create 3 pairs = 6 cards
-  let deck = [...memoryIcons, ...memoryIcons];
+  const all = getAllItems();
+  // Pick 3 random distinct items
+  let chosen = [];
+  while(chosen.length < 3) {
+    let rand = all[Math.floor(Math.random() * all.length)];
+    if (!chosen.some(c => c.name === rand.name)) chosen.push(rand);
+  }
+  
+  let deck = [...chosen, ...chosen];
   deck.sort(() => Math.random() - 0.5);
   
   const grid = document.getElementById('memoryGrid');
   grid.innerHTML = '';
   
-  deck.forEach((icon, index) => {
+  deck.forEach((item, index) => {
     const card = document.createElement('div');
     card.className = 'memory-card';
-    card.dataset.icon = icon;
-    card.dataset.index = index;
+    card.dataset.name = item.name;
+    card.dataset.emoji = item.emoji;
     card.textContent = '❓';
     card.onclick = () => flipMemoryCard(card);
     grid.appendChild(card);
@@ -818,20 +966,22 @@ function flipMemoryCard(card) {
   
   playSound('click');
   card.classList.add('flipped');
-  card.textContent = card.dataset.icon;
+  card.textContent = card.dataset.emoji;
+  speakText(card.dataset.name);
+
   flippedCards.push(card);
   
   if (flippedCards.length === 2) {
     const [c1, c2] = flippedCards;
-    if (c1.dataset.icon === c2.dataset.icon) {
+    if (c1.dataset.name === c2.dataset.name) {
       playSound('correct');
       c1.classList.add('matched');
       c2.classList.add('matched');
       matchedPairs++;
       flippedCards = [];
       
-      if (matchedPairs === memoryIcons.length) {
-        setTimeout(triggerWin, 500);
+      if (matchedPairs === 3) {
+        setTimeout(triggerWin, 600);
       }
     } else {
       playSound('wrong');
@@ -841,7 +991,7 @@ function flipMemoryCard(card) {
         c1.textContent = '❓';
         c2.textContent = '❓';
         flippedCards = [];
-      }, 800);
+      }, 900);
     }
   }
 }
@@ -849,27 +999,20 @@ function flipMemoryCard(card) {
 /* ---------------------------------------------------------
    4. SUSUN KATA GAME LOGIC
    --------------------------------------------------------- */
-const wordList = [
-  { word: 'BATU', emoji: '🪨' },
-  { word: 'BOLA', emoji: '⚽' },
-  { word: 'KUDA', emoji: '🐎' },
-  { word: 'IKAN', emoji: '🐟' },
-  { word: 'APEL', emoji: '🍎' }
-];
-
 function startSpellingGame() {
   playSound('click');
   currentGame = 'spelling';
   switchView('viewSpelling');
   
-  const targetObj = wordList[Math.floor(Math.random() * wordList.length)];
-  spellingWord = targetObj.word;
+  const all = getAllItems().filter(i => i.name.length <= 8 && !i.name.includes(' '));
+  const targetObj = all[Math.floor(Math.random() * all.length)];
+  spellingWord = targetObj.name.toUpperCase();
   currentSpellingInput = [];
   
   document.getElementById('spellingEmoji').textContent = targetObj.emoji;
-  document.getElementById('spellingHint').textContent = `Kata: ${targetObj.word}`;
-  
-  // Slots
+  document.getElementById('spellingHint').textContent = `Kata: ${spellingWord}`;
+  speakText(`Susun kata ${targetObj.name}`);
+
   const slotsBox = document.getElementById('spellingSlots');
   slotsBox.innerHTML = '';
   for (let i = 0; i < spellingWord.length; i++) {
@@ -879,12 +1022,11 @@ function startSpellingGame() {
     slotsBox.appendChild(slot);
   }
   
-  // Letter buttons pool (scrambled)
   let letters = spellingWord.split('').sort(() => Math.random() - 0.5);
   const poolBox = document.getElementById('lettersPool');
   poolBox.innerHTML = '';
   
-  letters.forEach((char, idx) => {
+  letters.forEach((char) => {
     const btn = document.createElement('button');
     btn.className = 'btn-letter';
     btn.textContent = char;
@@ -897,6 +1039,7 @@ function selectLetter(char, btnElement) {
   if (currentSpellingInput.length >= spellingWord.length) return;
   
   playSound('click');
+  speakText(char);
   btnElement.style.visibility = 'hidden';
   
   const currentIdx = currentSpellingInput.length;
@@ -911,7 +1054,6 @@ function selectLetter(char, btnElement) {
     } else {
       playSound('wrong');
       setTimeout(() => {
-        // Reset
         currentSpellingInput.forEach(item => item.btnElement.style.visibility = 'visible');
         currentSpellingInput = [];
         for (let i = 0; i < spellingWord.length; i++) {
@@ -923,12 +1065,75 @@ function selectLetter(char, btnElement) {
 }
 
 /* ---------------------------------------------------------
+   5. KAMUS SUARA PINTAR (KATALOG) LOGIC
+   --------------------------------------------------------- */
+const CATEGORIES = [
+  { id: 'semua', label: '🌟 Semua' },
+  { id: 'kendaraan', label: '🚜 Alat Berat & Mobil' },
+  { id: 'buah', label: '🍎 Buah' },
+  { id: 'hewan', label: '🐶 Hewan' },
+  { id: 'sayur', label: '🥕 Sayur' },
+  { id: 'snack', label: '🍦 Snack Alfamart' },
+  { id: 'bangunan', label: '🏠 Bangunan' },
+  { id: 'perabot', label: '🪑 Perabot Rumah' }
+];
+
+function startCatalogView() {
+  playSound('click');
+  currentGame = 'catalog';
+  switchView('viewCatalog');
+  
+  const bar = document.getElementById('catalogCategoryBar');
+  bar.innerHTML = '';
+  
+  CATEGORIES.forEach((cat, index) => {
+    const chip = document.createElement('div');
+    chip.className = `chip-cat ${index === 0 ? 'active' : ''}`;
+    chip.textContent = cat.label;
+    chip.onclick = () => filterCatalog(cat.id, chip);
+    bar.appendChild(chip);
+  });
+  
+  renderCatalogItems('semua');
+}
+
+function filterCatalog(catId, chipElement) {
+  playSound('click');
+  document.querySelectorAll('.chip-cat').forEach(c => c.classList.remove('active'));
+  chipElement.classList.add('active');
+  renderCatalogItems(catId);
+}
+
+function renderCatalogItems(catId) {
+  const grid = document.getElementById('catalogGrid');
+  grid.innerHTML = '';
+  
+  let items = catId === 'semua' ? getAllItems() : (DATABASE[catId] || []);
+  
+  items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'catalog-card';
+    card.innerHTML = `
+      <div class="catalog-emoji">${item.emoji}</div>
+      <div class="catalog-name">${item.name}</div>
+    `;
+    card.onclick = () => {
+      playSound('click');
+      speakText(item.name);
+    };
+    grid.appendChild(card);
+  });
+}
+
+/* ---------------------------------------------------------
    GLOBAL ANSWER CHECK & CELEBRATION
    --------------------------------------------------------- */
-function checkAnswer(selected, correct) {
+function checkAnswer(selected, correct, spokenWord) {
   if (selected === correct) {
+    if (spokenWord) speakText(`Benar! ${spokenWord}`);
     triggerWin();
   } else {
+    speakText('Coba lagi ya!');
     playSound('wrong');
   }
 }
@@ -945,7 +1150,7 @@ function nextQuestionOrHome() {
   document.getElementById('winModal').classList.remove('active');
   
   if (currentGame === 'count') startCountGame();
-  else if (currentGame === 'shape') startShapeGame();
+  else if (currentGame === 'guess') startGuessGame();
   else if (currentGame === 'memory') startMemoryGame();
   else if (currentGame === 'spelling') startSpellingGame();
   else showHome();
@@ -962,17 +1167,17 @@ function launchConfetti() {
   canvas.height = canvas.parentElement.clientHeight;
   
   const particles = [];
-  const colors = ['#FF6B81', '#FFD15C', '#4D96FF', '#6BCB77', '#9B51E0'];
+  const colors = ['#FF6B81', '#FFD15C', '#4D96FF', '#6BCB77', '#9B51E0', '#00CEC9'];
   
-  for (let i = 0; i < 60; i++) {
+  for (let i = 0; i < 70; i++) {
     particles.push({
       x: canvas.width / 2,
       y: canvas.height / 2,
-      vx: (Math.random() - 0.5) * 12,
-      vy: (Math.random() - 0.7) * 14,
+      vx: (Math.random() - 0.5) * 14,
+      vy: (Math.random() - 0.7) * 16,
       color: colors[Math.floor(Math.random() * colors.length)],
       size: Math.random() * 8 + 6,
-      gravity: 0.3
+      gravity: 0.35
     });
   }
   
