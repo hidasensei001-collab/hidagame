@@ -6,1425 +6,2677 @@
 <meta name="theme-color" content="#FFD15C">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<title>HIDA GAME - Main & Belajar Pintar</title>
+<title>HIDA GAME — Dunia Belajar Tanpa Batas</title>
 
-<!-- GOOGLE FONTS & FONTAWESOME -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-/* =========================================================
-   HIDA GAME STUDIO V3.0 - PLAYER & DYNAMIC BG EDITION
-   ========================================================= */
-
-:root {
-  --bg-app: #FFF9E6;
-  --card-bg: rgba(255, 255, 255, 0.94);
-  --text-main: #2D3436;
-  --text-muted: #636E72;
-  
-  --kids-pink: #FF6B81;
-  --kids-yellow: #FFD15C;
-  --kids-blue: #4D96FF;
-  --kids-green: #6BCB77;
-  --kids-purple: #9B51E0;
-  --kids-orange: #FF9F43;
-  --kids-teal: #00CEC9;
-
-  --shadow-3d: 0 8px 0px rgba(0, 0, 0, 0.15);
-  --shadow-3d-active: 0 2px 0px rgba(0, 0, 0, 0.15);
-  --shadow-soft: 0 10px 30px rgba(0,0,0,0.12);
-
-  --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Fredoka', 'Nunito', sans-serif;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  background: var(--bg-app);
-  color: var(--text-main);
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-  padding-top: var(--safe-top);
-  padding-bottom: var(--safe-bottom);
-}
-
-.app-viewport {
-  width: 100%;
-  max-width: 480px;
-  height: 100vh;
-  max-height: 920px;
-  background-color: var(--bg-app);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 0 50px rgba(0,0,0,0.15);
-  transition: background-image 0.4s ease-in-out;
-}
-
-/* TOP HEADER BAR */
-.top-header {
-  height: calc(64px + var(--safe-top));
-  padding-top: var(--safe-top);
-  padding-left: 14px;
-  padding-right: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  border-bottom: 4px solid #F0E6D2;
-  z-index: 100;
-}
-
-.header-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: var(--kids-yellow);
-  color: #5A3E00;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 4px 0px #D6A329;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.1s, box-shadow 0.1s;
-}
-
-.header-btn:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0px #D6A329;
-}
-
-.player-badge {
-  background: #FFF0F3;
-  border: 3px solid var(--kids-pink);
-  border-radius: 20px;
-  padding: 4px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 800;
-  color: var(--text-main);
-  cursor: pointer;
-  box-shadow: 0 3px 0px rgba(0,0,0,0.1);
-}
-
-.star-badge {
-  background: #FFF3C4;
-  border: 3px solid var(--kids-yellow);
-  border-radius: 30px;
-  padding: 4px 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #B77900;
-}
-
-.star-badge i {
-  color: #FFB800;
-  font-size: 20px;
-  filter: drop-shadow(0 2px 0 #D6A329);
-}
-
-/* MAIN CONTENT CONTAINER */
-.main-content {
-  flex: 1;
-  padding: 16px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-/* VIEW MANAGEMENT */
-.view-panel {
-  width: 100%;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  animation: bounceIn 0.35s ease;
-}
-
-.view-panel.active {
-  display: flex;
-}
-
-@keyframes bounceIn {
-  0% { opacity: 0; transform: scale(0.92); }
-  60% { transform: scale(1.03); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-/* 0. PLAYER SELECTION VIEW */
-.player-select-box {
-  width: 100%;
-  text-align: center;
-  padding: 10px 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-}
-
-.game-logo-badge {
-  background: var(--kids-yellow);
-  color: #5A3E00;
-  font-size: 32px;
-  font-weight: 900;
-  padding: 12px 28px;
-  border-radius: 32px;
-  border: 4px solid #D6A329;
-  box-shadow: var(--shadow-3d);
-  letter-spacing: 1px;
-}
-
-.player-select-box h2 {
-  font-size: 24px;
-  color: var(--kids-pink);
-  text-shadow: 2px 2px 0px #FFB8C6;
-}
-
-.player-select-box p {
-  font-size: 15px;
-  color: var(--text-muted);
-}
-
-.player-buttons-grid {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 8px;
-}
-
-.btn-player {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(4px);
-  border-radius: 24px;
-  padding: 18px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  border: 4px solid;
-  box-shadow: var(--shadow-3d);
-  transition: transform 0.1s;
-}
-
-.btn-player:active {
-  transform: translateY(4px);
-  box-shadow: var(--shadow-3d-active);
-}
-
-.btn-raina {
-  border-color: var(--kids-pink);
-  background: #FFF0F3;
-}
-
-.btn-fatih {
-  border-color: var(--kids-blue);
-  background: #EBF3FF;
-}
-
-.player-avatar {
-  font-size: 52px;
-}
-
-.player-fullname {
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--text-main);
-  text-align: center;
-  line-height: 1.2;
-}
-
-.player-nickname {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.85);
-  padding: 4px 14px;
-  border-radius: 12px;
-  border: 1px solid #E0E0E0;
-}
-
-/* HOME MENU VIEW */
-.home-title {
-  text-align: center;
-  margin-bottom: 16px;
-  background: rgba(255, 255, 255, 0.85);
-  padding: 10px 16px;
-  border-radius: 20px;
-  backdrop-filter: blur(4px);
-}
-
-.home-title h1 {
-  font-size: 28px;
-  color: var(--kids-pink);
-  text-shadow: 2px 2px 0px #FFB8C6;
-  line-height: 1.1;
-}
-
-.home-title p {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-.game-grid {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.game-card {
-  width: 100%;
-  background: var(--card-bg);
-  backdrop-filter: blur(4px);
-  border-radius: 22px;
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
-  border: 4px solid;
-  box-shadow: var(--shadow-3d);
-  transition: transform 0.1s;
-}
-
-.game-card:active {
-  transform: translateY(4px);
-  box-shadow: var(--shadow-3d-active);
-}
-
-.game-card.card-count { border-color: var(--kids-blue); }
-.game-card.card-guess { border-color: var(--kids-pink); }
-.game-card.card-memory { border-color: var(--kids-green); }
-.game-card.card-words { border-color: var(--kids-purple); }
-.game-card.card-catalog { border-color: var(--kids-teal); }
-
-.card-icon-box {
-  width: 60px;
-  height: 60px;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  flex-shrink: 0;
-}
-
-.card-count .card-icon-box { background: #E6F0FF; }
-.card-guess .card-icon-box { background: #FFE6EA; }
-.card-memory .card-icon-box { background: #E6F8EB; }
-.card-words .card-icon-box { background: #F3E6FF; }
-.card-catalog .card-icon-box { background: #E0F7F6; }
-
-.card-info h3 {
-  font-size: 19px;
-  color: var(--text-main);
-}
-
-.card-info p {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* CATEGORY FILTER CHIPS */
-.category-bar {
-  width: 100%;
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  margin-bottom: 12px;
-  scrollbar-width: none;
-}
-.category-bar::-webkit-scrollbar { display: none; }
-
-.chip-cat {
-  flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.9);
-  border: 3px solid #E0E0E0;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-.chip-cat.active {
-  background: var(--kids-yellow);
-  border-color: #D6A329;
-  color: #5A3E00;
-}
-
-/* GAMEPLAY ARENA GLOBAL */
-.game-question-box {
-  width: 100%;
-  background: var(--card-bg);
-  backdrop-filter: blur(4px);
-  border-radius: 24px;
-  padding: 20px 14px;
-  text-align: center;
-  box-shadow: var(--shadow-soft);
-  border: 4px solid #FFEAA7;
-  margin-bottom: 16px;
-  position: relative;
-}
-
-.question-text {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 10px;
-}
-
-.display-items {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  min-height: 80px;
-  align-items: center;
-}
-
-.item-emoji {
-  font-size: 46px;
-  animation: popItem 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popItem {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
-}
-
-/* BUTTON OPTIONS (ANSWER GRID) */
-.answers-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.btn-answer {
-  background: var(--card-bg);
-  backdrop-filter: blur(4px);
-  border: 4px solid var(--kids-blue);
-  border-radius: 22px;
-  padding: 16px 8px;
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--kids-blue);
-  cursor: pointer;
-  box-shadow: var(--shadow-3d);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  transition: transform 0.1s;
-}
-
-.btn-answer:active {
-  transform: translateY(4px);
-  box-shadow: var(--shadow-3d-active);
-}
-
-.btn-answer .ans-label {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-/* GAME: MEMORY CARDS */
-.memory-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.memory-card {
-  aspect-ratio: 1;
-  background: var(--kids-purple);
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 38px;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 5px 0px #7B2CBF;
-  transition: transform 0.2s;
-}
-
-.memory-card.flipped {
-  background: white;
-  border: 4px solid var(--kids-purple);
-  box-shadow: 0 2px 0px #7B2CBF;
-  transform: rotateY(180deg);
-}
-
-.memory-card.matched {
-  background: #E6F8EB;
-  border: 4px solid var(--kids-green);
-  box-shadow: none;
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-/* GAME: SPELLING / WORD BUILDER */
-.spelling-slots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
-
-.letter-slot {
-  width: 42px;
-  height: 50px;
-  border-bottom: 4px solid var(--kids-orange);
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--kids-orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.letters-pool {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.btn-letter {
-  width: 48px;
-  height: 52px;
-  background: var(--kids-orange);
-  color: white;
-  font-size: 24px;
-  font-weight: 800;
-  border-radius: 14px;
-  border: none;
-  box-shadow: 0 4px 0px #D35400;
-  cursor: pointer;
-}
-
-.btn-letter:active {
-  transform: translateY(3px);
-  box-shadow: 0 1px 0px #D35400;
-}
-
-/* ENSIKLOPEDIA / KATALOG GRID */
-.catalog-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.catalog-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(4px);
-  border: 3px solid #E0E0E0;
-  border-radius: 18px;
-  padding: 12px 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  box-shadow: 0 4px 0px rgba(0,0,0,0.08);
-}
-
-.catalog-card:active {
-  transform: scale(0.95);
-  background: #FFFDE7;
-}
-
-.catalog-emoji {
-  font-size: 40px;
-}
-
-.catalog-name {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text-main);
-  text-align: center;
-  line-height: 1.1;
-}
-
-/* CELEBRATION OVERLAY / WIN MODAL */
-.modal-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 500;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-
-.modal-overlay.active {
-  display: flex;
-  animation: fadeIn 0.2s ease;
-}
-
-.win-box {
-  width: 100%;
-  background: white;
-  border-radius: 32px;
-  padding: 26px 18px;
-  text-align: center;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popModal {
-  from { transform: scale(0.5); }
-  to { transform: scale(1); }
-}
-
-.win-icon {
-  font-size: 70px;
-  margin-bottom: 8px;
-}
-
-.win-title {
-  font-size: 28px;
-  color: var(--kids-green);
-  margin-bottom: 6px;
-}
-
-.win-desc {
-  font-size: 15px;
-  color: var(--text-muted);
-  margin-bottom: 18px;
-}
-
-.btn-next {
-  width: 100%;
-  background: var(--kids-green);
-  color: white;
-  border: none;
-  border-radius: 22px;
-  padding: 14px;
-  font-size: 20px;
-  font-weight: 800;
-  box-shadow: 0 6px 0px #388E3C;
-  cursor: pointer;
-}
-
-.btn-next:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0px #388E3C;
-}
-
-/* CANVAS CONFETTI */
-#confettiCanvas {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 600;
+:root{
+--bg:#FFF9E6;
+--white:#fff;
+--text:#2D3436;
+--muted:#636E72;
+--pink:#FF6B81;
+--yellow:#FFD15C;
+--blue:#4D96FF;
+--green:#6BCB77;
+--purple:#9B51E0;
+--orange:#FF9F43;
+--teal:#00CEC9;
+--red:#FF7675;
+--shadow:0 7px 0 rgba(0,0,0,.14);
+--shadow2:0 3px 0 rgba(0,0,0,.14);
+--safe-top:env(safe-area-inset-top,0px);
+--safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:'Fredoka','Nunito',sans-serif;
+user-select:none;
+-webkit-user-select:none;
+-webkit-tap-highlight-color:transparent;
+}
+
+body{
+background:#e9e9e9;
+color:var(--text);
+min-height:100vh;
+display:flex;
+justify-content:center;
+overflow:hidden;
+}
+
+button{font-family:inherit}
+
+#app{
+width:100%;
+max-width:480px;
+height:100vh;
+max-height:920px;
+background:var(--bg);
+position:relative;
+overflow:hidden;
+display:flex;
+flex-direction:column;
+box-shadow:0 0 50px rgba(0,0,0,.18);
+background-size:cover;
+background-position:center;
+}
+
+#app:before{
+content:"";
+position:absolute;
+inset:0;
+background:
+radial-gradient(circle at 10% 20%,rgba(255,255,255,.7),transparent 22%),
+radial-gradient(circle at 90% 70%,rgba(255,255,255,.55),transparent 25%);
+pointer-events:none;
+}
+
+header{
+height:68px;
+padding-top:var(--safe-top);
+box-sizing:content-box;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding-left:12px;
+padding-right:12px;
+background:rgba(255,255,255,.94);
+backdrop-filter:blur(12px);
+border-bottom:4px solid #F0E6D2;
+z-index:50;
+}
+
+.hbtn{
+width:43px;
+height:43px;
+border:0;
+border-radius:50%;
+background:var(--yellow);
+box-shadow:0 4px 0 #D6A329;
+color:#5A3E00;
+font-size:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.hbtn:active{
+transform:translateY(3px);
+box-shadow:0 1px 0 #D6A329;
+}
+
+.playerBadge{
+display:none;
+align-items:center;
+gap:6px;
+background:#FFF0F3;
+border:3px solid var(--pink);
+padding:5px 10px;
+border-radius:18px;
+font-weight:800;
+font-size:13px;
+cursor:pointer;
+}
+
+.starBadge{
+background:#FFF3C4;
+border:3px solid var(--yellow);
+border-radius:22px;
+padding:5px 10px;
+font-weight:900;
+color:#B77900;
+display:flex;
+gap:5px;
+align-items:center;
+}
+
+.starBadge i{color:#FFB800}
+
+.main{
+position:relative;
+z-index:2;
+flex:1;
+overflow-y:auto;
+overflow-x:hidden;
+padding:15px;
+padding-bottom:30px;
+scrollbar-width:none;
+}
+
+.main::-webkit-scrollbar{display:none}
+
+.view{
+display:none;
+width:100%;
+animation:in .3s ease;
+}
+
+.view.active{
+display:block;
+}
+
+@keyframes in{
+from{opacity:0;transform:scale(.96)}
+to{opacity:1;transform:scale(1)}
+}
+
+.logo{
+background:var(--yellow);
+border:4px solid #D6A329;
+box-shadow:var(--shadow);
+border-radius:28px;
+padding:12px 22px;
+font-size:29px;
+font-weight:900;
+color:#5A3E00;
+display:inline-block;
+}
+
+.center{text-align:center}
+
+.welcome{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
+padding:12px 0;
+}
+
+.welcome h2{
+color:var(--pink);
+font-size:24px;
+}
+
+.welcome p{
+color:var(--muted);
+font-size:14px;
+}
+
+.playerGrid{
+display:grid;
+gap:14px;
+margin-top:12px;
+}
+
+.player{
+border:4px solid;
+border-radius:25px;
+padding:18px;
+background:#fff;
+box-shadow:var(--shadow);
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:5px;
+cursor:pointer;
+}
+
+.player:active{
+transform:translateY(4px);
+box-shadow:var(--shadow2);
+}
+
+.raina{border-color:var(--pink);background:#FFF0F3}
+.fatih{border-color:var(--blue);background:#EBF3FF}
+
+.avatar{font-size:55px}
+.fullname{font-size:18px;font-weight:900;text-align:center}
+.nickname{
+font-size:13px;
+background:#fff;
+padding:4px 13px;
+border-radius:15px;
+color:var(--muted);
+}
+
+.homeHero{
+background:rgba(255,255,255,.88);
+border-radius:25px;
+padding:14px;
+text-align:center;
+margin-bottom:12px;
+backdrop-filter:blur(7px);
+}
+
+.homeHero h1{
+color:var(--pink);
+font-size:27px;
+}
+
+.homeHero p{
+color:var(--muted);
+font-size:13px;
+margin-top:3px;
+}
+
+.progressBox{
+margin-top:10px;
+background:#fff;
+border-radius:18px;
+padding:10px;
+border:3px solid #E8E8E8;
+}
+
+.progressTop{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+font-weight:900;
+margin-bottom:5px;
+}
+
+.progress{
+height:12px;
+background:#eee;
+border-radius:20px;
+overflow:hidden;
+}
+
+.progress div{
+height:100%;
+background:linear-gradient(90deg,var(--blue),var(--purple));
+border-radius:20px;
+transition:.4s;
+}
+
+.daily{
+background:#FFF8D8;
+border:3px solid var(--yellow);
+border-radius:20px;
+padding:12px;
+margin-bottom:12px;
+box-shadow:var(--shadow2);
+}
+
+.dailyTitle{
+font-size:17px;
+font-weight:900;
+color:#8A6500;
+}
+
+.dailyText{
+font-size:13px;
+margin-top:4px;
+}
+
+.dailyProgress{
+font-size:12px;
+font-weight:900;
+margin-top:6px;
+color:#A06E00;
+}
+
+.menu{
+display:grid;
+gap:11px;
+}
+
+.gameCard{
+background:rgba(255,255,255,.95);
+border:4px solid;
+border-radius:22px;
+padding:13px;
+display:flex;
+align-items:center;
+gap:13px;
+box-shadow:var(--shadow);
+cursor:pointer;
+}
+
+.gameCard:active{
+transform:translateY(4px);
+box-shadow:var(--shadow2);
+}
+
+.cardCount{border-color:var(--blue)}
+.cardGuess{border-color:var(--pink)}
+.cardMemory{border-color:var(--green)}
+.cardWords{border-color:var(--purple)}
+.cardCatalog{border-color:var(--teal)}
+.cardQuest{border-color:var(--orange)}
+.cardLearn{border-color:#FDCB6E}
+
+.icon{
+width:58px;
+height:58px;
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:31px;
+flex-shrink:0;
+}
+
+.cardCount .icon{background:#E6F0FF}
+.cardGuess .icon{background:#FFE6EA}
+.cardMemory .icon{background:#E6F8EB}
+.cardWords .icon{background:#F3E6FF}
+.cardCatalog .icon{background:#E0F7F6}
+.cardQuest .icon{background:#FFF0DC}
+.cardLearn .icon{background:#FFF7D0}
+
+.info h3{font-size:18px}
+.info p{font-size:11px;color:var(--muted);margin-top:2px}
+
+.sectionTitle{
+font-size:21px;
+font-weight:900;
+margin-bottom:10px;
+text-align:center;
+color:var(--pink);
+}
+
+.question{
+background:rgba(255,255,255,.96);
+border:4px solid #FFEAA7;
+border-radius:24px;
+padding:17px 12px;
+text-align:center;
+box-shadow:0 9px 25px rgba(0,0,0,.10);
+margin-bottom:13px;
+}
+
+.questionText{
+font-size:19px;
+font-weight:900;
+line-height:1.25;
+margin-bottom:10px;
+}
+
+.bigEmoji{
+font-size:65px;
+min-height:75px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.answers{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:11px;
+}
+
+.answer{
+min-height:100px;
+background:#fff;
+border:4px solid var(--blue);
+border-radius:21px;
+box-shadow:var(--shadow);
+font-size:25px;
+font-weight:900;
+padding:9px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:4px;
+cursor:pointer;
+}
+
+.answer:active{
+transform:translateY(4px);
+box-shadow:var(--shadow2);
+}
+
+.answer .label{
+font-size:13px;
+color:var(--text);
+}
+
+.answer.correct{
+border-color:var(--green);
+background:#E9F9EC;
+}
+
+.answer.wrong{
+border-color:var(--red);
+background:#FFF0F0;
+}
+
+.badgeInfo{
+display:inline-block;
+font-size:11px;
+font-weight:900;
+background:#F0F4FF;
+border-radius:15px;
+padding:5px 9px;
+color:#4969A8;
+margin-bottom:5px;
+}
+
+.memoryGrid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:9px;
+}
+
+.memoryCard{
+aspect-ratio:1;
+border:0;
+border-radius:17px;
+background:var(--purple);
+box-shadow:0 5px 0 #7B2CBF;
+font-size:35px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
+cursor:pointer;
+transition:.2s;
+}
+
+.memoryCard.flipped{
+background:#fff;
+border:4px solid var(--purple);
+box-shadow:0 2px 0 #7B2CBF;
+}
+
+.memoryCard.matched{
+background:#E6F8EB;
+border:4px solid var(--green);
+opacity:.65;
+}
+
+.spellSlots{
+display:flex;
+justify-content:center;
+gap:5px;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.slot{
+width:34px;
+height:45px;
+border-bottom:4px solid var(--orange);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
+font-weight:900;
+color:var(--orange);
+}
+
+.letters{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:7px;
+margin-top:14px;
+}
+
+.letter{
+width:45px;
+height:48px;
+border:0;
+border-radius:13px;
+background:var(--orange);
+color:#fff;
+font-size:22px;
+font-weight:900;
+box-shadow:0 4px 0 #D35400;
+}
+
+.letter:active{
+transform:translateY(3px);
+box-shadow:0 1px 0 #D35400;
+}
+
+.category{
+display:flex;
+gap:7px;
+overflow-x:auto;
+padding-bottom:9px;
+scrollbar-width:none;
+}
+
+.category::-webkit-scrollbar{display:none}
+
+.chip{
+white-space:nowrap;
+padding:7px 12px;
+border-radius:18px;
+border:3px solid #ddd;
+background:#fff;
+font-size:12px;
+font-weight:900;
+}
+
+.chip.active{
+background:var(--yellow);
+border-color:#D6A329;
+}
+
+.catalog{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px;
+}
+
+.catalogCard{
+background:rgba(255,255,255,.96);
+border:3px solid #ddd;
+border-radius:17px;
+padding:10px 5px;
+text-align:center;
+box-shadow:var(--shadow2);
+cursor:pointer;
+}
+
+.catalogCard:active{transform:scale(.95)}
+
+.catalogEmoji{font-size:38px}
+.catalogName{
+font-size:12px;
+font-weight:900;
+line-height:1.1;
+margin-top:4px;
+}
+
+.discovered{
+border-color:var(--green);
+background:#F0FFF3;
+}
+
+.learnBox{
+background:#fff;
+border:4px solid var(--teal);
+border-radius:25px;
+padding:17px;
+box-shadow:var(--shadow);
+text-align:center;
+}
+
+.learnEmoji{font-size:85px}
+
+.learnName{
+font-size:28px;
+font-weight:900;
+color:var(--teal);
+}
+
+.learnCategory{
+display:inline-block;
+margin-top:5px;
+background:#E4FFFE;
+padding:5px 12px;
+border-radius:15px;
+font-size:12px;
+font-weight:900;
+}
+
+.fact{
+margin-top:12px;
+background:#FFF9D9;
+border-radius:17px;
+padding:12px;
+font-size:14px;
+line-height:1.4;
+font-weight:700;
+}
+
+.btn{
+width:100%;
+border:0;
+border-radius:20px;
+padding:14px;
+font-size:18px;
+font-weight:900;
+cursor:pointer;
+box-shadow:0 5px 0 rgba(0,0,0,.2);
+margin-top:11px;
+}
+
+.btn:active{
+transform:translateY(3px);
+box-shadow:0 2px 0 rgba(0,0,0,.2);
+}
+
+.btnGreen{background:var(--green);color:#fff}
+.btnBlue{background:var(--blue);color:#fff}
+.btnYellow{background:var(--yellow);color:#5A3E00}
+.btnPurple{background:var(--purple);color:#fff}
+
+.statGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+margin-bottom:12px;
+}
+
+.stat{
+background:#fff;
+border:3px solid #eee;
+border-radius:20px;
+padding:13px;
+text-align:center;
+}
+
+.statIcon{font-size:30px}
+.statNumber{
+font-size:25px;
+font-weight:900;
+color:var(--purple);
+}
+
+.statLabel{
+font-size:11px;
+color:var(--muted);
+}
+
+.achievementGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+}
+
+.achievement{
+background:#fff;
+border:3px solid #ddd;
+border-radius:17px;
+padding:9px 4px;
+text-align:center;
+opacity:.42;
+}
+
+.achievement.unlocked{
+opacity:1;
+border-color:var(--yellow);
+background:#FFFBEA;
+}
+
+.achievement i{
+font-size:29px;
+color:#FFB800;
+}
+
+.achievement b{
+display:block;
+font-size:10px;
+margin-top:4px;
+}
+
+.modal{
+position:absolute;
+inset:0;
+z-index:100;
+background:rgba(0,0,0,.62);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.modal.show{display:flex}
+
+.modalBox{
+background:#fff;
+width:100%;
+border-radius:30px;
+padding:22px 16px;
+text-align:center;
+box-shadow:0 15px 45px rgba(0,0,0,.3);
+animation:modalIn .35s ease;
+}
+
+@keyframes modalIn{
+from{transform:scale(.6)}
+to{transform:scale(1)}
+}
+
+.modalIcon{
+font-size:67px;
+margin-bottom:4px;
+}
+
+.modalTitle{
+font-size:28px;
+color:var(--green);
+font-weight:900;
+}
+
+.modalDesc{
+font-size:14px;
+color:var(--muted);
+margin:7px 0 13px;
+line-height:1.4;
+}
+
+.factModal{
+background:#FFF9D9;
+border-radius:18px;
+padding:10px;
+font-size:13px;
+font-weight:700;
+margin-bottom:10px;
+display:none;
+}
+
+#confetti{
+position:absolute;
+inset:0;
+z-index:150;
+pointer-events:none;
+}
+
+.empty{
+padding:30px 10px;
+text-align:center;
+color:var(--muted);
+}
+
+.smallBack{
+background:#fff;
+border:3px solid #ddd;
+border-radius:17px;
+padding:7px 12px;
+font-weight:900;
+margin-bottom:10px;
+cursor:pointer;
+}
+
+.newTag{
+position:absolute;
+top:5px;
+right:5px;
+font-size:9px;
+background:var(--pink);
+color:white;
+padding:3px 6px;
+border-radius:8px;
+font-weight:900;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app-viewport" id="appViewport">
+<div id="app">
 
-  <canvas id="confettiCanvas"></canvas>
+<canvas id="confetti"></canvas>
 
-  <!-- TOP HEADER -->
-  <header class="top-header">
-    <button class="header-btn" id="btnHome" onclick="showHome()">
-      <i class="fa-solid fa-house"></i>
-    </button>
+<header>
+<button class="hbtn" onclick="showHome()">
+<i class="fa-solid fa-house"></i>
+</button>
 
-    <div class="player-badge" id="playerBadge" onclick="showPlayerSelect()" style="display:none;">
-      <span id="playerBadgeAvatar">👧</span>
-      <span id="playerBadgeName">Raina</span>
-    </div>
+<div class="playerBadge" id="playerBadge" onclick="showPlayerSelect()">
+<span id="badgeAvatar">👧</span>
+<span id="badgeName">Raina</span>
+</div>
 
-    <div class="star-badge">
-      <i class="fa-solid fa-star"></i>
-      <span id="starCount">0</span>
-    </div>
+<div class="starBadge">
+<i class="fa-solid fa-star"></i>
+<span id="stars">0</span>
+</div>
 
-    <button class="header-btn" id="btnSound" onclick="toggleSound()">
-      <i class="fa-solid fa-volume-high" id="soundIcon"></i>
-    </button>
-  </header>
+<button class="hbtn" onclick="toggleSound()">
+<i id="soundIcon" class="fa-solid fa-volume-high"></i>
+</button>
+</header>
 
-  <!-- MAIN CONTENT CONTAINER -->
-  <main class="main-content">
+<main class="main">
 
-    <!-- 0. PLAYER SELECTION VIEW (TAMPILAN AWAL SEBELUM MAIN) -->
-    <section class="view-panel active" id="viewPlayerSelect">
-      <div class="player-select-box">
-        <div class="game-logo-badge">🎮 HIDA GAME</div>
-        <h2>Siapa yang Mau Main?</h2>
-        <p>Pilih nama kamu dulu ya!</p>
-        
-        <div class="player-buttons-grid">
-          <button class="btn-player btn-raina" onclick="selectPlayer('raina')">
-            <span class="player-avatar">👧</span>
-            <span class="player-fullname">Marisa Raina Hidayatullah</span>
-            <span class="player-nickname">Panggil: Raina</span>
-          </button>
+<!-- PLAYER -->
+<section class="view active" id="playerView">
+<div class="welcome center">
+<div class="logo">🎮 HIDA GAME</div>
+<h2>Siapa yang Mau Main?</h2>
+<p>Pilih pemain untuk memulai petualangan belajar!</p>
 
-          <button class="btn-player btn-fatih" onclick="selectPlayer('fatih')">
-            <span class="player-avatar">👦</span>
-            <span class="player-fullname">Muhammad Alfatih Hidayatullah</span>
-            <span class="player-nickname">Panggil: Alfatih</span>
-          </button>
-        </div>
-      </div>
-    </section>
+<div class="playerGrid">
+<button class="player raina" onclick="selectPlayer('raina')">
+<div class="avatar">👧</div>
+<div class="fullname">Marisa Raina Hidayatullah</div>
+<div class="nickname">Panggil: Raina</div>
+</button>
 
-    <!-- 1. HOME MENU VIEW -->
-    <section class="view-panel" id="viewHome">
-      <div class="home-title">
-        <h1>HIDA GAME</h1>
-        <p id="homeSubhead">Main, Belajar & Mengenal Dunia!</p>
-      </div>
+<button class="player fatih" onclick="selectPlayer('fatih')">
+<div class="avatar">👦</div>
+<div class="fullname">Muhammad Alfatih Hidayatullah</div>
+<div class="nickname">Panggil: Alfatih</div>
+</button>
+</div>
+</div>
+</section>
 
-      <div class="game-grid">
-        <div class="game-card card-count" onclick="startCountGame()">
-          <div class="card-icon-box">🔢</div>
-          <div class="card-info">
-            <h3>Hitung Benda</h3>
-            <p>Hitung buah, mobil, hewan & snack</p>
-          </div>
-        </div>
+<!-- HOME -->
+<section class="view" id="homeView">
 
-        <div class="game-card card-guess" onclick="startGuessGame()">
-          <div class="card-icon-box">🚜</div>
-          <div class="card-info">
-            <h3>Tebak Gambar</h3>
-            <p>Tebak alat berat, kendaraan & perabot</p>
-          </div>
-        </div>
+<div class="homeHero">
+<h1>🌎 HIDA GAME</h1>
+<p id="welcomeText">Main, belajar, dan mengenal dunia!</p>
 
-        <div class="game-card card-memory" onclick="startMemoryGame()">
-          <div class="card-icon-box">🧠</div>
-          <div class="card-info">
-            <h3>Kartu Memori</h3>
-            <p>Cari pasangan gambar yang sama</p>
-          </div>
-        </div>
+<div class="progressBox">
+<div class="progressTop">
+<span id="levelText">Level 1</span>
+<span id="xpText">0 / 100 XP</span>
+</div>
+<div class="progress">
+<div id="xpBar" style="width:0%"></div>
+</div>
+</div>
+</div>
 
-        <div class="game-card card-words" onclick="startSpellingGame()">
-          <div class="card-icon-box">🔤</div>
-          <div class="card-info">
-            <h3>Susun Kata</h3>
-            <p>Latihan menyusun kata & membaca</p>
-          </div>
-        </div>
+<div class="daily">
+<div class="dailyTitle">🎯 Misi Hari Ini</div>
+<div class="dailyText" id="dailyText">Temukan benda baru!</div>
+<div class="dailyProgress" id="dailyProgress">0 / 5</div>
+</div>
 
-        <div class="game-card card-catalog" onclick="startCatalogView()">
-          <div class="card-icon-box">📚</div>
-          <div class="card-info">
-            <h3>Kamus Suara Pintar</h3>
-            <p>Tekan gambar untuk mendengar suaranya</p>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="menu">
 
-    <!-- 2. HITUNG BENDA VIEW -->
-    <section class="view-panel" id="viewCount">
-      <div class="game-question-box">
-        <div class="question-text" id="countQuestion">Ada berapa benda di bawah?</div>
-        <div class="display-items" id="countDisplay"></div>
-      </div>
-      <div class="answers-grid" id="countAnswers"></div>
-    </section>
+<div class="gameCard cardCount" onclick="startCount()">
+<div class="icon">🔢</div>
+<div class="info">
+<h3>Hitung Benda</h3>
+<p>Hitung buah, hewan, kendaraan dan benda lainnya</p>
+</div>
+</div>
 
-    <!-- 3. TEBAK GAMBAR VIEW -->
-    <section class="view-panel" id="viewGuess">
-      <div class="game-question-box">
-        <div class="question-text" id="guessQuestion">Manakah gambar Ekskavator?</div>
-      </div>
-      <div class="answers-grid" id="guessAnswers"></div>
-    </section>
+<div class="gameCard cardGuess" onclick="startGuess()">
+<div class="icon">🔍</div>
+<div class="info">
+<h3>Tebak Gambar</h3>
+<p>Kenali benda dan dunia di sekitarmu</p>
+</div>
+</div>
 
-    <!-- 4. KARTU MEMORI VIEW -->
-    <section class="view-panel" id="viewMemory">
-      <div class="game-question-box" style="padding:12px; margin-bottom:12px;">
-        <div class="question-text" style="font-size:17px; margin:0;">Cari 3 Pasang Gambar Sama!</div>
-      </div>
-      <div class="memory-grid" id="memoryGrid"></div>
-    </section>
+<div class="gameCard cardMemory" onclick="startMemory()">
+<div class="icon">🧠</div>
+<div class="info">
+<h3>Kartu Memori</h3>
+<p>Latih ingatan dengan benda yang berbeda-beda</p>
+</div>
+</div>
 
-    <!-- 5. SUSUN KATA VIEW -->
-    <section class="view-panel" id="viewSpelling">
-      <div class="game-question-box">
-        <div class="item-emoji" id="spellingEmoji" style="font-size:60px;">🚜</div>
-        <div class="question-text" style="font-size:17px; margin-top:6px;" id="spellingHint">Susun Kata: EKSKAVATOR</div>
-        <div class="spelling-slots" id="spellingSlots"></div>
-      </div>
-      <div class="letters-pool" id="lettersPool"></div>
-    </section>
+<div class="gameCard cardWords" onclick="startSpelling()">
+<div class="icon">🔤</div>
+<div class="info">
+<h3>Susun Kata</h3>
+<p>Belajar membaca dan mengenal huruf</p>
+</div>
+</div>
 
-    <!-- 6. KAMUS SUARA PINTAR (KATALOG) VIEW -->
-    <section class="view-panel" id="viewCatalog">
-      <div class="category-bar" id="catalogCategoryBar"></div>
-      <div class="catalog-grid" id="catalogGrid"></div>
-    </section>
+<div class="gameCard cardCatalog" onclick="startCatalog()">
+<div class="icon">📚</div>
+<div class="info">
+<h3>Kamus Suara Pintar</h3>
+<p>Temukan benda baru dan dengarkan namanya</p>
+</div>
+</div>
 
-  </main>
+<div class="gameCard cardQuest" onclick="startQuest()">
+<div class="icon">🏆</div>
+<div class="info">
+<h3>Misi Petualangan</h3>
+<p>Tantangan khusus yang selalu berubah</p>
+</div>
+</div>
 
-  <!-- WIN CELEBRATION MODAL -->
-  <div class="modal-overlay" id="winModal">
-    <div class="win-box">
-      <div class="win-icon">🎉</div>
-      <div class="win-title">HEBAT BANGET!</div>
-      <div class="win-desc" id="winModalDesc">Kamu dapat 1 Bintang Emas! ⭐</div>
-      <button class="btn-next" onclick="nextQuestionOrHome()">Lanjut Main! 🚀</button>
-    </div>
-  </div>
+<div class="gameCard cardLearn" onclick="startRandomLearn()">
+<div class="icon">💡</div>
+<div class="info">
+<h3>Belajar Hal Baru</h3>
+<p>Temukan pengetahuan baru secara acak</p>
+</div>
+</div>
+
+<div class="gameCard" style="border-color:#A29BFE" onclick="showCollection()">
+<div class="icon" style="background:#F0EDFF">🎒</div>
+<div class="info">
+<h3>Koleksi Pengetahuan</h3>
+<p>Lihat semua benda yang sudah kamu temukan</p>
+</div>
+</div>
+
+<div class="gameCard" style="border-color:#74B9FF" onclick="showAchievements()">
+<div class="icon" style="background:#EAF5FF">🏅</div>
+<div class="info">
+<h3>Lencana & Prestasi</h3>
+<p>Lihat pencapaianmu di HIDA GAME</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- COUNT -->
+<section class="view" id="countView">
+<div class="question">
+<div class="badgeInfo" id="countCategory">Matematika</div>
+<div class="questionText" id="countQuestion">Ada berapa benda?</div>
+<div class="bigEmoji" id="countItems"></div>
+</div>
+<div class="answers" id="countAnswers"></div>
+</section>
+
+<!-- GUESS -->
+<section class="view" id="guessView">
+<div class="question">
+<div class="badgeInfo" id="guessCategory">Pengetahuan</div>
+<div class="questionText" id="guessQuestion">Manakah gambar yang benar?</div>
+</div>
+<div class="answers" id="guessAnswers"></div>
+</section>
+
+<!-- MEMORY -->
+<section class="view" id="memoryView">
+<div class="question" style="padding:12px">
+<div class="questionText" style="margin:0;font-size:17px" id="memoryTitle">
+Cari pasangan yang sama!
+</div>
+</div>
+<div class="memoryGrid" id="memoryGrid"></div>
+</section>
+
+<!-- SPELLING -->
+<section class="view" id="spellingView">
+<div class="question">
+<div class="bigEmoji" id="spellEmoji">🍎</div>
+<div class="questionText" id="spellHint">Susun kata</div>
+<div class="spellSlots" id="spellSlots"></div>
+</div>
+<div class="letters" id="letters"></div>
+</section>
+
+<!-- CATALOG -->
+<section class="view" id="catalogView">
+<div class="sectionTitle">📚 Ensiklopedia HIDA</div>
+<div class="category" id="categories"></div>
+<div class="catalog" id="catalog"></div>
+</section>
+
+<!-- LEARN -->
+<section class="view" id="learnView">
+<button class="smallBack" onclick="showHome()">← Kembali</button>
+<div class="learnBox">
+<div class="learnEmoji" id="learnEmoji">🌎</div>
+<div class="learnName" id="learnName">Bumi</div>
+<div class="learnCategory" id="learnCategory">Alam</div>
+<div class="fact" id="learnFact">Fakta menarik...</div>
+<button class="btn btnBlue" onclick="nextLearn()">💡 Temukan Hal Lain</button>
+<button class="btn btnGreen" onclick="discoverCurrent()">⭐ Simpan ke Koleksi</button>
+</div>
+</section>
+
+<!-- QUEST -->
+<section class="view" id="questView">
+<div class="sectionTitle">🏆 Misi Petualangan</div>
+<div class="question">
+<div class="bigEmoji">🗺️</div>
+<div class="questionText" id="questQuestion">Misi...</div>
+<div class="fact" id="questHint"></div>
+</div>
+<div class="answers" id="questAnswers"></div>
+</section>
+
+<!-- COLLECTION -->
+<section class="view" id="collectionView">
+<button class="smallBack" onclick="showHome()">← Kembali</button>
+<div class="sectionTitle">🎒 Koleksi Pengetahuan</div>
+<div class="statGrid">
+<div class="stat">
+<div class="statIcon">📚</div>
+<div class="statNumber" id="collectionCount">0</div>
+<div class="statLabel">Benda ditemukan</div>
+</div>
+<div class="stat">
+<div class="statIcon">🌎</div>
+<div class="statNumber" id="collectionTotal">0</div>
+<div class="statLabel">Total dunia HIDA</div>
+</div>
+</div>
+<div class="catalog" id="collectionGrid"></div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="view" id="achievementView">
+<button class="smallBack" onclick="showHome()">← Kembali</button>
+<div class="sectionTitle">🏅 Lencana Prestasi</div>
+<div class="achievementGrid" id="achievementGrid"></div>
+</section>
+
+</main>
+
+<!-- WIN MODAL -->
+<div class="modal" id="modal">
+<div class="modalBox">
+<div class="modalIcon" id="modalIcon">🎉</div>
+<div class="modalTitle" id="modalTitle">HEBAT!</div>
+<div class="modalDesc" id="modalDesc"></div>
+<div class="factModal" id="modalFact"></div>
+<button class="btn btnGreen" onclick="continueGame()">🚀 Lanjut Main</button>
+</div>
+</div>
 
 </div>
 
 <script>
 /* =========================================================
-   HIDA GAME EXPANDED DATABASE & PLAYER LOGIC
+   HIDA GAME V4.0
+   EDUCATIONAL INFINITE CONTENT ENGINE
    ========================================================= */
 
-// DATA PEMAIN
-const PLAYERS = {
-  raina: {
-    fullName: 'Marisa Raina Hidayatullah',
-    nickName: 'Raina',
-    avatar: '👧',
-    bg: 'bgraina.jpg'
-  },
-  fatih: {
-    fullName: 'Muhammad Alfatih Hidayatullah',
-    nickName: 'Alfatih',
-    avatar: '👦',
-    bg: 'bgfatih.jpg'
-  }
+/* =========================
+   PLAYER
+========================= */
+
+const PLAYERS={
+raina:{
+fullName:"Marisa Raina Hidayatullah",
+nick:"Raina",
+avatar:"👧",
+bg:"bgraina.jpg"
+},
+fatih:{
+fullName:"Muhammad Alfatih Hidayatullah",
+nick:"Alfatih",
+avatar:"👦",
+bg:"bgfatih.jpg"
+}
 };
 
-let currentPlayer = null;
+let currentPlayer=null;
 
-// DATABASE KATALOG BENDA (100+ ITEM)
-const DATABASE = {
-  buah: [
-    { name: 'Apel', emoji: '🍎' }, { name: 'Pisang', emoji: '🍌' }, { name: 'Stroberi', emoji: '🍓' },
-    { name: 'Jeruk', emoji: '🍊' }, { name: 'Anggur', emoji: '🍇' }, { name: 'Semangka', emoji: '🍉' },
-    { name: 'Melon', emoji: '🍈' }, { name: 'Nanas', emoji: '🍍' }, { name: 'Mangga', emoji: '🥭' },
-    { name: 'Lemon', emoji: '🍋' }, { name: 'Ceri', emoji: '🍒' }, { name: 'Kiwi', emoji: '🥝' },
-    { name: 'Alpukat', emoji: '🥑' }, { name: 'Kelapa', emoji: '🥥' }, { name: 'Persik', emoji: '🍑' }
-  ],
-  sayur: [
-    { name: 'Wortel', emoji: '🥕' }, { name: 'Jagung', emoji: '🌽' }, { name: 'Brokoli', emoji: '🥦' },
-    { name: 'Terong', emoji: '🍆' }, { name: 'Tomat', emoji: '🍅' }, { name: 'Mentimun', emoji: '🥒' },
-    { name: 'Cabai', emoji: '🌶️' }, { name: 'Bawang', emoji: '🧅' }, { name: 'Jamur', emoji: '🍄' },
-    { name: 'Kentang', emoji: '🥔' }, { name: 'Labu', emoji: '🎃' }
-  ],
-  hewan: [
-    { name: 'Kucing', emoji: '🐱' }, { name: 'Anjing', emoji: '🐶' }, { name: 'Kelinci', emoji: '🐰' },
-    { name: 'Singa', emoji: '🦁' }, { name: 'Harimau', emoji: '🐯' }, { name: 'Gajah', emoji: '🐘' },
-    { name: 'Jerapah', emoji: '🦒' }, { name: 'Sapi', emoji: '🐮' }, { name: 'Kuda', emoji: '🐴' },
-    { name: 'Monyet', emoji: '🐵' }, { name: 'Ayam', emoji: '🐔' }, { name: 'Bebek', emoji: '🦆' },
-    { name: 'Ikan', emoji: '🐟' }, { name: 'Gurita', emoji: '🐙' }, { name: 'Dinosaurus', emoji: '🦕' }
-  ],
-  kendaraan: [
-    { name: 'Mobil', emoji: '🚗' }, { name: 'Mobil Balap', emoji: '🏎️' }, { name: 'Taksi', emoji: '🚕' },
-    { name: 'Bus', emoji: '🚌' }, { name: 'Truk', emoji: '🚚' }, { name: 'Truk Molen', emoji: '🚜' },
-    { name: 'Ekskavator', emoji: '🏗️' }, { name: 'Motor', emoji: '🏍️' }, { name: 'Sepeda', emoji: '🚲' },
-    { name: 'Ambulans', emoji: '🚑' }, { name: 'Polisi', emoji: '🚓' }, { name: 'Pemadam', emoji: '🚒' },
-    { name: 'Pesawat', emoji: '✈️' }, { name: 'Helikopter', emoji: '🚁' }, { name: 'Kereta', emoji: '🚂' },
-    { name: 'Kapal', emoji: '🚢' }
-  ],
-  snack: [
-    { name: 'Es Krim', emoji: '🍦' }, { name: 'Donat', emoji: '🍩' }, { name: 'Cokelat', emoji: '🍫' },
-    { name: 'Permen', emoji: '🍬' }, { name: 'Susu', emoji: '🥛' }, { name: 'Jus', emoji: '🧃' },
-    { name: 'Roti', emoji: '🍞' }, { name: 'Pizza', emoji: '🍕' }, { name: 'Burger', emoji: '🍔' },
-    { name: 'Popcorn', emoji: '🍿' }, { name: 'Kue', emoji: '🎂' }
-  ],
-  bangunan: [
-    { name: 'Rumah', emoji: '🏠' }, { name: 'Sekolah', emoji: '🏫' }, { name: 'Rumah Sakit', emoji: '🏥' },
-    { name: 'Toko', emoji: '🏪' }, { name: 'Masjid', emoji: '🕌' }, { name: 'Gedung', emoji: '🏢' },
-    { name: 'Pintu', emoji: '🚪' }, { name: 'Jendela', emoji: '🪟' }, { name: 'Tangga', emoji: '🪜' },
-    { name: 'Pagar', emoji: '🧱' }
-  ],
-  perabot: [
-    { name: 'Kursi', emoji: '🪑' }, { name: 'Kasur', emoji: '🛏️' }, { name: 'Televisi', emoji: '📺' },
-    { name: 'Lampu', emoji: '💡' }, { name: 'Kipas', emoji: '🌀' }, { name: 'Jam', emoji: '⏰' },
-    { name: 'Cermin', emoji: '🪞' }, { name: 'Telepon', emoji: '☎️' }, { name: 'Kulkas', emoji: '🧊' }
-  ]
+/* =========================
+   DATABASE PENGETAHUAN
+========================= */
+
+const DATABASE={
+
+buah:[
+["Apel","🍎","Buah apel dapat memiliki warna merah, hijau, atau kuning.","Buah"],
+["Pisang","🍌","Pisang tumbuh dalam satu tandan dan merupakan sumber energi.","Buah"],
+["Stroberi","🍓","Stroberi memiliki biji kecil yang terlihat di bagian luarnya.","Buah"],
+["Jeruk","🍊","Jeruk terkenal karena rasanya yang segar dan mengandung vitamin C.","Buah"],
+["Anggur","🍇","Anggur tumbuh bergerombol dalam satu tandan.","Buah"],
+["Semangka","🍉","Semangka memiliki banyak air sehingga terasa sangat menyegarkan.","Buah"],
+["Melon","🍈","Melon biasanya memiliki daging buah yang manis dan berair.","Buah"],
+["Nanas","🍍","Nanas memiliki kulit yang kasar dan daun di bagian atasnya.","Buah"],
+["Mangga","🥭","Mangga memiliki biji besar di bagian tengah buah.","Buah"],
+["Lemon","🍋","Lemon memiliki rasa asam dan sering digunakan untuk minuman.","Buah"],
+["Ceri","🍒","Buah ceri berukuran kecil dan sering berwarna merah.","Buah"],
+["Kiwi","🥝","Bagian dalam kiwi berwarna hijau dengan biji kecil berwarna hitam.","Buah"],
+["Alpukat","🥑","Alpukat memiliki satu biji besar di tengahnya.","Buah"],
+["Kelapa","🥥","Kelapa memiliki tempurung keras yang melindungi daging dan airnya.","Buah"],
+["Pepaya","🧡","Pepaya memiliki daging berwarna oranye dan banyak biji hitam.","Buah"],
+["Durian","🌰","Durian memiliki kulit berduri dan aroma yang sangat khas.","Buah"],
+["Rambutan","🍒","Rambutan mempunyai kulit dengan rambut-rambut lembut.","Buah"],
+["Manggis","🟣","Manggis memiliki kulit berwarna ungu ketika matang.","Buah"],
+["Jambu","🍐","Jambu dapat memiliki daging berwarna putih atau merah muda.","Buah"],
+["Salak","🥭","Kulit salak terlihat seperti sisik dan terasa cukup kasar.","Buah"]
+],
+
+sayur:[
+["Wortel","🥕","Wortel adalah sayuran yang bagian akarnya dapat dimakan.","Sayur"],
+["Jagung","🌽","Jagung memiliki banyak biji yang tersusun pada tongkol.","Sayur"],
+["Brokoli","🥦","Brokoli memiliki bentuk seperti pohon kecil.","Sayur"],
+["Terong","🍆","Terong dapat berwarna ungu dan memiliki bentuk memanjang.","Sayur"],
+["Tomat","🍅","Tomat dapat digunakan sebagai bahan makanan dan masakan.","Sayur"],
+["Mentimun","🥒","Mentimun memiliki kandungan air yang tinggi.","Sayur"],
+["Cabai","🌶️","Cabai memiliki banyak jenis dan tingkat kepedasan berbeda.","Sayur"],
+["Bawang","🧅","Bawang digunakan dalam banyak masakan untuk memberikan aroma.","Sayur"],
+["Jamur","🍄","Jamur bukan tumbuhan dan memiliki banyak jenis.","Sayur"],
+["Kentang","🥔","Kentang adalah umbi yang tumbuh di dalam tanah.","Sayur"],
+["Labu","🎃","Labu dapat berukuran besar dan memiliki banyak biji.","Sayur"],
+["Bayam","🌿","Bayam memiliki daun hijau yang dapat dimasak.","Sayur"],
+["Kembang Kol","🥬","Kembang kol memiliki bagian putih yang berbentuk seperti kumpulan bunga.","Sayur"],
+["Kacang Panjang","🫛","Kacang panjang memiliki bentuk yang panjang dan ramping.","Sayur"],
+["Sawi","🥬","Sawi memiliki daun hijau yang sering digunakan dalam masakan.","Sayur"]
+],
+
+hewan:[
+["Kucing","🐱","Kucing memiliki kumis yang membantu mengenali lingkungan.","Hewan"],
+["Anjing","🐶","Anjing memiliki penciuman yang sangat kuat.","Hewan"],
+["Kelinci","🐰","Kelinci memiliki telinga panjang dan suka memakan tumbuhan.","Hewan"],
+["Singa","🦁","Singa dikenal sebagai salah satu kucing besar.","Hewan"],
+["Harimau","🐯","Setiap harimau mempunyai pola belang yang unik.","Hewan"],
+["Gajah","🐘","Gajah menggunakan belalainya untuk mengambil makanan dan minum.","Hewan"],
+["Jerapah","🦒","Jerapah mempunyai leher yang panjang untuk mencapai daun tinggi.","Hewan"],
+["Sapi","🐮","Sapi termasuk hewan mamalia.","Hewan"],
+["Kuda","🐴","Kuda dapat berlari dengan cepat.","Hewan"],
+["Monyet","🐵","Banyak jenis monyet hidup di pepohonan.","Hewan"],
+["Ayam","🐔","Ayam merupakan burung yang tidak dapat terbang jauh.","Hewan"],
+["Bebek","🦆","Bebek memiliki kaki berselaput yang membantu berenang.","Hewan"],
+["Ikan","🐟","Ikan bernapas menggunakan insang.","Hewan"],
+["Gurita","🐙","Gurita mempunyai delapan lengan.","Hewan"],
+["Dinosaurus","🦕","Dinosaurus hidup di Bumi jauh sebelum manusia.","Hewan"],
+["Kupu-kupu","🦋","Kupu-kupu mengalami perubahan bentuk selama hidupnya.","Hewan"],
+["Lebah","🐝","Lebah membantu penyerbukan banyak tumbuhan.","Hewan"],
+["Katak","🐸","Katak dapat hidup di darat dan tempat yang berair.","Hewan"],
+["Ular","🐍","Ular bergerak dengan menggunakan tubuhnya tanpa kaki.","Hewan"],
+["Buaya","🐊","Buaya termasuk reptil dan banyak hidup di sekitar perairan.","Hewan"],
+["Panda","🐼","Panda terkenal suka memakan bambu.","Hewan"],
+["Penguin","🐧","Penguin adalah burung yang tidak dapat terbang dan pandai berenang.","Hewan"],
+["Lumba-lumba","🐬","Lumba-lumba adalah mamalia yang hidup di laut.","Hewan"],
+["Paus","🐳","Paus adalah mamalia terbesar yang hidup di laut.","Hewan"],
+["Hiu","🦈","Hiu adalah ikan yang memiliki kerangka dari tulang rawan.","Hewan"],
+["Kepiting","🦀","Kepiting mempunyai cangkang keras dan capit.","Hewan"],
+["Bintang Laut","⭐","Bintang laut hidup di lingkungan laut.","Hewan"],
+["Kuda Laut","🐴","Kuda laut adalah hewan laut yang bentuk kepalanya menyerupai kuda.","Hewan"],
+["Merak","🦚","Merak terkenal dengan ekornya yang dapat dibuka lebar.","Hewan"],
+["Burung Hantu","🦉","Burung hantu umumnya aktif pada malam hari.","Hewan"]
+],
+
+kendaraan:[
+["Mobil","🚗","Mobil digunakan untuk membawa orang dan barang melalui jalan.","Kendaraan"],
+["Mobil Balap","🏎️","Mobil balap dibuat untuk mencapai kecepatan tinggi di lintasan.","Kendaraan"],
+["Taksi","🚕","Taksi merupakan kendaraan yang dapat digunakan untuk mengantar penumpang.","Kendaraan"],
+["Bus","🚌","Bus dapat membawa banyak penumpang sekaligus.","Kendaraan"],
+["Truk","🚚","Truk digunakan untuk mengangkut berbagai jenis barang.","Kendaraan"],
+["Truk Molen","🚜","Truk molen digunakan untuk membawa dan mengaduk campuran beton.","Kendaraan"],
+["Ekskavator","🏗️","Ekskavator digunakan untuk menggali dan memindahkan tanah.","Alat Berat"],
+["Motor","🏍️","Sepeda motor biasanya memiliki dua roda.","Kendaraan"],
+["Sepeda","🚲","Sepeda bergerak menggunakan tenaga dari kayuhan.","Kendaraan"],
+["Ambulans","🚑","Ambulans digunakan untuk membantu membawa pasien.","Kendaraan"],
+["Mobil Polisi","🚓","Mobil polisi digunakan oleh petugas kepolisian.","Kendaraan"],
+["Pemadam Kebakaran","🚒","Mobil pemadam membawa peralatan untuk membantu memadamkan kebakaran.","Kendaraan"],
+["Pesawat","✈️","Pesawat dapat terbang di udara dan membawa penumpang.","Kendaraan"],
+["Helikopter","🚁","Helikopter dapat terbang menggunakan baling-baling.","Kendaraan"],
+["Kereta","🚂","Kereta berjalan di atas rel.","Kendaraan"],
+["Kapal","🚢","Kapal digunakan untuk perjalanan atau mengangkut barang melalui air.","Kendaraan"],
+["Perahu","🛶","Perahu dapat digunakan untuk bergerak di atas air.","Kendaraan"],
+["Kapal Selam","🚤","Kapal selam dapat bergerak di bawah permukaan laut.","Kendaraan"],
+["Roket","🚀","Roket digunakan untuk membawa benda menuju luar angkasa.","Kendaraan"],
+["Balon Udara","🎈","Balon udara dapat naik karena udara panas membuatnya mengapung.","Kendaraan"]
+],
+
+makanan:[
+["Es Krim","🍦","Es krim biasanya disajikan dalam keadaan dingin.","Makanan"],
+["Donat","🍩","Donat biasanya memiliki lubang di bagian tengah.","Makanan"],
+["Cokelat","🍫","Cokelat dibuat dari biji kakao yang diolah.","Makanan"],
+["Permen","🍬","Permen biasanya memiliki rasa manis.","Makanan"],
+["Susu","🥛","Susu adalah minuman yang dapat berasal dari hewan maupun tumbuhan.","Minuman"],
+["Jus","🧃","Jus dapat dibuat dari buah yang dihaluskan atau diperas.","Minuman"],
+["Roti","🍞","Roti dibuat dari adonan yang biasanya menggunakan tepung.","Makanan"],
+["Pizza","🍕","Pizza biasanya memiliki adonan, saus, dan berbagai topping.","Makanan"],
+["Burger","🍔","Burger biasanya terdiri dari roti dan isian di tengahnya.","Makanan"],
+["Popcorn","🍿","Popcorn dibuat dari biji jagung yang dipanaskan.","Makanan"],
+["Kue","🎂","Kue sering disajikan pada berbagai acara perayaan.","Makanan"],
+["Nasi","🍚","Nasi merupakan makanan pokok bagi banyak orang di Indonesia.","Makanan"],
+["Telur","🥚","Telur dapat berasal dari berbagai jenis unggas.","Makanan"],
+["Keju","🧀","Keju dibuat dari susu yang diproses.","Makanan"],
+["Madu","🍯","Madu dibuat oleh lebah dari nektar bunga.","Makanan"]
+],
+
+rumah:[
+["Rumah","🏠","Rumah adalah tempat manusia tinggal dan beristirahat.","Bangunan"],
+["Sekolah","🏫","Sekolah adalah tempat belajar dan mendapatkan pengetahuan.","Bangunan"],
+["Rumah Sakit","🏥","Rumah sakit menyediakan layanan kesehatan.","Bangunan"],
+["Toko","🏪","Toko adalah tempat orang membeli berbagai barang.","Bangunan"],
+["Masjid","🕌","Masjid merupakan tempat ibadah umat Islam.","Bangunan"],
+["Gedung","🏢","Gedung dapat digunakan untuk berbagai kegiatan.","Bangunan"],
+["Pintu","🚪","Pintu digunakan sebagai jalan masuk dan keluar suatu ruangan.","Rumah"],
+["Jendela","🪟","Jendela membantu cahaya dan udara masuk ke ruangan.","Rumah"],
+["Tangga","🪜","Tangga digunakan untuk berpindah dari satu tingkat ke tingkat lain.","Rumah"],
+["Pagar","🧱","Pagar dapat digunakan sebagai pembatas suatu area.","Rumah"],
+["Kursi","🪑","Kursi digunakan untuk duduk.","Perabot"],
+["Kasur","🛏️","Kasur digunakan untuk beristirahat atau tidur.","Perabot"],
+["Televisi","📺","Televisi dapat menampilkan gambar dan suara.","Elektronik"],
+["Lampu","💡","Lampu menghasilkan cahaya agar tempat menjadi lebih terang.","Elektronik"],
+["Kipas","🌀","Kipas menghasilkan aliran udara.","Elektronik"],
+["Jam","⏰","Jam digunakan untuk mengetahui waktu.","Perabot"],
+["Cermin","🪞","Cermin memantulkan cahaya sehingga kita dapat melihat bayangan.","Perabot"],
+["Telepon","☎️","Telepon digunakan untuk berkomunikasi.","Elektronik"],
+["Kulkas","🧊","Kulkas digunakan untuk menjaga makanan dan minuman tetap dingin.","Elektronik"],
+["Kompor","🔥","Kompor digunakan untuk memasak makanan.","Perabot"]
+],
+
+sekolah:[
+["Pensil","✏️","Pensil digunakan untuk menulis atau menggambar.","Sekolah"],
+["Buku","📖","Buku berisi tulisan, gambar, atau informasi.","Sekolah"],
+["Penghapus","🧽","Penghapus digunakan untuk menghilangkan tulisan pensil.","Sekolah"],
+["Penggaris","📏","Penggaris membantu membuat garis lurus dan mengukur panjang.","Sekolah"],
+["Tas","🎒","Tas digunakan untuk membawa buku dan perlengkapan.","Sekolah"],
+["Buku Tulis","📓","Buku tulis digunakan untuk mencatat atau mengerjakan tugas.","Sekolah"],
+["Krayon","🖍️","Krayon digunakan untuk mewarnai gambar.","Sekolah"],
+["Gunting","✂️","Gunting digunakan untuk memotong benda tertentu dengan hati-hati.","Alat"],
+["Lem","🧴","Lem digunakan untuk merekatkan benda.","Alat"],
+["Papan Tulis","🧑‍🏫","Papan tulis digunakan guru untuk menjelaskan pelajaran.","Sekolah"],
+["Kapur","⚪","Kapur dapat digunakan untuk menulis pada papan tertentu.","Sekolah"],
+["Rautan","🔪","Rautan digunakan untuk meraut pensil.","Sekolah"]
+],
+
+alam:[
+["Matahari","☀️","Matahari adalah bintang yang menjadi sumber energi utama bagi Bumi.","Alam"],
+["Bulan","🌙","Bulan mengelilingi Bumi.","Alam"],
+["Bintang","⭐","Bintang adalah benda langit yang dapat menghasilkan cahaya sendiri.","Alam"],
+["Awan","☁️","Awan terdiri dari kumpulan tetesan air atau kristal es.","Alam"],
+["Hujan","🌧️","Hujan terjadi ketika air dari atmosfer jatuh ke permukaan Bumi.","Alam"],
+["Pelangi","🌈","Pelangi dapat terlihat ketika cahaya Matahari melewati tetesan air.","Alam"],
+["Gunung","⛰️","Gunung merupakan permukaan Bumi yang menjulang tinggi.","Alam"],
+["Gunung Berapi","🌋","Gunung berapi adalah tempat keluarnya material dari dalam Bumi.","Alam"],
+["Laut","🌊","Laut merupakan perairan asin yang sangat luas.","Alam"],
+["Sungai","🏞️","Sungai merupakan aliran air yang mengalir menuju tempat yang lebih rendah.","Alam"],
+["Pohon","🌳","Pohon membantu menghasilkan oksigen melalui proses fotosintesis.","Alam"],
+["Bunga","🌸","Bunga merupakan bagian tumbuhan yang berperan dalam perkembangbiakan.","Tumbuhan"],
+["Daun","🍃","Daun membantu tumbuhan membuat makanan.","Tumbuhan"],
+["Kaktus","🌵","Kaktus dapat hidup di lingkungan yang kering.","Tumbuhan"],
+["Kelapa Sawit","🌴","Kelapa sawit merupakan tanaman yang banyak dibudidayakan untuk menghasilkan minyak.","Tumbuhan"]
+],
+
+profesi:[
+["Dokter","🧑‍⚕️","Dokter membantu memeriksa dan merawat orang yang sakit.","Profesi"],
+["Guru","🧑‍🏫","Guru membantu siswa belajar dan memahami berbagai pengetahuan.","Profesi"],
+["Polisi","👮","Polisi membantu menjaga keamanan dan ketertiban.","Profesi"],
+["Pemadam","🧑‍🚒","Petugas pemadam membantu menangani kebakaran dan keadaan darurat tertentu.","Profesi"],
+["Pilot","🧑‍✈️","Pilot menerbangkan pesawat.","Profesi"],
+["Masinis","🧑‍🔧","Masinis mengoperasikan kereta api.","Profesi"],
+["Petani","🧑‍🌾","Petani menanam dan merawat tanaman.","Profesi"],
+["Nelayan","🎣","Nelayan mencari atau menangkap ikan dan hasil laut.","Profesi"],
+["Koki","👨‍🍳","Koki menyiapkan dan memasak makanan.","Profesi"],
+["Astronaut","🧑‍🚀","Astronaut dapat melakukan perjalanan dan bekerja di luar angkasa.","Profesi"],
+["Arsitek","📐","Arsitek merancang bangunan.","Profesi"],
+["Mekanik","🔧","Mekanik membantu memeriksa dan memperbaiki kendaraan atau mesin.","Profesi"]
+],
+
+tubuh:[
+["Mata","👁️","Mata membantu manusia melihat.","Tubuh"],
+["Telinga","👂","Telinga membantu manusia mendengar.","Tubuh"],
+["Hidung","👃","Hidung membantu mencium berbagai aroma.","Tubuh"],
+["Mulut","👄","Mulut digunakan untuk berbicara, makan, dan minum.","Tubuh"],
+["Tangan","✋","Tangan membantu kita memegang dan melakukan berbagai kegiatan.","Tubuh"],
+["Kaki","🦶","Kaki membantu tubuh berdiri dan berjalan.","Tubuh"],
+["Jari","☝️","Jari membantu melakukan banyak gerakan kecil.","Tubuh"],
+["Rambut","💇","Rambut tumbuh pada kulit dan bagian tubuh tertentu.","Tubuh"],
+["Gigi","🦷","Gigi membantu menggigit dan mengunyah makanan.","Tubuh"],
+["Jantung","❤️","Jantung memompa darah ke seluruh tubuh.","Tubuh"]
+],
+
+angkasa:[
+["Bumi","🌎","Bumi adalah planet tempat manusia tinggal.","Luar Angkasa"],
+["Mars","🔴","Mars sering disebut sebagai Planet Merah.","Luar Angkasa"],
+["Jupiter","🪐","Jupiter adalah planet terbesar di Tata Surya.","Luar Angkasa"],
+["Saturnus","🪐","Saturnus terkenal karena sistem cincinnya.","Luar Angkasa"],
+["Merkurius","🟤","Merkurius adalah planet yang paling dekat dengan Matahari.","Luar Angkasa"],
+["Venus","🟡","Venus adalah salah satu planet yang paling terang jika dilihat dari Bumi.","Luar Angkasa"],
+["Uranus","🔵","Uranus merupakan planet dengan kemiringan sumbu yang sangat besar.","Luar Angkasa"],
+["Neptunus","🔵","Neptunus adalah salah satu planet terluar Tata Surya.","Luar Angkasa"],
+["Roket","🚀","Roket digunakan untuk membawa muatan ke luar angkasa.","Luar Angkasa"],
+["Astronaut","👨‍🚀","Astronaut adalah orang yang melakukan perjalanan atau bekerja di luar angkasa.","Luar Angkasa"]
+],
+
+warna:[
+["Merah","🔴","Merah adalah salah satu warna dasar yang sering dipelajari anak.","Warna"],
+["Biru","🔵","Biru sering diasosiasikan dengan warna langit yang cerah.","Warna"],
+["Kuning","🟡","Kuning adalah warna cerah seperti warna Matahari dalam gambar anak-anak.","Warna"],
+["Hijau","🟢","Hijau banyak ditemukan pada daun dan tumbuhan.","Warna"],
+["Ungu","🟣","Ungu merupakan warna yang sering ditemukan pada beberapa bunga dan buah.","Warna"],
+["Oranye","🟠","Oranye merupakan warna yang berada di antara merah dan kuning.","Warna"],
+["Putih","⚪","Putih merupakan warna yang banyak digunakan pada benda sehari-hari.","Warna"],
+["Hitam","⚫","Hitam adalah warna yang sangat gelap.","Warna"],
+["Cokelat","🟤","Cokelat banyak terlihat pada tanah dan batang pohon.","Warna"],
+["Merah Muda","🩷","Merah muda merupakan warna yang lebih terang dari merah.","Warna"]
+],
+
+bentuk:[
+["Lingkaran","⚪","Lingkaran adalah bentuk tanpa sudut.","Bentuk"],
+["Segitiga","🔺","Segitiga mempunyai tiga sisi.","Bentuk"],
+["Kotak","🟦","Kotak mempunyai empat sisi dengan panjang yang sama.","Bentuk"],
+["Persegi Panjang","▭","Persegi panjang mempunyai empat sisi dan sisi berhadapan sama panjang.","Bentuk"],
+["Bintang","⭐","Bentuk bintang memiliki beberapa ujung atau sudut.","Bentuk"],
+["Hati","❤️","Bentuk hati sering digunakan sebagai simbol kasih sayang.","Bentuk"],
+["Oval","🥚","Oval menyerupai bentuk telur.","Bentuk"],
+["Bulan Sabit","🌙","Bentuk bulan sabit terlihat seperti bagian melengkung dari lingkaran.","Bentuk"]
+],
+
+olahraga:[
+["Sepak Bola","⚽","Sepak bola dimainkan menggunakan bola dan dua kelompok pemain.","Olahraga"],
+["Basket","🏀","Bola basket dimainkan dengan memasukkan bola ke keranjang.","Olahraga"],
+["Tenis","🎾","Tenis dimainkan menggunakan raket dan bola.","Olahraga"],
+["Bulu Tangkis","🏸","Bulu tangkis menggunakan raket dan kok.","Olahraga"],
+["Renang","🏊","Renang dilakukan di dalam air.","Olahraga"],
+["Bersepeda","🚴","Bersepeda menggunakan sepeda sebagai alat bergerak.","Olahraga"],
+["Lari","🏃","Lari adalah aktivitas bergerak dengan langkah cepat.","Olahraga"],
+["Bola Voli","🏐","Bola voli dimainkan dengan melewatkan bola melewati net.","Olahraga"]
+]
+
 };
 
-function getAllItems() {
-  return Object.values(DATABASE).flat();
+/* =========================
+   NORMALISASI DATABASE
+========================= */
+
+let ITEMS=[];
+
+Object.keys(DATABASE).forEach(cat=>{
+DATABASE[cat].forEach((x,i)=>{
+ITEMS.push({
+id:(cat+"_"+i+"_"+x[0]).toLowerCase().replace(/[^a-z0-9]+/g,"_"),
+name:x[0],
+emoji:x[1],
+fact:x[2],
+category:x[3],
+group:cat
+});
+});
+});
+
+function getAll(){
+return ITEMS;
 }
 
-// APP STATE
-let stars = parseInt(localStorage.getItem('hidagame_stars') || '0');
-let soundEnabled = true;
-let currentGame = '';
+/* =========================
+   STATE
+========================= */
 
-// GAME STATES
-let memoryCards = [];
-let flippedCards = [];
-let matchedPairs = 0;
+let state={
+stars:parseInt(localStorage.getItem("hida_stars")||"0"),
+xp:parseInt(localStorage.getItem("hida_xp")||"0"),
+level:parseInt(localStorage.getItem("hida_level")||"1"),
+games:parseInt(localStorage.getItem("hida_games")||"0"),
+correct:parseInt(localStorage.getItem("hida_correct")||"0"),
+discovered:JSON.parse(localStorage.getItem("hida_discovered")||"[]"),
+streak:parseInt(localStorage.getItem("hida_streak")||"0"),
+lastDate:localStorage.getItem("hida_last_date")||"",
+dailyCount:parseInt(localStorage.getItem("hida_daily_count")||"0"),
+dailyDate:localStorage.getItem("hida_daily_date")||""
+};
 
-let spellingWord = '';
-let currentSpellingInput = [];
+let sound=true;
+let currentGame="";
+let currentItem=null;
+let memoryCards=[];
+let flipped=[];
+let matched=0;
+let spellingWord="";
+let spellingInput=[];
+let questAnswer=null;
 
-// INITIALIZE STAR DISPLAY
-document.getElementById('starCount').textContent = stars;
+/* =========================
+   DAILY SYSTEM
+========================= */
 
-/* ---------------------------------------------------------
-   AUDIO SYNTHESIZER & TEXT-TO-SPEECH WITH PLAYER NAME
-   --------------------------------------------------------- */
-const AudioCtx = window.AudioContext || window.webkitAudioContext;
-let audioCtx = null;
-
-function initAudio() {
-  if (!audioCtx) audioCtx = new AudioCtx();
+function today(){
+return new Date().toISOString().slice(0,10);
 }
 
-function speakText(text) {
-  if (!soundEnabled) return;
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'id-ID';
-    utterance.rate = 0.9;
-    utterance.pitch = 1.1;
-    window.speechSynthesis.speak(utterance);
-  }
-}
+function setupDaily(){
 
-function playSound(type) {
-  if (!soundEnabled) return;
-  initAudio();
-  if (!audioCtx) return;
+let t=today();
 
-  const now = audioCtx.currentTime;
+if(state.dailyDate!==t){
+state.dailyDate=t;
+state.dailyCount=0;
 
-  if (type === 'click') {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(400, now);
-    osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
-    gain.gain.setValueAtTime(0.3, now);
-    gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.08);
-  } 
-  else if (type === 'correct') {
-    const notes = [523.25, 659.25, 783.99, 1046.50];
-    notes.forEach((freq, idx) => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(freq, now + idx * 0.07);
-      gain.gain.setValueAtTime(0.3, now + idx * 0.07);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.25);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(now + idx * 0.07);
-      osc.stop(now + idx * 0.07 + 0.25);
-    });
-  }
-  else if (type === 'wrong') {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(220, now);
-    osc.frequency.linearRampToValueAtTime(180, now + 0.15);
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.15);
-  }
-}
-
-function toggleSound() {
-  soundEnabled = !soundEnabled;
-  const icon = document.getElementById('soundIcon');
-  icon.className = soundEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark';
-  playSound('click');
-}
-
-/* ---------------------------------------------------------
-   PLAYER SELECTION & BACKGROUND MANAGEMENT
-   --------------------------------------------------------- */
-function selectPlayer(playerKey) {
-  playSound('click');
-  currentPlayer = PLAYERS[playerKey];
-  
-  // Set Dynamic Background
-  const viewport = document.getElementById('appViewport');
-  viewport.style.backgroundImage = `url('${currentPlayer.bg}')`;
-
-  // Update Header Badge
-  document.getElementById('playerBadgeAvatar').textContent = currentPlayer.avatar;
-  document.getElementById('playerBadgeName').textContent = currentPlayer.nickName;
-  document.getElementById('playerBadge').style.display = 'flex';
-  
-  // Update Home Subhead
-  document.getElementById('homeSubhead').textContent = `Selamat datang ${currentPlayer.nickName}! Ayo main & belajar!`;
-
-  // Speak Welcome
-  speakText(`Selamat datang di Hida Game, ${currentPlayer.nickName}! Ayo kita mulai!`);
-
-  // Navigate to Home
-  switchView('viewHome');
-}
-
-function showPlayerSelect() {
-  playSound('click');
-  switchView('viewPlayerSelect');
-}
-
-/* ---------------------------------------------------------
-   NAVIGATION
-   --------------------------------------------------------- */
-function switchView(viewId) {
-  document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
-  document.getElementById(viewId).classList.add('active');
-}
-
-function showHome() {
-  playSound('click');
-  if (!currentPlayer) {
-    showPlayerSelect();
-  } else {
-    currentGame = '';
-    switchView('viewHome');
-  }
-}
-
-function addStar() {
-  stars += 1;
-  localStorage.setItem('hidagame_stars', stars);
-  document.getElementById('starCount').textContent = stars;
-}
-
-/* ---------------------------------------------------------
-   1. HITUNG BENDA GAME LOGIC
-   --------------------------------------------------------- */
-function startCountGame() {
-  playSound('click');
-  currentGame = 'count';
-  switchView('viewCount');
-  
-  const all = getAllItems();
-  const chosenItem = all[Math.floor(Math.random() * all.length)];
-  const targetCount = Math.floor(Math.random() * 6) + 1;
-  
-  document.getElementById('countQuestion').textContent = `Ada berapa ${chosenItem.name}?`;
-  speakText(`Ada berapa ${chosenItem.name}?`);
-
-  const displayBox = document.getElementById('countDisplay');
-  displayBox.innerHTML = '';
-  
-  for (let i = 0; i < targetCount; i++) {
-    const span = document.createElement('span');
-    span.className = 'item-emoji';
-    span.textContent = chosenItem.emoji;
-    displayBox.appendChild(span);
-  }
-  
-  let options = [targetCount];
-  while (options.length < 4) {
-    let rand = Math.floor(Math.random() * 6) + 1;
-    if (!options.includes(rand)) options.push(rand);
-  }
-  options.sort(() => Math.random() - 0.5);
-  
-  const answersBox = document.getElementById('countAnswers');
-  answersBox.innerHTML = '';
-  options.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'btn-answer';
-    btn.textContent = opt;
-    btn.onclick = () => checkAnswer(opt, targetCount, `${opt}`);
-    answersBox.appendChild(btn);
-  });
-}
-
-/* ---------------------------------------------------------
-   2. TEBAK GAMBAR GAME LOGIC
-   --------------------------------------------------------- */
-function startGuessGame() {
-  playSound('click');
-  currentGame = 'guess';
-  switchView('viewGuess');
-  
-  const all = getAllItems();
-  const targetObj = all[Math.floor(Math.random() * all.length)];
-  
-  document.getElementById('guessQuestion').textContent = `Manakah gambar ${targetObj.name}?`;
-  speakText(`Manakah gambar ${targetObj.name}?`);
-
-  let options = [targetObj];
-  while (options.length < 4) {
-    let rand = all[Math.floor(Math.random() * all.length)];
-    if (!options.some(o => o.name === rand.name)) options.push(rand);
-  }
-  options.sort(() => Math.random() - 0.5);
-  
-  const answersBox = document.getElementById('guessAnswers');
-  answersBox.innerHTML = '';
-  options.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'btn-answer';
-    btn.innerHTML = `<span style="font-size:42px;">${opt.emoji}</span><span class="ans-label">${opt.name}</span>`;
-    btn.onclick = () => checkAnswer(opt.name, targetObj.name, opt.name);
-    answersBox.appendChild(btn);
-  });
-}
-
-/* ---------------------------------------------------------
-   3. KARTU MEMORI GAME LOGIC
-   --------------------------------------------------------- */
-function startMemoryGame() {
-  playSound('click');
-  currentGame = 'memory';
-  switchView('viewMemory');
-  
-  matchedPairs = 0;
-  flippedCards = [];
-  
-  const all = getAllItems();
-  let chosen = [];
-  while(chosen.length < 3) {
-    let rand = all[Math.floor(Math.random() * all.length)];
-    if (!chosen.some(c => c.name === rand.name)) chosen.push(rand);
-  }
-  
-  let deck = [...chosen, ...chosen];
-  deck.sort(() => Math.random() - 0.5);
-  
-  const grid = document.getElementById('memoryGrid');
-  grid.innerHTML = '';
-  
-  deck.forEach((item, index) => {
-    const card = document.createElement('div');
-    card.className = 'memory-card';
-    card.dataset.name = item.name;
-    card.dataset.emoji = item.emoji;
-    card.textContent = '❓';
-    card.onclick = () => flipMemoryCard(card);
-    grid.appendChild(card);
-  });
-}
-
-function flipMemoryCard(card) {
-  if (flippedCards.length >= 2 || card.classList.contains('flipped') || card.classList.contains('matched')) return;
-  
-  playSound('click');
-  card.classList.add('flipped');
-  card.textContent = card.dataset.emoji;
-  speakText(card.dataset.name);
-
-  flippedCards.push(card);
-  
-  if (flippedCards.length === 2) {
-    const [c1, c2] = flippedCards;
-    if (c1.dataset.name === c2.dataset.name) {
-      playSound('correct');
-      c1.classList.add('matched');
-      c2.classList.add('matched');
-      matchedPairs++;
-      flippedCards = [];
-      
-      if (matchedPairs === 3) {
-        const nick = currentPlayer ? currentPlayer.nickName : '';
-        speakText(`Luar biasa ${nick}! Kamu berhasil menemukan semua pasangan!`);
-        setTimeout(triggerWin, 600);
-      }
-    } else {
-      playSound('wrong');
-      setTimeout(() => {
-        c1.classList.remove('flipped');
-        c2.classList.remove('flipped');
-        c1.textContent = '❓';
-        c2.textContent = '❓';
-        flippedCards = [];
-      }, 900);
-    }
-  }
-}
-
-/* ---------------------------------------------------------
-   4. SUSUN KATA GAME LOGIC
-   --------------------------------------------------------- */
-function startSpellingGame() {
-  playSound('click');
-  currentGame = 'spelling';
-  switchView('viewSpelling');
-  
-  const all = getAllItems().filter(i => i.name.length <= 8 && !i.name.includes(' '));
-  const targetObj = all[Math.floor(Math.random() * all.length)];
-  spellingWord = targetObj.name.toUpperCase();
-  currentSpellingInput = [];
-  
-  document.getElementById('spellingEmoji').textContent = targetObj.emoji;
-  document.getElementById('spellingHint').textContent = `Kata: ${spellingWord}`;
-  speakText(`Susun kata ${targetObj.name}`);
-
-  const slotsBox = document.getElementById('spellingSlots');
-  slotsBox.innerHTML = '';
-  for (let i = 0; i < spellingWord.length; i++) {
-    const slot = document.createElement('div');
-    slot.className = 'letter-slot';
-    slot.id = `slot_${i}`;
-    slotsBox.appendChild(slot);
-  }
-  
-  let letters = spellingWord.split('').sort(() => Math.random() - 0.5);
-  const poolBox = document.getElementById('lettersPool');
-  poolBox.innerHTML = '';
-  
-  letters.forEach((char) => {
-    const btn = document.createElement('button');
-    btn.className = 'btn-letter';
-    btn.textContent = char;
-    btn.onclick = () => selectLetter(char, btn);
-    poolBox.appendChild(btn);
-  });
-}
-
-function selectLetter(char, btnElement) {
-  if (currentSpellingInput.length >= spellingWord.length) return;
-  
-  playSound('click');
-  speakText(char);
-  btnElement.style.visibility = 'hidden';
-  
-  const currentIdx = currentSpellingInput.length;
-  currentSpellingInput.push({ char, btnElement });
-  
-  document.getElementById(`slot_${currentIdx}`).textContent = char;
-  
-  if (currentSpellingInput.length === spellingWord.length) {
-    const builtWord = currentSpellingInput.map(item => item.char).join('');
-    const nick = currentPlayer ? currentPlayer.nickName : '';
-    
-    if (builtWord === spellingWord) {
-      speakText(`Hebat banget ${nick}! Kamu berhasil menyusun kata ${spellingWord}!`);
-      setTimeout(triggerWin, 400);
-    } else {
-      playSound('wrong');
-      speakText(`Susunan katanya masih belum tepat, ${nick}. Coba lagi ya!`);
-      setTimeout(() => {
-        currentSpellingInput.forEach(item => item.btnElement.style.visibility = 'visible');
-        currentSpellingInput = [];
-        for (let i = 0; i < spellingWord.length; i++) {
-          document.getElementById(`slot_${i}`).textContent = '';
-        }
-      }, 900);
-    }
-  }
-}
-
-/* ---------------------------------------------------------
-   5. KAMUS SUARA PINTAR (KATALOG) LOGIC
-   --------------------------------------------------------- */
-const CATEGORIES = [
-  { id: 'semua', label: '🌟 Semua' },
-  { id: 'kendaraan', label: '🚜 Alat Berat & Mobil' },
-  { id: 'buah', label: '🍎 Buah' },
-  { id: 'hewan', label: '🐶 Hewan' },
-  { id: 'sayur', label: '🥕 Sayur' },
-  { id: 'snack', label: '🍦 Snack Alfamart' },
-  { id: 'bangunan', label: '🏠 Bangunan' },
-  { id: 'perabot', label: '🪑 Perabot Rumah' }
+let missions=[
+"Temukan 5 benda baru!",
+"Jawab benar 5 soal!",
+"Temukan 3 hewan!",
+"Belajar 5 benda dari kategori berbeda!",
+"Mainkan 5 tantangan!",
+"Temukan 2 benda yang belum pernah ditemukan!"
 ];
 
-function startCatalogView() {
-  playSound('click');
-  currentGame = 'catalog';
-  switchView('viewCatalog');
-  
-  const bar = document.getElementById('catalogCategoryBar');
-  bar.innerHTML = '';
-  
-  CATEGORIES.forEach((cat, index) => {
-    const chip = document.createElement('div');
-    chip.className = `chip-cat ${index === 0 ? 'active' : ''}`;
-    chip.textContent = cat.label;
-    chip.onclick = () => filterCatalog(cat.id, chip);
-    bar.appendChild(chip);
-  });
-  
-  renderCatalogItems('semua');
+localStorage.setItem("hida_daily_mission",
+missions[Math.floor(Math.random()*missions.length)]);
+
+save();
 }
 
-function filterCatalog(catId, chipElement) {
-  playSound('click');
-  document.querySelectorAll('.chip-cat').forEach(c => c.classList.remove('active'));
-  chipElement.classList.add('active');
-  renderCatalogItems(catId);
+let mission=localStorage.getItem("hida_daily_mission")||"Temukan 5 benda baru!";
+
+document.getElementById("dailyText").textContent=mission;
+
+let target=5;
+
+document.getElementById("dailyProgress").textContent=
+Math.min(state.dailyCount,target)+" / "+target;
 }
 
-function renderCatalogItems(catId) {
-  const grid = document.getElementById('catalogGrid');
-  grid.innerHTML = '';
-  
-  let items = catId === 'semua' ? getAllItems() : (DATABASE[catId] || []);
-  
-  items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'catalog-card';
-    card.innerHTML = `
-      <div class="catalog-emoji">${item.emoji}</div>
-      <div class="catalog-name">${item.name}</div>
-    `;
-    card.onclick = () => {
-      playSound('click');
-      speakText(item.name);
-    };
-    grid.appendChild(card);
-  });
+function dailyProgress(){
+state.dailyCount++;
+save();
+setupDaily();
 }
 
-/* ---------------------------------------------------------
-   GLOBAL ANSWER CHECK & CELEBRATION
-   --------------------------------------------------------- */
-function checkAnswer(selected, correct, spokenWord) {
-  const nick = currentPlayer ? currentPlayer.nickName : '';
-  
-  if (selected === correct) {
-    if (spokenWord) {
-      speakText(`Benar! ${spokenWord}. Hebat sekali, ${nick}!`);
-    } else {
-      speakText(`Jawabanmu benar, ${nick}!`);
-    }
-    triggerWin();
-  } else {
-    speakText(`Jawabanmu salah, ${nick}, coba lagi ya!`);
-    playSound('wrong');
-  }
+/* =========================
+   SAVE
+========================= */
+
+function save(){
+localStorage.setItem("hida_stars",state.stars);
+localStorage.setItem("hida_xp",state.xp);
+localStorage.setItem("hida_level",state.level);
+localStorage.setItem("hida_games",state.games);
+localStorage.setItem("hida_correct",state.correct);
+localStorage.setItem("hida_discovered",JSON.stringify(state.discovered));
+localStorage.setItem("hida_streak",state.streak);
+localStorage.setItem("hida_last_date",state.lastDate);
+localStorage.setItem("hida_daily_count",state.dailyCount);
+localStorage.setItem("hida_daily_date",state.dailyDate);
 }
 
-function triggerWin() {
-  playSound('correct');
-  addStar();
-  launchConfetti();
-  const nick = currentPlayer ? currentPlayer.nickName : '';
-  document.getElementById('winModalDesc').textContent = `Hebat ${nick}, kamu dapat 1 Bintang Emas! ⭐`;
-  document.getElementById('winModal').classList.add('active');
+/* =========================
+   AUDIO
+========================= */
+
+let audioCtx=null;
+
+function initAudio(){
+if(!audioCtx){
+const C=window.AudioContext||window.webkitAudioContext;
+if(C) audioCtx=new C();
+}
 }
 
-function nextQuestionOrHome() {
-  playSound('click');
-  document.getElementById('winModal').classList.remove('active');
-  
-  if (currentGame === 'count') startCountGame();
-  else if (currentGame === 'guess') startGuessGame();
-  else if (currentGame === 'memory') startMemoryGame();
-  else if (currentGame === 'spelling') startSpellingGame();
-  else showHome();
+function playSound(type){
+
+if(!sound)return;
+
+initAudio();
+if(!audioCtx)return;
+
+let now=audioCtx.currentTime;
+
+let freq=type==="correct"?660:type==="wrong"?180:420;
+
+let osc=audioCtx.createOscillator();
+let gain=audioCtx.createGain();
+
+osc.type=type==="correct"?"triangle":"sine";
+osc.frequency.setValueAtTime(freq,now);
+
+gain.gain.setValueAtTime(.22,now);
+gain.gain.exponentialRampToValueAtTime(.001,now+.18);
+
+osc.connect(gain);
+gain.connect(audioCtx.destination);
+
+osc.start();
+osc.stop(now+.18);
+
+if(type==="correct"){
+setTimeout(()=>{
+let o=audioCtx.createOscillator();
+let g=audioCtx.createGain();
+o.type="triangle";
+o.frequency.value=880;
+g.gain.setValueAtTime(.18,audioCtx.currentTime);
+g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.2);
+o.connect(g);
+g.connect(audioCtx.destination);
+o.start();
+o.stop(audioCtx.currentTime+.2);
+},100);
+}
 }
 
-/* ---------------------------------------------------------
-   CANVAS CONFETTI EFFECT
-   --------------------------------------------------------- */
-function launchConfetti() {
-  const canvas = document.getElementById('confettiCanvas');
-  const ctx = canvas.getContext('2d');
-  
-  canvas.width = canvas.parentElement.clientWidth;
-  canvas.height = canvas.parentElement.clientHeight;
-  
-  const particles = [];
-  const colors = ['#FF6B81', '#FFD15C', '#4D96FF', '#6BCB77', '#9B51E0', '#00CEC9'];
-  
-  for (let i = 0; i < 70; i++) {
-    particles.push({
-      x: canvas.width / 2,
-      y: canvas.height / 2,
-      vx: (Math.random() - 0.5) * 14,
-      vy: (Math.random() - 0.7) * 16,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      size: Math.random() * 8 + 6,
-      gravity: 0.35
-    });
-  }
-  
-  let animationFrame;
-  function render() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    let active = false;
-    
-    particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += p.gravity;
-      
-      if (p.y < canvas.height) active = true;
-      
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fill();
-    });
-    
-    if (active) {
-      animationFrame = requestAnimationFrame(render);
-    } else {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      cancelAnimationFrame(animationFrame);
-    }
-  }
-  
-  render();
+function speak(text){
+
+if(!sound)return;
+
+if("speechSynthesis" in window){
+
+speechSynthesis.cancel();
+
+let u=new SpeechSynthesisUtterance(text);
+
+u.lang="id-ID";
+u.rate=.88;
+u.pitch=1.08;
+
+speechSynthesis.speak(u);
 }
+}
+
+function toggleSound(){
+
+sound=!sound;
+
+document.getElementById("soundIcon").className=
+sound?"fa-solid fa-volume-high":"fa-solid fa-volume-xmark";
+
+if(sound)playSound("click");
+}
+
+/* =========================
+   PLAYER
+========================= */
+
+function selectPlayer(key){
+
+playSound("click");
+
+currentPlayer=PLAYERS[key];
+
+document.getElementById("badgeAvatar").textContent=currentPlayer.avatar;
+document.getElementById("badgeName").textContent=currentPlayer.nick;
+document.getElementById("playerBadge").style.display="flex";
+
+document.getElementById("welcomeText").textContent=
+`Halo ${currentPlayer.nick}! Yuk jelajahi dunia! 🌎`;
+
+document.getElementById("app").style.backgroundImage=
+`url('${currentPlayer.bg}')`;
+
+updateUI();
+
+switchView("homeView");
+
+speak(`Selamat datang ${currentPlayer.nick}! Yuk bermain dan belajar!`);
+}
+
+function showPlayerSelect(){
+switchView("playerView");
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function switchView(id){
+
+document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+
+let el=document.getElementById(id);
+
+if(el)el.classList.add("active");
+
+document.querySelector(".main").scrollTop=0;
+}
+
+function showHome(){
+
+playSound("click");
+
+if(!currentPlayer){
+switchView("playerView");
+}else{
+currentGame="";
+updateUI();
+switchView("homeView");
+}
+}
+
+/* =========================
+   XP / LEVEL / STARS
+========================= */
+
+function xpNeeded(){
+return 100+(state.level-1)*50;
+}
+
+function addReward(){
+
+state.stars++;
+state.xp+=20;
+state.correct++;
+
+let levelUp=false;
+
+while(state.xp>=xpNeeded()){
+state.xp-=xpNeeded();
+state.level++;
+levelUp=true;
+}
+
+state.games++;
+
+dailyProgress();
+save();
+updateUI();
+
+return levelUp;
+}
+
+function updateUI(){
+
+document.getElementById("stars").textContent=state.stars;
+
+let need=xpNeeded();
+
+document.getElementById("levelText").textContent=
+"Level "+state.level;
+
+document.getElementById("xpText").textContent=
+state.xp+" / "+need+" XP";
+
+document.getElementById("xpBar").style.width=
+Math.min(100,state.xp/need*100)+"%";
+
+setupDaily();
+}
+
+/* =========================
+   RANDOM ENGINE
+========================= */
+
+let recent=[];
+
+function randomItem(filter=null){
+
+let pool=filter?
+ITEMS.filter(i=>i.group===filter||i.category===filter):
+ITEMS;
+
+let available=pool.filter(i=>!recent.includes(i.id));
+
+if(available.length<5){
+recent=[];
+available=pool;
+}
+
+let item=available[Math.floor(Math.random()*available.length)];
+
+recent.push(item.id);
+
+if(recent.length>25)recent.shift();
+
+return item;
+}
+
+function randomDifferent(item,pool){
+
+let x;
+
+do{
+x=pool[Math.floor(Math.random()*pool.length)];
+}while(x.id===item.id);
+
+return x;
+}
+
+/* =========================
+   DISCOVERY
+========================= */
+
+function discover(item){
+
+if(!item)return;
+
+let isNew=!state.discovered.includes(item.id);
+
+if(isNew){
+
+state.discovered.push(item.id);
+
+save();
+
+return true;
+}
+
+return false;
+}
+
+function rewardItem(item){
+
+let isNew=discover(item);
+
+let fact=document.getElementById("modalFact");
+
+if(isNew){
+
+fact.style.display="block";
+
+fact.innerHTML=
+`💡 <b>Pengetahuan baru!</b><br>${item.fact}`;
+
+}else{
+
+fact.style.display="none";
+}
+
+return isNew;
+}
+
+/* =========================
+   WIN
+========================= */
+
+function win(item=null){
+
+playSound("correct");
+
+let levelUp=addReward();
+
+let isNew=false;
+
+if(item)isNew=rewardItem(item);
+
+launchConfetti();
+
+let nick=currentPlayer?currentPlayer.nick:"Teman";
+
+document.getElementById("modalIcon").textContent=
+levelUp?"🚀":"🎉";
+
+document.getElementById("modalTitle").textContent=
+levelUp?"NAIK LEVEL!":"HEBAT!";
+
+let text=
+`Hebat ${nick}! Kamu mendapatkan ⭐ 1 dan +20 XP.`;
+
+if(isNew)text+=" Kamu menemukan pengetahuan baru!";
+
+if(levelUp)
+text+=` Sekarang kamu Level ${state.level}!`;
+
+document.getElementById("modalDesc").textContent=text;
+
+document.getElementById("modal").classList.add("show");
+}
+
+function closeModal(){
+
+document.getElementById("modal").classList.remove("show");
+}
+
+function continueGame(){
+
+closeModal();
+
+if(currentGame==="count")startCount();
+else if(currentGame==="guess")startGuess();
+else if(currentGame==="memory")startMemory();
+else if(currentGame==="spelling")startSpelling();
+else if(currentGame==="quest")startQuest();
+else if(currentGame==="learn")nextLearn();
+else showHome();
+}
+
+/* =========================
+   COUNT GAME
+========================= */
+
+function startCount(){
+
+currentGame="count";
+
+switchView("countView");
+
+let item=randomItem();
+
+let max=state.level<3?5:state.level<7?8:10;
+
+let target=Math.floor(Math.random()*max)+1;
+
+document.getElementById("countCategory").textContent=
+item.category;
+
+document.getElementById("countQuestion").textContent=
+`Ada berapa ${item.name}?`;
+
+let box=document.getElementById("countItems");
+
+box.innerHTML="";
+
+for(let i=0;i<target;i++){
+
+let e=document.createElement("span");
+
+e.textContent=item.emoji;
+e.style.fontSize="45px";
+e.style.margin="3px";
+
+box.appendChild(e);
+}
+
+let options=[target];
+
+while(options.length<4){
+
+let n=Math.floor(Math.random()*max)+1;
+
+if(!options.includes(n))options.push(n);
+}
+
+options.sort(()=>Math.random()-.5);
+
+let answers=document.getElementById("countAnswers");
+
+answers.innerHTML="";
+
+options.forEach(n=>{
+
+let b=document.createElement("button");
+
+b.className="answer";
+b.textContent=n;
+
+b.onclick=()=>{
+
+if(n===target){
+
+b.classList.add("correct");
+
+speak(`Benar! Ada ${target} ${item.name}.`);
+
+setTimeout(()=>win(item),250);
+
+}else{
+
+b.classList.add("wrong");
+
+playSound("wrong");
+
+speak("Belum tepat. Coba lagi ya!");
+
+setTimeout(()=>b.classList.remove("wrong"),500);
+}
+};
+
+answers.appendChild(b);
+});
+
+speak(`Ada berapa ${item.name}?`);
+}
+
+/* =========================
+   GUESS GAME
+========================= */
+
+function startGuess(){
+
+currentGame="guess";
+
+switchView("guessView");
+
+let item=randomItem();
+
+document.getElementById("guessCategory").textContent=item.category;
+
+document.getElementById("guessQuestion").textContent=
+`Manakah gambar ${item.name}?`;
+
+let options=[item];
+
+while(options.length<4){
+
+let x=randomItem();
+
+if(!options.some(o=>o.id===x.id))
+options.push(x);
+}
+
+options.sort(()=>Math.random()-.5);
+
+let box=document.getElementById("guessAnswers");
+
+box.innerHTML="";
+
+options.forEach(x=>{
+
+let b=document.createElement("button");
+
+b.className="answer";
+
+b.innerHTML=
+`<span style="font-size:43px">${x.emoji}</span>
+<span class="label">${x.name}</span>`;
+
+b.onclick=()=>{
+
+if(x.id===item.id){
+
+b.classList.add("correct");
+
+speak(`Benar! Ini ${item.name}.`);
+
+setTimeout(()=>win(item),250);
+
+}else{
+
+b.classList.add("wrong");
+
+playSound("wrong");
+
+speak(`Belum tepat. Coba lagi!`);
+
+setTimeout(()=>b.classList.remove("wrong"),500);
+}
+};
+
+box.appendChild(b);
+});
+
+speak(`Manakah gambar ${item.name}?`);
+}
+
+/* =========================
+   MEMORY GAME
+========================= */
+
+function startMemory(){
+
+currentGame="memory";
+
+switchView("memoryView");
+
+flipped=[];
+matched=0;
+
+let pairs=state.level<4?3:state.level<8?4:6;
+
+document.getElementById("memoryTitle").textContent=
+`Cari ${pairs} pasangan gambar yang sama!`;
+
+let chosen=[];
+
+while(chosen.length<pairs){
+
+let item=randomItem();
+
+if(!chosen.some(x=>x.id===item.id))
+chosen.push(item);
+}
+
+let deck=[...chosen,...chosen];
+
+deck.sort(()=>Math.random()-.5);
+
+memoryCards=deck;
+
+let grid=document.getElementById("memoryGrid");
+
+grid.style.gridTemplateColumns=
+pairs>=6?"repeat(4,1fr)":"repeat(3,1fr)";
+
+grid.innerHTML="";
+
+deck.forEach((item,index)=>{
+
+let b=document.createElement("button");
+
+b.className="memoryCard";
+
+b.textContent="❓";
+
+b.dataset.id=item.id;
+
+b.dataset.name=item.name;
+
+b.dataset.emoji=item.emoji;
+
+b.onclick=()=>flipCard(b);
+
+grid.appendChild(b);
+});
+}
+
+function flipCard(card){
+
+if(flipped.length>=2)return;
+
+if(card.classList.contains("flipped")||
+card.classList.contains("matched"))return;
+
+playSound("click");
+
+card.classList.add("flipped");
+
+card.textContent=card.dataset.emoji;
+
+flipped.push(card);
+
+speak(card.dataset.name);
+
+if(flipped.length===2){
+
+let a=flipped[0];
+let b=flipped[1];
+
+if(a.dataset.id===b.dataset.id){
+
+a.classList.add("matched");
+b.classList.add("matched");
+
+matched++;
+
+flipped=[];
+
+playSound("correct");
+
+if(matched===memoryCards.length/2){
+
+let item=ITEMS.find(x=>x.id===a.dataset.id);
+
+setTimeout(()=>win(item),500);
+}
+
+}else{
+
+playSound("wrong");
+
+setTimeout(()=>{
+
+a.classList.remove("flipped");
+b.classList.remove("flipped");
+
+a.textContent="❓";
+b.textContent="❓";
+
+flipped=[];
+
+},800);
+}
+}
+}
+
+/* =========================
+   SPELLING
+========================= */
+
+function startSpelling(){
+
+currentGame="spelling";
+
+switchView("spellingView");
+
+let maxLength=state.level<4?6:state.level<8?8:12;
+
+let candidates=ITEMS.filter(x=>
+x.name.replace(/\s/g,"").length>=3 &&
+x.name.replace(/\s/g,"").length<=maxLength &&
+!/[^a-zA-Z ]/.test(x.name)
+);
+
+let item=candidates[Math.floor(Math.random()*candidates.length)];
+
+currentItem=item;
+
+spellingWord=item.name
+.toUpperCase()
+.replace(/\s/g,"");
+
+spellingInput=[];
+
+document.getElementById("spellEmoji").textContent=item.emoji;
+
+document.getElementById("spellHint").textContent=
+`Susun kata: ${item.name}`;
+
+let slots=document.getElementById("spellSlots");
+
+slots.innerHTML="";
+
+for(let i=0;i<spellingWord.length;i++){
+
+let s=document.createElement("div");
+
+s.className="slot";
+s.id="slot"+i;
+
+slots.appendChild(s);
+}
+
+let chars=spellingWord.split("");
+
+/* tambah huruf pengecoh untuk level lebih tinggi */
+
+if(state.level>=5){
+
+let extra="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+while(chars.length<spellingWord.length+2){
+
+let c=extra[Math.floor(Math.random()*extra.length)];
+
+if(!chars.includes(c)||Math.random()>.5)
+chars.push(c);
+}
+}
+
+chars.sort(()=>Math.random()-.5);
+
+let pool=document.getElementById("letters");
+
+pool.innerHTML="";
+
+chars.forEach((char,index)=>{
+
+let b=document.createElement("button");
+
+b.className="letter";
+b.textContent=char;
+
+b.onclick=()=>selectLetter(char,b);
+
+pool.appendChild(b);
+});
+
+speak(`Susun kata ${item.name}`);
+}
+
+function selectLetter(char,button){
+
+if(spellingInput.length>=spellingWord.length)return;
+
+playSound("click");
+
+button.disabled=true;
+button.style.opacity=".35";
+
+let i=spellingInput.length;
+
+spellingInput.push({
+char:char,
+button:button
+});
+
+document.getElementById("slot"+i).textContent=char;
+
+speak(char);
+
+if(spellingInput.length===spellingWord.length){
+
+let answer=spellingInput.map(x=>x.char).join("");
+
+if(answer===spellingWord){
+
+setTimeout(()=>win(currentItem),350);
+
+}else{
+
+playSound("wrong");
+
+speak("Belum tepat. Coba susun lagi!");
+
+setTimeout(()=>{
+
+spellingInput.forEach(x=>{
+x.button.disabled=false;
+x.button.style.opacity="1";
+});
+
+spellingInput=[];
+
+for(let i=0;i<spellingWord.length;i++)
+document.getElementById("slot"+i).textContent="";
+
+},700);
+}
+}
+}
+
+/* =========================
+   CATALOG
+========================= */
+
+const CATEGORIES=[
+["semua","🌟 Semua"],
+["buah","🍎 Buah"],
+["sayur","🥕 Sayur"],
+["hewan","🐾 Hewan"],
+["kendaraan","🚗 Kendaraan"],
+["makanan","🍔 Makanan"],
+["rumah","🏠 Rumah"],
+["sekolah","🎒 Sekolah"],
+["alam","🌎 Alam"],
+["profesi","👩‍🚀 Profesi"],
+["tubuh","🧠 Tubuh"],
+["angkasa","🚀 Angkasa"],
+["warna","🎨 Warna"],
+["bentuk","🔺 Bentuk"],
+["olahraga","⚽ Olahraga"]
+];
+
+function startCatalog(){
+
+switchView("catalogView");
+
+let bar=document.getElementById("categories");
+
+bar.innerHTML="";
+
+CATEGORIES.forEach((c,i)=>{
+
+let b=document.createElement("button");
+
+b.className="chip"+(i===0?" active":"");
+
+b.textContent=c[1];
+
+b.onclick=()=>{
+
+document.querySelectorAll(".chip")
+.forEach(x=>x.classList.remove("active"));
+
+b.classList.add("active");
+
+renderCatalog(c[0]);
+};
+
+bar.appendChild(b);
+});
+
+renderCatalog("semua");
+}
+
+function renderCatalog(category){
+
+let grid=document.getElementById("catalog");
+
+grid.innerHTML="";
+
+let items=category==="semua"?
+ITEMS:
+ITEMS.filter(x=>x.group===category);
+
+items.forEach(item=>{
+
+let card=document.createElement("div");
+
+let discovered=state.discovered.includes(item.id);
+
+card.className="catalogCard"+
+(discovered?" discovered":"");
+
+card.innerHTML=`
+<div class="catalogEmoji">${item.emoji}</div>
+<div class="catalogName">${item.name}</div>
+${discovered?'<div style="font-size:9px;color:#388E3C;font-weight:900">✓ DITEMUKAN</div>':''}
+`;
+
+card.onclick=()=>showLearn(item);
+
+grid.appendChild(card);
+});
+}
+
+/* =========================
+   LEARNING MODE
+========================= */
+
+function startRandomLearn(){
+
+currentGame="learn";
+
+switchView("learnView");
+
+nextLearn();
+}
+
+function showLearn(item){
+
+currentItem=item;
+
+switchView("learnView");
+
+document.getElementById("learnEmoji").textContent=item.emoji;
+document.getElementById("learnName").textContent=item.name;
+document.getElementById("learnCategory").textContent=item.category;
+document.getElementById("learnFact").textContent=item.fact;
+
+speak(`${item.name}. ${item.fact}`);
+}
+
+function nextLearn(){
+
+let item=randomItem();
+
+showLearn(item);
+}
+
+function discoverCurrent(){
+
+if(!currentItem)return;
+
+let isNew=discover(currentItem);
+
+if(isNew){
+
+state.stars++;
+state.xp+=10;
+
+while(state.xp>=xpNeeded()){
+
+state.xp-=xpNeeded();
+state.level++;
+}
+
+save();
+updateUI();
+
+launchConfetti();
+
+speak(`Hebat! Kamu menemukan ${currentItem.name}!`);
+
+document.getElementById("learnFact").textContent=
+`⭐ Disimpan ke koleksi! ${currentItem.fact}`;
+
+}else{
+
+speak(`Kamu sudah menemukan ${currentItem.name} sebelumnya.`);
+}
+}
+
+/* =========================
+   QUEST / MISSION GAME
+========================= */
+
+function startQuest(){
+
+currentGame="quest";
+
+switchView("questView");
+
+let quests=[
+
+{
+q:"Manakah hewan yang hidup di laut?",
+a:["Paus","Kucing","Ayam","Kuda"],
+correct:"Paus",
+hint:"Hewan ini bernapas dengan paru-paru meskipun hidup di laut."
+},
+
+{
+q:"Manakah benda yang digunakan untuk menulis?",
+a:["Pensil","Bola","Sendok","Sepatu"],
+correct:"Pensil",
+hint:"Benda ini sering digunakan anak-anak di sekolah."
+},
+
+{
+q:"Manakah yang dapat terbang?",
+a:["Pesawat","Kapal","Kereta","Sepeda"],
+correct:"Pesawat",
+hint:"Kendaraan ini bergerak di udara."
+},
+
+{
+q:"Manakah yang tumbuh di dalam tanah?",
+a:["Kentang","Apel","Anggur","Jeruk"],
+correct:"Kentang",
+hint:"Benda ini merupakan umbi."
+},
+
+{
+q:"Manakah planet tempat kita tinggal?",
+a:["Bumi","Mars","Jupiter","Saturnus"],
+correct:"Bumi",
+hint:"Planet ini memiliki air, daratan, dan kehidupan."
+},
+
+{
+q:"Manakah yang memiliki delapan lengan?",
+a:["Gurita","Kuda","Gajah","Ayam"],
+correct:"Gurita",
+hint:"Hewan ini hidup di laut."
+},
+
+{
+q:"Manakah alat untuk mengetahui waktu?",
+a:["Jam","Pensil","Kursi","Piring"],
+correct:"Jam",
+hint:"Benda ini memiliki angka atau penunjuk waktu."
+},
+
+{
+q:"Manakah yang menghasilkan cahaya sendiri?",
+a:["Matahari","Bulan","Awan","Gunung"],
+correct:"Matahari",
+hint:"Benda langit ini adalah sebuah bintang."
+}
+
+];
+
+let q=quests[Math.floor(Math.random()*quests.length)];
+
+document.getElementById("questQuestion").textContent=q.q;
+document.getElementById("questHint").textContent="💡 "+q.hint;
+
+let box=document.getElementById("questAnswers");
+
+box.innerHTML="";
+
+q.a.sort(()=>Math.random()-.5);
+
+q.a.forEach(answer=>{
+
+let b=document.createElement("button");
+
+b.className="answer";
+b.innerHTML=`<span style="font-size:28px">❓</span><span class="label">${answer}</span>`;
+
+b.onclick=()=>{
+
+if(answer===q.correct){
+
+b.classList.add("correct");
+
+let item=ITEMS.find(x=>
+x.name.toLowerCase()===answer.toLowerCase()
+);
+
+setTimeout(()=>win(item),300);
+
+}else{
+
+b.classList.add("wrong");
+
+playSound("wrong");
+
+speak("Belum tepat. Coba lagi!");
+
+setTimeout(()=>b.classList.remove("wrong"),500);
+}
+};
+
+box.appendChild(b);
+});
+
+speak(q.q);
+}
+
+/* =========================
+   COLLECTION
+========================= */
+
+function showCollection(){
+
+switchView("collectionView");
+
+document.getElementById("collectionCount").textContent=
+state.discovered.length;
+
+document.getElementById("collectionTotal").textContent=
+ITEMS.length;
+
+let grid=document.getElementById("collectionGrid");
+
+grid.innerHTML="";
+
+let found=ITEMS.filter(x=>state.discovered.includes(x.id));
+
+if(found.length===0){
+
+grid.innerHTML=`
+<div class="empty" style="grid-column:1/-1">
+🎒 Koleksimu masih kosong.<br>
+Yuk mulai menemukan benda baru!
+</div>`;
+
+return;
+}
+
+found.forEach(item=>{
+
+let card=document.createElement("div");
+
+card.className="catalogCard discovered";
+
+card.innerHTML=`
+<div class="catalogEmoji">${item.emoji}</div>
+<div class="catalogName">${item.name}</div>
+`;
+
+card.onclick=()=>showLearn(item);
+
+grid.appendChild(card);
+});
+}
+
+/* =========================
+   ACHIEVEMENTS
+========================= */
+
+const ACHIEVEMENTS=[
+["🌱","Pemula","Main pertama kali",s=>s.games>=1],
+["⭐","Bintang 10","Kumpulkan 10 bintang",s=>s.stars>=10],
+["🌟","Bintang 50","Kumpulkan 50 bintang",s=>s.stars>=50],
+["📚","Penjelajah","Temukan 20 benda",s=>s.discovered.length>=20],
+["🔭","Ilmuwan Kecil","Temukan 50 benda",s=>s.discovered.length>=50],
+["🌎","Penjelajah Dunia","Temukan 100 benda",s=>s.discovered.length>=100],
+["🧠","Jago Memori","Jawab 20 soal",s=>s.correct>=20],
+["🚀","Naik Tinggi","Capai Level 5",s=>s.level>=5],
+["🏆","Hebat Sekali","Capai Level 10",s=>s.level>=10],
+["💡","Penasaran","Belajar 10 fakta",s=>s.discovered.length>=10],
+["🔥","Rajin Main","Main 30 kali",s=>s.games>=30],
+["👑","Master HIDA","Temukan 200 benda",s=>s.discovered.length>=200]
+];
+
+function showAchievements(){
+
+switchView("achievementView");
+
+let grid=document.getElementById("achievementGrid");
+
+grid.innerHTML="";
+
+ACHIEVEMENTS.forEach(a=>{
+
+let unlocked=a[3](state);
+
+let div=document.createElement("div");
+
+div.className="achievement"+(unlocked?" unlocked":"");
+
+div.innerHTML=`
+<i>${a[0]}</i>
+<b>${a[1]}</b>
+<div style="font-size:8px;margin-top:2px">${a[2]}</div>
+`;
+
+grid.appendChild(div);
+});
+}
+
+/* =========================
+   CONFETTI
+========================= */
+
+function launchConfetti(){
+
+let canvas=document.getElementById("confetti");
+
+canvas.width=document.getElementById("app").clientWidth;
+canvas.height=document.getElementById("app").clientHeight;
+
+let ctx=canvas.getContext("2d");
+
+let colors=[
+"#FF6B81",
+"#FFD15C",
+"#4D96FF",
+"#6BCB77",
+"#9B51E0",
+"#00CEC9"
+];
+
+let particles=[];
+
+for(let i=0;i<80;i++){
+
+particles.push({
+x:canvas.width/2,
+y:canvas.height*.45,
+vx:(Math.random()-.5)*14,
+vy:(Math.random()-.8)*15,
+size:Math.random()*7+4,
+color:colors[Math.floor(Math.random()*colors.length)],
+life:100
+});
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+let alive=false;
+
+particles.forEach(p=>{
+
+p.x+=p.vx;
+p.y+=p.vy;
+p.vy+=.35;
+p.life--;
+
+if(p.life>0)alive=true;
+
+ctx.fillStyle=p.color;
+
+ctx.fillRect(p.x,p.y,p.size,p.size);
+});
+
+if(alive){
+requestAnimationFrame(draw);
+}else{
+ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+}
+
+draw();
+}
+
+/* =========================
+   INIT
+========================= */
+
+function init(){
+
+setupDaily();
+updateUI();
+
+let savedPlayer=localStorage.getItem("hida_player");
+
+if(savedPlayer && PLAYERS[savedPlayer]){
+
+currentPlayer=PLAYERS[savedPlayer];
+
+document.getElementById("badgeAvatar").textContent=
+currentPlayer.avatar;
+
+document.getElementById("badgeName").textContent=
+currentPlayer.nick;
+
+document.getElementById("playerBadge").style.display="flex";
+
+document.getElementById("welcomeText").textContent=
+`Halo ${currentPlayer.nick}! Yuk jelajahi dunia! 🌎`;
+
+switchView("homeView");
+
+}else{
+
+switchView("playerView");
+}
+}
+
+/* simpan pemain setiap memilih */
+
+const originalSelectPlayer=selectPlayer;
+
+selectPlayer=function(key){
+
+localStorage.setItem("hida_player",key);
+
+originalSelectPlayer(key);
+};
+
+init();
+
 </script>
 
 </body>
