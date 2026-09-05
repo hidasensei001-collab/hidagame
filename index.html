@@ -397,7 +397,6 @@ line-height:1.25;
 margin-bottom:10px;
 }
 
-/* PERBAIKAN: flex-wrap ditambahkan agar benda tidak terpotong di HP */
 .bigEmoji{
 font-size:45px;
 min-height:90px;
@@ -1071,7 +1070,7 @@ Cari pasangan yang sama!
 
 <script>
 /* =========================================================
-   HIDA GAME V4.1 — FIXED & OPTIMIZED
+   HIDA GAME V4.3 — STRICT 100% UNICODE EMOJI ACCURACY
    ========================================================= */
 
 const PLAYERS={
@@ -1091,251 +1090,257 @@ bg:"bgfatih.jpg"
 
 let currentPlayer=null;
 
+/* DATABASE PENGETAHUAN DENGAN HANYA ITEM YANG MEMILIKI EMOJI PRESISI 100% */
 const DATABASE={
 buah:[
-["Apel","🍎","Buah apel dapat memiliki warna merah, hijau, atau kuning.","Buah"],
-["Pisang","🍌","Pisang tumbuh dalam satu tandan dan merupakan sumber energi.","Buah"],
-["Stroberi","🍓","Stroberi memiliki biji kecil yang terlihat di bagian luarnya.","Buah"],
-["Jeruk","🍊","Jeruk terkenal karena rasanya yang segar dan mengandung vitamin C.","Buah"],
-["Anggur","🍇","Anggur tumbuh bergerombol dalam satu tandan.","Buah"],
-["Semangka","🍉","Semangka memiliki banyak air sehingga terasa sangat menyegarkan.","Buah"],
-["Melon","🍈","Melon biasanya memiliki daging buah yang manis dan berair.","Buah"],
-["Nanas","🍍","Nanas memiliki kulit yang kasar dan daun di bagian atasnya.","Buah"],
-["Mangga","🥭","Mangga memiliki biji besar di bagian tengah buah.","Buah"],
-["Lemon","🍋","Lemon memiliki rasa asam dan sering digunakan untuk minuman.","Buah"],
-["Ceri","🍒","Buah ceri berukuran kecil dan sering berwarna merah.","Buah"],
-["Kiwi","🥝","Bagian dalam kiwi berwarna hijau dengan biji kecil berwarna hitam.","Buah"],
-["Alpukat","🥑","Alpukat memiliki satu biji besar di tengahnya.","Buah"],
-["Kelapa","🥥","Kelapa memiliki tempurung keras yang melindungi daging dan airnya.","Buah"],
-["Pepaya","🍈","Pepaya memiliki daging berwarna oranye dan banyak biji hitam.","Buah"],
-["Durian","🌰","Durian memiliki kulit berduri dan aroma yang sangat khas.","Buah"],
-["Rambutan","🍒","Rambutan mempunyai kulit dengan rambut-rambut lembut.","Buah"],
-["Manggis","🍇","Manggis memiliki kulit berwarna ungu ketika matang.","Buah"],
-["Jambu","🍐","Jambu dapat memiliki daging berwarna putih atau merah muda.","Buah"],
-["Salak","🥭","Kulit salak terlihat seperti sisik dan terasa cukup kasar.","Buah"]
+["Apel","🍎","Buah apel segar berwarna merah, hijau, atau kuning.","Buah"],
+["Pisang","🍌","Pisang tumbuh dalam tandan dan kaya akan kalium.","Buah"],
+["Stroberi","🍓","Stroberi memiliki biji-biji kecil di bagian luar kulitnya.","Buah"],
+["Jeruk","🍊","Jeruk kaya akan vitamin C yang baik untuk daya tahan tubuh.","Buah"],
+["Anggur","🍇","Anggur tumbuh bergerombol dalam satu tangkai.","Buah"],
+["Semangka","🍉","Semangka memiliki daging merah manis dan kaya air.","Buah"],
+["Melon","🍈","Melon memiliki daging buah manis yang sangat menyegarkan.","Buah"],
+["Nanas","🍍","Nanas memiliki kulit bersisik tajam dan daun mahkota di atasnya.","Buah"],
+["Mangga","🥭","Mangga adalah buah manis beraroma harum dengan biji besar di tengah.","Buah"],
+["Lemon","🍋","Lemon berwarna kuning cerah dan memiliki rasa asam segar.","Buah"],
+["Ceri","🍒","Ceri berukuran kecil, berwarna merah, dan sering dijadikan hiasan kue.","Buah"],
+["Kiwi","🥝","Kiwi memiliki kulit berbulu halus dan daging hijau berbiji hitam.","Buah"],
+["Alpukat","🥑","Alpukat memiliki daging lembut dan satu biji besar di dalamnya.","Buah"],
+["Kelapa","🥥","Kelapa memiliki tempurung keras dan air segar di dalamnya.","Buah"],
+["Pir","🍐","Pir memiliki rasa manis renyah dan kaya akan serat.","Buah"],
+["Persik","🍑","Persik adalah buah berbulu halus dengan rasa manis lembut.","Buah"],
+["Blueberry","🫐","Blueberry adalah buah beri kecil berwarna biru yang kaya antioksidan.","Buah"]
 ],
 
 sayur:[
-["Wortel","🥕","Wortel adalah sayuran yang bagian akarnya dapat dimakan.","Sayur"],
-["Jagung","🌽","Jagung memiliki banyak biji yang tersusun pada tongkol.","Sayur"],
-["Brokoli","🥦","Brokoli memiliki bentuk seperti pohon kecil.","Sayur"],
-["Terong","🍆","Terong dapat berwarna ungu dan memiliki bentuk memanjang.","Sayur"],
-["Tomat","🍅","Tomat dapat digunakan sebagai bahan makanan dan masakan.","Sayur"],
-["Mentimun","🥒","Mentimun memiliki kandungan air yang tinggi.","Sayur"],
-["Cabai","🌶️","Cabai memiliki banyak jenis dan tingkat kepedasan berbeda.","Sayur"],
-["Bawang","🧅","Bawang digunakan dalam banyak masakan untuk memberikan aroma.","Sayur"],
-["Jamur","🍄","Jamur bukan tumbuhan dan memiliki banyak jenis.","Sayur"],
-["Kentang","🥔","Kentang adalah umbi yang tumbuh di dalam tanah.","Sayur"],
-["Labu","🎃","Labu dapat berukuran besar dan memiliki banyak biji.","Sayur"],
-["Bayam","🌿","Bayam memiliki daun hijau yang dapat dimasak.","Sayur"],
-["Kembang Kol","🥬","Kembang kol memiliki bagian putih berbentuk seperti bunga.","Sayur"],
-["Kacang Panjang","🫛","Kacang panjang memiliki bentuk yang panjang dan ramping.","Sayur"],
-["Sawi","🥬","Sawi memiliki daun hijau yang sering digunakan dalam masakan.","Sayur"]
+["Wortel","🥕","Wortel adalah sayuran oranye yang sangat baik untuk kesehatan mata.","Sayur"],
+["Jagung","🌽","Jagung memiliki biji-biji kuning manis yang tersusun rapi.","Sayur"],
+["Brokoli","🥦","Brokoli berbentuk seperti pohon kecil berwarna hijau kaya nutrisi.","Sayur"],
+["Terong","🍆","Terong berwarna ungu dan sering diolah menjadi masakan lezat.","Sayur"],
+["Tomat","🍅","Tomat berwarna merah segar dan kaya akan vitamin.","Sayur"],
+["Mentimun","🥒","Mentimun terasa renyah dan mengandung banyak air segar.","Sayur"],
+["Cabai","🌶️","Cabai memberi rasa pedas yang khas pada masakan.","Sayur"],
+["Bawang Merah","🧅","Bawang merah digunakan untuk memberikan aroma harum pada masakan.","Sayur"],
+["Bawang Putih","🧄","Bawang putih adalah bumbu dapur utama yang menyehatkan.","Sayur"],
+["Jamur","🍄","Jamur tumbuh di tempat lembap dan memiliki banyak bentuk unik.","Sayur"],
+["Kentang","🥔","Kentang adalah umbi kaya karbohidrat yang tumbuh di dalam tanah.","Sayur"],
+["Paprika","🫑","Paprika memiliki warna cerah dan rasa yang tidak terlalu pedas.","Sayur"],
+["Selada","🥬","Selada memiliki daun hijau segar yang sering dijadikan lalapan.","Sayur"],
+["Kacang Polong","🫛","Kacang polong tersusun rapi di dalam polong hijaunya.","Sayur"],
+["Labu","🎃","Labu berukuran besar dengan daging oranye yang manis.","Sayur"]
 ],
 
 hewan:[
-["Kucing","🐱","Kucing memiliki kumis yang membantu mengenali lingkungan.","Hewan"],
-["Anjing","🐶","Anjing memiliki penciuman yang sangat kuat.","Hewan"],
-["Kelinci","🐰","Kelinci memiliki telinga panjang dan suka memakan tumbuhan.","Hewan"],
-["Singa","🦁","Singa dikenal sebagai salah satu kucing besar.","Hewan"],
-["Harimau","🐯","Setiap harimau mempunyai pola belang yang unik.","Hewan"],
-["Gajah","🐘","Gajah menggunakan belalainya untuk mengambil makanan dan minum.","Hewan"],
-["Jerapah","🦒","Jerapah mempunyai leher panjang untuk mencapai daun tinggi.","Hewan"],
-["Sapi","🐮","Sapi termasuk hewan mamalia.","Hewan"],
-["Kuda","🐴","Kuda dapat berlari dengan cepat.","Hewan"],
-["Monyet","🐵","Banyak jenis monyet hidup di pepohonan.","Hewan"],
-["Ayam","🐔","Ayam merupakan burung yang tidak dapat terbang jauh.","Hewan"],
-["Bebek","🦆","Bebek memiliki kaki berselaput yang membantu berenang.","Hewan"],
-["Ikan","🐟","Ikan bernapas menggunakan insang.","Hewan"],
-["Gurita","🐙","Gurita mempunyai delapan lengan.","Hewan"],
-["Dinosaurus","🦕","Dinosaurus hidup di Bumi jauh sebelum manusia.","Hewan"],
-["Kupu-kupu","🦋","Kupu-kupu mengalami perubahan bentuk selama hidupnya.","Hewan"],
-["Lebah","🐝","Lebah membantu penyerbukan banyak tumbuhan.","Hewan"],
-["Katak","🐸","Katak dapat hidup di darat dan tempat yang berair.","Hewan"],
-["Ular","🐍","Ular bergerak dengan menggunakan tubuhnya tanpa kaki.","Hewan"],
-["Buaya","🐊","Buaya termasuk reptil dan banyak hidup di sekitar perairan.","Hewan"],
-["Panda","🐼","Panda terkenal suka memakan bambu.","Hewan"],
-["Penguin","🐧","Penguin adalah burung yang tidak dapat terbang dan pandai berenang.","Hewan"],
-["Lumba-lumba","🐬","Lumba-lumba adalah mamalia yang hidup di laut.","Hewan"],
-["Paus","🐳","Paus adalah mamalia terbesar yang hidup di laut.","Hewan"],
-["Hiu","🦈","Hiu adalah ikan yang memiliki kerangka dari tulang rawan.","Hewan"],
-["Kepiting","🦀","Kepiting mempunyai cangkang keras dan capit.","Hewan"],
-["Bintang Laut","⭐","Bintang laut hidup di lingkungan laut.","Hewan"],
-["Kuda Laut","🐴","Kuda laut adalah hewan laut dengan kepala menyerupai kuda.","Hewan"],
-["Merak","🦚","Merak terkenal dengan ekornya yang dapat dibuka lebar.","Hewan"],
-["Burung Hantu","🦉","Burung hantu umumnya aktif pada malam hari.","Hewan"]
+["Kucing","🐱","Kucing memiliki kumis dan suara mengeong yang menggemaskan.","Hewan"],
+["Anjing","🐶","Anjing adalah hewan setia dengan kemampuan penciuman yang tajam.","Hewan"],
+["Kelinci","🐰","Kelinci memiliki telinga panjang dan melompat dengan lincah.","Hewan"],
+["Singa","🦁","Singa dikenal sebagai raja hutan dengan surai yang lebat.","Hewan"],
+["Harimau","🐯","Harimau memiliki pola belang hitam-oranye yang gagah.","Hewan"],
+["Gajah","🐘","Gajah adalah hewan darat terbesar yang memiliki belalai panjang.","Hewan"],
+["Jerapah","🦒","Jerapah memiliki leher sangat panjang untuk memakan daun tinggi.","Hewan"],
+["Sapi","🐮","Sapi menghasilkan susu segar yang baik untuk pertumbuhan tubuh.","Hewan"],
+["Kuda","🐴","Kuda berlari sangat cepat dan memiliki fisik yang kuat.","Hewan"],
+["Monyet","🐵","Monyet sangat pandai memanjat pohon dan melompat antar dahan.","Hewan"],
+["Ayam","🐔","Ayam berkokok nyaring di pagi hari membangunkan kita.","Hewan"],
+["Bebek","🦆","Bebek memiliki kaki berselaput yang membantunya berenang di air.","Hewan"],
+["Ikan","🐟","Ikan berenang bebas di dalam air menggunakan sirip dan insang.","Hewan"],
+["Gurita","🐙","Gurita hidup di dalam laut dan memiliki delapan lengan yang lentur.","Hewan"],
+["Dinosaurus","🦕","Dinosaurus adalah hewan purba berukuran raksasa yang pernah hidup di Bumi.","Hewan"],
+["Kupu-kupu","🦋","Kupu-kupu memiliki sayap indah berwarna-warni hasil metamorfosis.","Hewan"],
+["Lebah","🐝","Lebah hinggap di Bunga untuk menghisap nektar dan membuat madu.","Hewan"],
+["Katak","🐸","Katak pandai melompat dan dapat hidup di darat maupun air.","Hewan"],
+["Ular","🐍","Ular berjalan meliuk-liuk di tanah tanpa menggunakan kaki.","Hewan"],
+["Buaya","🐊","Buaya memiliki kulit tebal keras dan rahang sangat kuat.","Hewan"],
+["Panda","🐼","Panda berbulu hitam-putih dan sangat suka memakan batang bambu.","Hewan"],
+["Penguin","🐧","Penguin adalah burung kutub yang pandai berenang di air dingin.","Hewan"],
+["Lumba-lumba","🐬","Lumba-lumba adalah mamalia laut yang sangat cerdas dan ramah.","Hewan"],
+["Paus","🐳","Paus adalah mamalia raksasa terbesar yang hidup di lautan.","Hewan"],
+["Hiu","🦈","Hiu adalah perenang cepat di laut dengan deretan gigi yang tajam.","Hewan"],
+["Kepiting","🦀","Kepiting berjalan miring dan memiliki dua capit yang kuat.","Hewan"],
+["Unta","🐪","Unta tangguh berjalan di gurun pasir dan memiliki punuk simpanan lemak.","Hewan"],
+["Flamingo","🦩","Flamingo adalah burung anggun berwarna merah muda dengan kaki panjang.","Hewan"],
+["Kangguru","🦘","Kangguru melompat tinggi dan membawa anaknya di dalam kantung.","Hewan"],
+["Koala","🐨","Koala adalah mamalia lucu yang suka memeluk pohon kayu putih.","Hewan"],
+["Beruang","🐻","Beruang berbadan besar dan berbulu tebal penghuni hutan.","Hewan"],
+["Kura-kura","🐢","Kura-kura berjalan lambat dan membawa cangkang pelindung keras.","Hewan"]
 ],
 
 kendaraan:[
-["Mobil","🚗","Mobil digunakan untuk membawa orang dan barang melalui jalan.","Kendaraan"],
-["Mobil Balap","🏎️","Mobil balap dibuat untuk mencapai kecepatan tinggi di lintasan.","Kendaraan"],
-["Taksi","🚕","Taksi merupakan kendaraan untuk mengantar penumpang.","Kendaraan"],
-["Bus","🚌","Bus dapat membawa banyak penumpang sekaligus.","Kendaraan"],
-["Truk","🚚","Truk digunakan untuk mengangkut berbagai jenis barang.","Kendaraan"],
-["Truk Molen","🚜","Truk molen digunakan untuk membawa dan mengaduk campuran beton.","Kendaraan"],
-["Ekskavator","🏗️","Ekskavator digunakan untuk menggali dan memindahkan tanah.","Alat Berat"],
-["Motor","🏍️","Sepeda motor biasanya memiliki dua roda.","Kendaraan"],
-["Sepeda","🚲","Sepeda bergerak menggunakan tenaga dari kayuhan.","Kendaraan"],
-["Ambulans","🚑","Ambulans digunakan untuk membawa pasien.","Kendaraan"],
-["Mobil Polisi","🚓","Mobil polisi digunakan oleh petugas kepolisian.","Kendaraan"],
-["Pemadam Kebakaran","🚒","Mobil pemadam membawa peralatan pemadam kebakaran.","Kendaraan"],
-["Pesawat","✈️","Pesawat dapat terbang di udara dan membawa penumpang.","Kendaraan"],
-["Helikopter","🚁","Helikopter dapat terbang menggunakan baling-baling.","Kendaraan"],
-["Kereta","🚂","Kereta berjalan di atas rel.","Kendaraan"],
-["Kapal","🚢","Kapal digunakan untuk perjalanan atau mengangkut barang di air.","Kendaraan"],
-["Perahu","🛶","Perahu dapat digunakan untuk bergerak di atas air.","Kendaraan"],
-["Kapal Selam","🚤","Kapal selam dapat bergerak di bawah permukaan laut.","Kendaraan"],
-["Roket","🚀","Roket digunakan untuk membawa benda ke luar angkasa.","Kendaraan"],
-["Balon Udara","🎈","Balon udara dapat naik karena udara panas membuatnya mengapung.","Kendaraan"]
+["Mobil","🚗","Mobil berjalan di jalan raya menggunakan empat roda.","Kendaraan"],
+["Mobil Balap","🏎️","Mobil balap dirancang khusus untuk melaju cepat di sirkuit.","Kendaraan"],
+["Taksi","🚕","Taksi mengantar penumpang sampai tepat ke tempat tujuan.","Kendaraan"],
+["Bus","🚌","Bus berukuran panjang untuk mengangkut banyak penumpang sekaligus.","Kendaraan"],
+["Truk","🚚","Truk digunakan untuk membawa dan mengangkut barang-barang berat.","Kendaraan"],
+["Motor","🏍️","Motor adalah kendaraan cepat beroda dua.","Kendaraan"],
+["Sepeda","🚲","Sepeda bergerak ramah lingkungan saat kita mengayuh pedalnya.","Kendaraan"],
+["Ambulans","🚑","Ambulans membunyikan sirine untuk membawa orang sakit ke rumah sakit.","Kendaraan"],
+["Mobil Polisi","🚓","Mobil polisi bertugas patroli menjaga keamanan jalan raya.","Kendaraan"],
+["Pemadam Kebakaran","🚒","Mobil pemadam bertugas cepat memadamkan kobaran api.","Kendaraan"],
+["Pesawat","✈️","Pesawat terbang tinggi di angkasa membawa penumpang antar kota.","Kendaraan"],
+["Helikopter","🚁","Helikopter dapat terbang tegak lurus memakai baling-baling atas.","Kendaraan"],
+["Kereta","🚂","Kereta berjalan panjang di atas rel baja.","Kendaraan"],
+["Kapal Laut","🚢","Kapal laut berlayar gagah mengarungi samudra luas.","Kendaraan"],
+["Perahu Layar","⛵","Perahu layar bergerak memanfaatkan dorongan angin di laut.","Kendaraan"],
+["Roket","🚀","Roket meluncur sangat cepat menembus luar angkasa.","Kendaraan"],
+["Skuter","🛵","Skuter adalah kendaraan roda dua yang praktis dan lincah.","Kendaraan"],
+["Otopet","🛴","Otopet dimainkan dengan mendorogkan satu kaki ke tanah.","Kendaraan"],
+["Traktor","🚜","Traktor digunakan petani untuk mengolah tanah pertanian.","Kendaraan"],
+["Trem","🚋","Trem adalah kereta listrik umum yang berjalan di dalam kota.","Kendaraan"]
 ],
 
 makanan:[
-["Es Krim","🍦","Es krim biasanya disajikan dalam keadaan dingin.","Makanan"],
-["Donat","🍩","Donat biasanya memiliki lubang di bagian tengah.","Makanan"],
-["Cokelat","🍫","Cokelat dibuat dari biji kakao yang diolah.","Makanan"],
-["Permen","🍬","Permen biasanya memiliki rasa manis.","Makanan"],
-["Susu","🥛","Susu adalah minuman yang kaya nutrisi.","Minuman"],
-["Jus","🧃","Jus dibuat dari buah yang dihaluskan atau diperas.","Minuman"],
-["Roti","🍞","Roti dibuat dari adonan yang biasanya menggunakan tepung.","Makanan"],
-["Pizza","🍕","Pizza biasanya memiliki adonan, saus, dan topping.","Makanan"],
-["Burger","🍔","Burger terdiri dari roti dan isian lezat di tengahnya.","Makanan"],
-["Popcorn","🍿","Popcorn dibuat dari biji jagung yang dipanaskan.","Makanan"],
-["Kue","🎂","Kue sering disajikan pada perayaan.","Makanan"],
-["Nasi","🍚","Nasi merupakan makanan pokok bagi banyak orang.","Makanan"],
-["Telur","🥚","Telur dapat berasal dari berbagai jenis unggas.","Makanan"],
-["Keju","🧀","Keju dibuat dari susu yang diproses.","Makanan"],
-["Madu","🍯","Madu dibuat oleh lebah dari nektar bunga.","Makanan"]
+["Es Krim","🍦","Es krim terasa dingin, manis, dan menyegarkan saat dimakan.","Makanan"],
+["Donat","🍩","Donat berbentuk bulat manis dengan lubang di tengahnya.","Makanan"],
+["Cokelat","🍫","Cokelat terbuat dari olahan kakao yang terasa lezat.","Makanan"],
+["Permen","🍬","Permen manis disukai anak-anak karena memiliki beragam rasa.","Makanan"],
+["Susu","🥛","Susu kaya kalsium untuk membuat tulang dan gigi tumbuh kuat.","Minuman"],
+["Jus","🧃","Jus segar terbuat dari perasan buah-buahan kaya vitamin.","Minuman"],
+["Roti","🍞","Roti terbuat dari tepung yang dipanggang hingga harum.","Makanan"],
+["Pizza","🍕","Pizza berbentuk bulat dengan taburan saus dan keju meleleh.","Makanan"],
+["Burger","🍔","Burger berisi daging gurih dan sayuran di antara roti empuk.","Makanan"],
+["Popcorn","🍿","Popcorn terbuat dari biji jagung yang mekar saat dipanaskan.","Makanan"],
+["Kue","🎂","Kue ulang tahun dihias cantik dan disajikan saat perayaan.","Makanan"],
+["Nasi","🍚","Nasi adalah makanan pokok yang memberi energi bagi tubuh kita.","Makanan"],
+["Telur","🥚","Telur kaya protein tinggi untuk menambah kekuatan tubuh.","Makanan"],
+["Keju","🧀","Keju terbuat dari olahan susu yang terasa gurih lezat.","Makanan"],
+["Madu","🍯","Madu asli buatan lebah terasa manis dan menyehatkan tubuh.","Makanan"],
+["Roti Lapis","🥪","Roti lapis berisi daging dan sayuran segar yang praktis dimakan.","Makanan"],
+["Kentang Goreng","🍟","Kentang goreng terasa renyah dan gurih saat dinikmati.","Makanan"]
 ],
 
 rumah:[
-["Rumah","🏠","Rumah adalah tempat manusia tinggal dan beristirahat.","Bangunan"],
-["Sekolah","🏫","Sekolah adalah tempat belajar dan mendapatkan pengetahuan.","Bangunan"],
-["Rumah Sakit","🏥","Rumah sakit menyediakan layanan kesehatan.","Bangunan"],
-["Toko","🏪","Toko adalah tempat orang membeli berbagai barang.","Bangunan"],
-["Masjid","🕌","Masjid merupakan tempat ibadah umat Islam.","Bangunan"],
-["Gedung","🏢","Gedung digunakan untuk berbagai kegiatan.","Bangunan"],
-["Pintu","🚪","Pintu digunakan sebagai jalan masuk dan keluar.","Rumah"],
-["Jendela","🪟","Jendela membantu cahaya dan udara masuk ke ruangan.","Rumah"],
-["Tangga","🪜","Tangga digunakan untuk berpindah tingkat.","Rumah"],
-["Pagar","🧱","Pagar digunakan sebagai pembatas area.","Rumah"],
-["Kursi","🪑","Kursi digunakan untuk duduk.","Perabot"],
-["Kasur","🛏️","Kasur digunakan untuk beristirahat atau tidur.","Perabot"],
-["Televisi","📺","Televisi menampilkan gambar dan suara.","Elektronik"],
-["Lampu","💡","Lampu menghasilkan cahaya terang.","Elektronik"],
-["Kipas","🌀","Kipas menghasilkan aliran udara.","Elektronik"],
-["Jam","⏰","Jam digunakan untuk mengetahui waktu.","Perabot"],
-["Cermin","🪞","Cermin memantulkan bayangan kita.","Perabot"],
-["Telepon","☎️","Telepon digunakan untuk berkomunikasi.","Elektronik"],
-["Kulkas","🧊","Kulkas menjaga makanan dan minuman tetap dingin.","Elektronik"],
-["Kompor","🔥","Kompor digunakan untuk memasak makanan.","Perabot"]
+["Rumah","🏠","Rumah adalah tempat tinggal yang aman dan hangat bagi keluarga.","Bangunan"],
+["Sekolah","🏫","Sekolah tempat kita menuntut ilmu dan bertemu teman-teman.","Bangunan"],
+["Rumah Sakit","🏥","Rumah sakit tempat dokter dan perawat merawat orang sakit.","Bangunan"],
+["Toko","🏪","Toko menyediakan berbagai barang kebutuhan sehari-hari.","Bangunan"],
+["Masjid","🕌","Masjid adalah tempat ibadah bagi umat Islam.","Bangunan"],
+["Gedung","🏢","Gedung bertingkat banyak ditemukan di kota-kota besar.","Bangunan"],
+["Pintu","🚪","Pintu dibuka dan ditutup saat kita keluar masuk ruangan.","Rumah"],
+["Jendela","🪟","Jendela membuat cahaya matahari dan udara segar masuk ke rumah.","Rumah"],
+["Tangga","🪜","Tangga membantu kita memanjat naik ke tempat yang lebih tinggi.","Rumah"],
+["Kursi","🪑","Kursi digunakan untuk duduk beristirahat dengan nyaman.","Perabot"],
+["Kasur","🛏️","Kasur empuk tempat kita tidur nyenyak di malam hari.","Perabot"],
+["Televisi","📺","Televisi menampilkan gambar kartun dan acara menarik.","Elektronik"],
+["Lampu","💡","Lampu menghasilkan cahaya terang saat ruangan mulai gelap.","Elektronik"],
+["Jam Weker","⏰","Jam weker berdering membantu membangunkan kita di pagi hari.","Perabot"],
+["Cermin","🪞","Cermin memantulkan bayangan diri kita dengan jelas.","Perabot"],
+["Telepon","☎️","Telepon memudahkan kita mengobrol dan berkomunikasi jarak jauh.","Elektronik"],
+["Batu Bata","🧱","Batu bata disusun kokoh untuk membangun dinding rumah.","Rumah"],
+["Sapu","🧹","Sapu digunakan untuk membersihkan lantai dari debu dan kotoran.","Alat"],
+["Ember","🪣","Ember digunakan untuk menampung air bersih di rumah.","Alat"],
+["Sabun","🧼","Sabun digunakan saat mandi untuk membersihkan kuman di tubuh.","Alat"]
 ],
 
 sekolah:[
-["Pensil","✏️","Pensil digunakan untuk menulis atau menggambar.","Sekolah"],
-["Buku","📖","Buku berisi tulisan, gambar, atau informasi.","Sekolah"],
-["Penghapus","🧽","Penghapus digunakan untuk menghilangkan tulisan pensil.","Sekolah"],
-["Penggaris","📏","Penggaris membantu membuat garis lurus.","Sekolah"],
-["Tas","🎒","Tas digunakan untuk membawa buku dan perlengkapan.","Sekolah"],
-["Buku Tulis","📓","Buku tulis digunakan untuk mencatat tugas.","Sekolah"],
-["Krayon","🖍️","Krayon digunakan untuk mewarnai gambar.","Sekolah"],
-["Gunting","✂️","Gunting digunakan untuk memotong kertas atau kain.","Alat"],
-["Lem","🧴","Lem digunakan untuk merekatkan benda.","Alat"],
-["Papan Tulis","🧑‍🏫","Papan tulis digunakan guru untuk menjelaskan pelajaran.","Sekolah"],
-["Rautan","🔪","Rautan digunakan untuk meraut pensil.","Sekolah"]
+["Pensil","✏️","Pensil digunakan untuk menulis dan menggambar di kertas.","Sekolah"],
+["Pena","🖊️","Pena berisi tinta untuk menulis rapi di buku catatan.","Sekolah"],
+["Buku","📖","Buku berisi tulisan ilmu pengetahuan dan cerita seru.","Sekolah"],
+["Buku Tulis","📓","Buku tulis tempat kita mencatat pelajaran sekolah.","Sekolah"],
+["Penggaris","📏","Penggaris digunakan untuk mengukur dan membuat garis lurus.","Sekolah"],
+["Penggaris Segitiga","📐","Penggaris segitiga digunakan untuk mengukur sudut dengan tepat.","Sekolah"],
+["Tas Sekolah","🎒","Tas sekolah dipakai membawa buku dan alat tulis di punggung.","Sekolah"],
+["Krayon","🖍️","Krayon penuh warna untuk mewarnai gambar dengan indah.","Sekolah"],
+["Gunting","✂️","Gunting digunakan untuk memotong kertas kerajinan dengan rapi.","Alat"],
+["Kuas Cat","🖌️","Kuas cat digunakan untuk melukis warna indah di atas kertas.","Alat"],
+["Klip Kertas","📎","Klip kertas digunakan untuk menjepit lembaran kertas agar rapi.","Alat"]
 ],
 
 alam:[
-["Matahari","☀️","Matahari adalah bintang sumber energi utama Bumi.","Alam"],
-["Bulan","🌙","Bulan mengelilingi Bumi.","Alam"],
-["Bintang","⭐","Bintang adalah benda langit yang memancarkan cahaya.","Alam"],
-["Awan","☁️","Awan terdiri dari kumpulan tetesan air.","Alam"],
-["Hujan","🌧️","Hujan terjadi ketika air dari langit jatuh ke Bumi.","Alam"],
-["Pelangi","🌈","Pelangi tampak indah setelah hujan turun.","Alam"],
-["Gunung","⛰️","Gunung merupakan daratan yang menjulang tinggi.","Alam"],
-["Gunung Berapi","🌋","Gunung berapi dapat mengeluarkan lava panas.","Alam"],
-["Laut","🌊","Laut merupakan perairan asin yang sangat luas.","Alam"],
-["Sungai","🏞️","Sungai adalah aliran air yang mengalir ke laut.","Alam"],
-["Pohon","🌳","Pohon membantu menghasilkan oksigen bersih.","Alam"],
-["Bunga","🌸","Bunga merupakan bagian tumbuhan yang indah.","Tumbuhan"],
-["Daun","🍃","Daun membantu tumbuhan membuat makanan.","Tumbuhan"],
-["Kaktus","🌵","Kaktus dapat hidup di lingkungan yang kering.","Tumbuhan"],
-["Kelapa Sawit","🌴","Kelapa sawit menghasilkan minyak kelapa sawit.","Tumbuhan"]
+["Matahari","☀️","Matahari bersinar terang menerangi Bumi di siang hari.","Alam"],
+["Bulan","🌙","Bulan bersinar lembut menghiasi langit di malam hari.","Alam"],
+["Bintang","⭐","Bintang-bintang berkelip indah jauh di langit malam.","Alam"],
+["Awan","☁️","Awan putih mengapung indah di langit biru cerah.","Alam"],
+["Hujan","🌧️","Titik-titik air hujan membasahi dan menyegarkan tanaman di bumi.","Alam"],
+["Pelangi","🌈","Pelangi muncul indah berwarna-warni seusai hujan reda.","Alam"],
+["Gunung","⛰️","Gunung menjulang tinggi dan sangat indah dipandang.","Alam"],
+["Gunung Berapi","🌋","Gunung berapi dapat mengeluarkan lahar panas saat aktif.","Alam"],
+["Laut","🌊","Laut adalah perairan biru yang sangat luas dan dalam.","Alam"],
+["Sungai","🏞️","Sungai mengalirkan air jernih dari gunung menuju ke laut.","Alam"],
+["Pohon","🌳","Pohon rindang menghasilkan udara bersih untuk kita bernapas.","Alam"],
+["Pohon Kelapa","🌴","Pohon kelapa tumbuh tinggi di pinggir pantai.","Alam"],
+["Bunga","🌸","Bunga mekar indah dan mengeluarkan aroma harum.","Tumbuhan"],
+["Daun","🍃","Daun hijau mengolah makanan bagi tumbuhan melalui fotosintesis.","Tumbuhan"],
+["Kaktus","🌵","Kaktus adalah tanaman berduri yang tahan hidup di gurun kering.","Tumbuhan"]
 ],
 
 profesi:[
-["Dokter","🧑‍⚕️","Dokter membantu merawat orang sakit.","Profesi"],
-["Guru","🧑‍🏫","Guru membantu siswa belajar dan pandai.","Profesi"],
-["Polisi","👮","Polisi menjaga keamanan lingkungan.","Profesi"],
-["Pemadam","🧑‍🚒","Petugas pemadam membantu mengatasi kebakaran.","Profesi"],
-["Pilot","🧑‍✈️","Pilot mengemudikan pesawat terbang.","Profesi"],
-["Masinis","🧑‍🔧","Masinis mengoperasikan kereta api.","Profesi"],
-["Petani","🧑‍🌾","Petani menanam tanaman dan bahan pangan.","Profesi"],
-["Nelayan","🎣","Nelayan menangkap ikan di laut.","Profesi"],
-["Koki","👨‍🍳","Koki memasak makanan yang lezat.","Profesi"],
-["Astronaut","🧑‍🚀","Astronaut menjelajahi luar angkasa.","Profesi"],
-["Arsitek","📐","Arsitek merancang bentuk bangunan.","Profesi"],
-["Mekanik","🔧","Mekanik memperbaiki kendaraan atau mesin.","Profesi"]
+["Dokter","🧑‍⚕️","Dokter memeriksa dan membantu merawat orang yang sakit.","Profesi"],
+["Guru","🧑‍🏫","Guru mengajar dan mendidik siswa menjadi anak yang pintar.","Profesi"],
+["Polisi","👮","Polisi menjaga ketertiban dan keamanan lingkungan masyarakat.","Profesi"],
+["Pemadam Fireman","🧑‍🚒","Petugas pemadam bertugas memadamkan kebakaran dengan cepat.","Profesi"],
+["Pilot","🧑‍✈️","Pilot mahir mengemudikan pesawat terbang tinggi di udara.","Profesi"],
+["Teknisi","🧑‍🔧","Teknisi ahli merawat dan memperbaiki mesin yang rusak.","Profesi"],
+["Petani","🧑‍🌾","Petani menanam padi dan sayur untuk bahan makanan kita.","Profesi"],
+["Koki","👨‍🍳","Koki pandai memasak hidangan yang lezat dan bergizi.","Profesi"],
+["Astronaut","🧑‍🚀","Astronaut terbang menjelajahi rahasia ruang angkasa.","Profesi"],
+["Pelukis","🧑‍🎨","Pelukis membuat karya gambar lukisan yang sangat indah.","Profesi"],
+["Mekanik","🔧","Mekanik memperbaiki kendaraan agar aman digunakan kembali.","Profesi"],
+["Detektif","🕵️","Detektif bertugas menyelidiki dan memecahkan teka-teki misteri.","Profesi"],
+["Penyanyi","🧑‍🎤","Penyanyi menghibur orang dengan suaranya yang merdu.","Profesi"],
+["Hakim","🧑‍⚖️","Hakim memimpin persidangan secara adil dan bijaksana.","Profesi"]
 ],
 
 tubuh:[
-["Mata","👁️","Mata digunakan untuk melihat.","Tubuh"],
-["Telinga","👂","Telinga digunakan untuk mendengar.","Tubuh"],
-["Hidung","👃","Hidung digunakan untuk mencium bau.","Tubuh"],
-["Mulut","👄","Mulut digunakan untuk berbicara dan makan.","Tubuh"],
-["Tangan","✋","Tangan digunakan untuk memegang benda.","Tubuh"],
-["Kaki","🦶","Kaki digunakan untuk berjalan dan berlari.","Tubuh"],
-["Jari","☝️","Jari membantu melakukan gerakan halus.","Tubuh"],
-["Rambut","💇","Rambut tumbuh di kepala kita.","Tubuh"],
-["Gigi","🦷","Gigi mengunyah makanan hingga halus.","Tubuh"],
-["Jantung","❤️","Jantung memompa darah ke seluruh tubuh.","Tubuh"]
+["Mata","👁️","Mata adalah karunia untuk kita melihat keindahan dunia.","Tubuh"],
+["Telinga","👂","Telinga digunakan untuk mendengarkan suara dan musik merdu.","Tubuh"],
+["Hidung","👃","Hidung membaui aroma harum dan bernapas lancar.","Tubuh"],
+["Mulut","👄","Mulut digunakan untuk berbicara sopan dan makan hidangan.","Tubuh"],
+["Tangan","✋","Tangan digunakan untuk memegang, menulis, dan bekerja.","Tubuh"],
+["Kaki","🦶","Kaki melangkah kuat untuk berjalan dan berlari.","Tubuh"],
+["Jari","☝️","Jari-jari membantu kita memegang benda-benda kecil.","Tubuh"],
+["Otak","🧠","Otak adalah pusat berpikir dan mengendalikan tubuh kita.","Tubuh"],
+["Gigi","🦷","Gigi mengunyah makanan hingga halus sebelum ditelan.","Tubuh"],
+["Tulang","🦴","Tulang membentuk kerangka tubuh agar kita bisa berdiri tegak.","Tubuh"]
 ],
 
 angkasa:[
-["Bumi","🌎","Bumi adalah planet tempat kita tinggal.","Luar Angkasa"],
-["Mars","🔴","Mars sering disebut Planet Merah.","Luar Angkasa"],
-["Jupiter","🪐","Jupiter adalah planet terbesar di Tata Surya.","Luar Angkasa"],
-["Saturnus","🪐","Saturnus terkenal karena cincin indahnya.","Luar Angkasa"],
-["Merkurius","🟤","Merkurius adalah planet terdekat dari Matahari.","Luar Angkasa"],
-["Venus","🟡","Venus adalah planet sangat terang.","Luar Angkasa"],
-["Uranus","🔵","Uranus merupakan planet dingin berwarna biru.","Luar Angkasa"],
-["Neptunus","🔵","Neptunus adalah planet paling luar Tata Surya.","Luar Angkasa"],
-["Roket","🚀","Roket meluncur membawa manusia ke luar angkasa.","Luar Angkasa"],
-["Astronaut","👨‍🚀","Astronaut bekerja di stasiun luar angkasa.","Luar Angkasa"]
+["Bumi","🌎","Bumi adalah planet indah tempat kita hidup bersama.","Luar Angkasa"],
+["Saturnus","🪐","Saturnus dipeluk oleh lingkaran cincin es yang indah.","Luar Angkasa"],
+["Matahari","☀️","Matahari adalah bintang raksasa sumber cahaya bagi Bumi.","Luar Angkasa"],
+["Bulan","🌙","Bulan mengelilingi Bumi dan bersinar lembut di malam hari.","Luar Angkasa"],
+["Bintang","🌟","Bintang bersinar terang di malam hari jauh di angkasa.","Luar Angkasa"],
+["Roket","🚀","Roket meluncur menembus atmosfer menuju ruang angkasa.","Luar Angkasa"],
+["Astronaut","👨‍🚀","Astronaut bertugas melakukan penelitian di stasiun luar angkasa.","Luar Angkasa"],
+["Piring Terbang","🛸","Piring terbang adalah kendaraan misterius dalam cerita fiksi ilmiah.","Luar Angkasa"],
+["Komet","☄️","Komet adalah benda langit es yang meluncur dengan ekor cahaya.","Luar Angkasa"],
+["Teleskop","🔭","Teleskop digunakan untuk mengamati benda-benda langit yang jauh.","Luar Angkasa"]
 ],
 
 warna:[
-["Merah","🔴","Merah adalah warna yang cerah dan berani.","Warna"],
-["Biru","🔵","Biru seperti warna langit dan laut.","Warna"],
-["Kuning","🟡","Kuning adalah warna cerah seperti Matahari.","Warna"],
-["Hijau","🟢","Hijau adalah warna rumput dan dedaunan.","Warna"],
-["Ungu","🟣","Ungu sering ditemukan pada bunga dan buah anggur.","Warna"],
-["Oranye","🟠","Oranye adalah warna campuran merah dan kuning.","Warna"],
-["Putih","⚪","Putih adalah warna yang bersih dan terang.","Warna"],
+["Merah","🔴","Merah adalah warna yang berani dan hangat.","Warna"],
+["Biru","🔵","Biru adalah warna sejuk seperti warna laut dan langit.","Warna"],
+["Kuning","🟡","Kuning adalah warna cerah ceria seperti sinar matahari.","Warna"],
+["Hijau","🟢","Hijau adalah warna segar dedaunan dan pepohonan.","Warna"],
+["Ungu","🟣","Ungu adalah warna anggur dan blueberry.","Warna"],
+["Oranye","🟠","Oranye warna segar gabungan merah dan kuning.","Warna"],
+["Putih","⚪","Putih mewakili warna awan dan susu yang bersih.","Warna"],
 ["Hitam","⚫","Hitam adalah warna gelap malam hari.","Warna"],
-["Cokelat","🟤","Cokelat adalah warna tanah dan kayu.","Warna"],
-["Merah Muda","🩷","Merah muda adalah warna yang lembut.","Warna"]
+["Cokelat","🟤","Cokelat adalah warna tanah dan batang pohon.","Warna"],
+["Merah Muda","🩷","Merah muda adalah warna yang manis dan lembut.","Warna"]
 ],
 
 bentuk:[
-["Lingkaran","⚪","Lingkaran bulat tanpa sudut.","Bentuk"],
-["Segitiga","🔺","Segitiga mempunyai tiga sudut.","Bentuk"],
-["Kotak","🟦","Kotak mempunyai empat sisi sama panjang.","Bentuk"],
-["Persegi Panjang","▭","Persegi panjang memiliki sisi sejajar sama panjang.","Bentuk"],
-["Bintang","⭐","Bintang memiliki sudut yang bersinar.","Bentuk"],
-["Hati","❤️","Bentuk hati adalah simbol kasih sayang.","Bentuk"],
-["Oval","🥚","Oval berbentuk lonjong seperti telur.","Bentuk"],
-["Bulan Sabit","🌙","Bulan sabit melengkung indah di langit.","Bentuk"]
+["Lingkaran","⚪","Lingkaran melingkar sempurna tanpa sudut.","Bentuk"],
+["Segitiga","🔺","Segitiga memiliki tiga garis dan tiga sudut.","Bentuk"],
+["Kotak","🟦","Kotak memiliki empat sisi sama panjang.","Bentuk"],
+["Bintang","⭐","Bintang berbentuk runcing bersinar indah.","Bentuk"],
+["Hati","❤️","Bentuk hati melambangkan kasih sayang tulus.","Bentuk"],
+["Bulan Sabit","🌙","Bulan sabit melengkung indah bagai busur panah.","Bentuk"],
+["Belah Ketupat","🔷","Belah ketupat memiliki empat sisi miring sama panjang.","Bentuk"]
 ],
 
 olahraga:[
-["Sepak Bola","⚽","Sepak bola dimainkan dengan menendang bola ke gawang.","Olahraga"],
-["Basket","🏀","Bola basket dimasukkan ke dalam keranjang tinggi.","Olahraga"],
-["Tenis","🎾","Tenis dimainkan menggunakan raket.","Olahraga"],
-["Bulu Tangkis","🏸","Bulu tangkis dimainkan memakai kok dan raket.","Olahraga"],
-["Renang","🏊","Renang membuat tubuh sehat di dalam air.","Olahraga"],
-["Bersepeda","🚴","Bersepeda menggunakan sepeda roda dua.","Olahraga"],
-["Lari","🏃","Lari adalah bergerak cepat dengan kaki.","Olahraga"],
-["Bola Voli","🏐","Bola voli dipukul melewati net.","Olahraga"]
+["Sepak Bola","⚽","Sepak bola dimainkan seru dengan menendang bola ke gawang.","Olahraga"],
+["Basket","🏀","Basket dimainkan dengan melempar bola ke dalam ring tinggi.","Olahraga"],
+["Tenis","🎾","Tenis dimainkan memukul bola hijau memakai raket.","Olahraga"],
+["Bulu Tangkis","🏸","Bulu tangkis dimainkan dengan memukul kok menyeberangi net.","Olahraga"],
+["Renang","🏊","Renang olahraga air yang menyenangkan dan menyehatkan.","Olahraga"],
+["Bersepeda","🚴","Bersepeda mengayuh cepat melatih kekuatan kaki.","Olahraga"],
+["Lari","🏃","Lari memperkuat jantung dan stamina tubuh.","Olahraga"],
+["Bola Voli","🏐","Bola voli dimainkan dengan menepuk bola melewati net tinggi.","Olahraga"],
+["Tenis Meja","🏓","Tenis meja dimainkan di atas meja memakai bet kecil.","Olahraga"],
+["Bowling","🎳","Bowling dimainkan dengan menggelindingkan bola ke arah pin.","Olahraga"],
+["Tinju","🥊","Tinju dimainkan dengan mengenakan sarung tangan khusus.","Olahraga"]
 ]
 };
 
@@ -1637,7 +1642,7 @@ else showHome();
 }
 
 /* =========================
-   GAME HITUNG BENDA (FIXED)
+   GAME HITUNG BENDA
 ========================= */
 function startCount(){
 currentGame="count";
@@ -1653,7 +1658,6 @@ document.getElementById("countQuestion").textContent=`Ada berapa ${item.name}?`;
 let box=document.getElementById("countItems");
 box.innerHTML="";
 
-/* Penyesuaian Font Size Dinamis Agar PASTI Muat di HP */
 let emojiSize = target <= 4 ? "52px" : target <= 7 ? "40px" : "32px";
 
 for(let i=0;i<target;i++){
@@ -1819,7 +1823,7 @@ flipped=[];
 }
 
 /* =========================
-   SUSUN KATA (DENGAN BATAL/HAPUS)
+   SUSUN KATA
 ========================= */
 function startSpelling(){
 currentGame="spelling";
@@ -1876,7 +1880,6 @@ for(let i=0;i<spellingWord.length;i++){
 let s=document.createElement("div");
 s.className="slot";
 s.textContent=spellingInput[i]?spellingInput[i].char:"";
-/* Fitur Hapus Huruf jika Kotak Ditekan */
 s.onclick=()=>removeLetterSlot(i);
 slots.appendChild(s);
 }
@@ -2053,7 +2056,7 @@ hint:"Benda ini sering digunakan anak-anak di sekolah."
 },
 {
 q:"Manakah yang dapat terbang?",
-a:["Pesawat","Kapal","Kereta","Sepeda"],
+a:["Pesawat","Kapal Laut","Kereta","Sepeda"],
 correct:"Pesawat",
 hint:"Kendaraan ini bergerak di udara."
 },
@@ -2065,7 +2068,7 @@ hint:"Benda ini merupakan umbi."
 },
 {
 q:"Manakah planet tempat kita tinggal?",
-a:["Bumi","Mars","Jupiter","Saturnus"],
+a:["Bumi","Saturnus","Matahari","Bulan"],
 correct:"Bumi",
 hint:"Planet ini memiliki air, daratan, dan kehidupan."
 },
@@ -2076,16 +2079,16 @@ correct:"Gurita",
 hint:"Hewan ini hidup di laut."
 },
 {
-q:"Manakah alat untuk mengetahui waktu?",
-a:["Jam","Pensil","Kursi","Piring"],
-correct:"Jam",
-hint:"Benda ini memiliki angka penunjuk waktu."
+q:"Manakah alat untuk membangunkan di pagi hari?",
+a:["Jam Weker","Pensil","Kursi","Sabun"],
+correct:"Jam Weker",
+hint:"Benda ini berdering nyaring di samping kasur."
 },
 {
-q:"Manakah yang menghasilkan cahaya sendiri?",
+q:"Manakah yang menghasilkan cahaya utama di siang hari?",
 a:["Matahari","Bulan","Awan","Gunung"],
 correct:"Matahari",
-hint:"Benda langit ini adalah sebuah bintang."
+hint:"Benda langit ini adalah sebuah bintang raksasa."
 }
 ];
 
@@ -2255,7 +2258,6 @@ switchView("homeView");
 switchView("playerView");
 }
 
-/* Audio listener untuk gesture pertama di mobile */
 document.addEventListener("click",function initAudioOnFirstTouch(){
 initAudio();
 document.removeEventListener("click",initAudioOnFirstTouch);
